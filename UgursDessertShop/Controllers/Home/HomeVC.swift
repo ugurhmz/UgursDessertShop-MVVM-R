@@ -13,12 +13,162 @@ class HomeVC: UIViewController {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: HomeVC.createCompositionalLayout())
         cv.backgroundColor = HomeBgColor
+        
+        //header
+               cv.register(CellHeaderView.self, forSupplementaryViewOfKind: "header",
+                           withReuseIdentifier:   CellHeaderView.identifier)
+        cv.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.identifier)
+        cv.register(ProductsCell.self, forCellWithReuseIdentifier: ProductsCell.identifier)
         return cv
     }()
 
+   static func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
+       let mylayout = UICollectionViewCompositionalLayout {  (index, environment) -> NSCollectionLayoutSection? in
+           return  HomeVC.createSectionFor(index: index, environment: environment)
+        }
+        return mylayout
+    }
+    
+    static func createSectionFor(index: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+        switch index {
+        case 0:
+            return createCategoriesSection()
+        case 1:
+            return createProductsSection()
+        default:
+            return  createProductsSection()
+        }
+    }
+    
+    static func createCategoriesSection() -> NSCollectionLayoutSection {
+        
+        let inset: CGFloat = 1
+      
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.18),
+                                              heightDimension: .fractionalHeight(0.67))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 10,
+                                                     leading: 16,
+                                                     bottom: inset,
+                                                     trailing: 4)
+     
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6),
+                                               heightDimension: .fractionalHeight(0.10))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
+                                                       subitem:  item, count: 2)
+     
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                                heightDimension: .absolute(60))
+        
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                 elementKind: "header",
+                                                                 alignment: .top)
+        section.boundarySupplementaryItems = [header]
+        return section
+    }
+    
+    static func createProductsSection() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5), heightDimension: .absolute(300)))
+       item.contentInsets.bottom = 16
+       item.contentInsets.trailing = 16
+       
+       let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1000)), subitems: [item])
+       
+       let section = NSCollectionLayoutSection(group: group)
+       section.contentInsets = .init(top: 2, leading: 16, bottom: 0, trailing: 0)
+       
+       return section
+    }
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = HomeBgColor
+        setupViews()
+        setConstraints()
+    }
+    
+    private func setupViews(){
+        view.addSubview(generalCollectionView)
+        generalCollectionView.dataSource = self
+        generalCollectionView.delegate = self
+        generalCollectionView.collectionViewLayout = HomeVC.createCompositionalLayout()
     }
 }
 
+extension HomeVC {
+    private func setConstraints(){
+        generalCollectionView.fillSuperview()
+    }
+}
+
+extension HomeVC: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch section {
+        case Sections.CategoriesSection.rawValue:
+            return 5
+        case Sections.ProductsSection.rawValue:
+            return 8
+        default:
+            return 5
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch indexPath.section {
+        case Sections.CategoriesSection.rawValue:
+            let categoryCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.identifier, for: indexPath) as! CategoryCell
+            categoryCell.backgroundColor = UIColor(hue: drand48(),
+                                                   saturation: 1,
+                                                   brightness: 1,
+                                                   alpha: 1)
+            return categoryCell
+        case Sections.ProductsSection.rawValue:
+            let productsCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: ProductsCell.identifier, for: indexPath) as! ProductsCell
+            
+            productsCell.backgroundColor = UIColor(hue: drand48(),
+                                                   saturation: 1,
+                                                   brightness: 1,
+                                                   alpha: 1)
+            return productsCell
+        default:
+           return UICollectionViewCell()
+        }
+    }
+    
+    // viewForSupplementaryElementOfKind
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: "header", withReuseIdentifier: CellHeaderView.identifier, for: indexPath) as! CellHeaderView
+        
+        switch indexPath.section {
+            case Sections.CategoriesSection.rawValue:
+                view.titleLabel.text = "Categories"
+            case Sections.ProductsSection.rawValue:
+                view.titleLabel.text = ""
+            default:
+                return UICollectionReusableView()
+        }
+        return view
+    }
+}
+
+extension HomeVC: UICollectionViewDelegateFlowLayout {
+    
+}
+
+enum Sections: Int {
+    case CategoriesSection = 0
+    case ProductsSection = 1
+  
+}
