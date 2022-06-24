@@ -13,8 +13,10 @@ class ProductsCell: UICollectionViewCell {
       public var prdimgView: UIImageView = {
            let iv = UIImageView()
            iv.contentMode = .scaleToFill
+          iv.image = UIImage(named: "d1")
            iv.clipsToBounds = true
            iv.layer.cornerRadius = 12
+           iv.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
            iv.backgroundColor = ProductBgColor
            return iv
        }()
@@ -88,6 +90,7 @@ class ProductsCell: UICollectionViewCell {
            prdstackView.setCustomSpacing(-30, after: prdPriceLbl)
            addSubview(addToCartBtn)
            addSubview(addToFavouriteBtn)
+           layer.cornerRadius = 12
        }
 }
 
@@ -118,4 +121,13 @@ extension ProductsCell {
                                     padding: .init(top: 10, left:0, bottom: 0, right: 10 ),
                                     size: .init(width: 28, height: 28))
        }
+}
+
+extension UIView {
+    func roundCorners(corners:UIRectCorner, radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
+    }
 }

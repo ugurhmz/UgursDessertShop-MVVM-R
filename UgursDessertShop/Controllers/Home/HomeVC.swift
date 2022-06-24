@@ -160,8 +160,3 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
     
 }
 
-enum Sections: Int {
-    case CategoriesSection = 0
-    case ProductsSection = 1
-  
-}
