@@ -14,3 +14,5 @@ public var GreenBtnBackground = #colorLiteral(red: 0.1524646528, green: 0.572227
 public var FavColor = #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 0.8832005381)
 public var ProgressRingendColor = #colorLiteral(red: 0.4191666921, green: 0.3532761257, blue: 0.8549019694, alpha: 0.942285803)
 public var TabBarBG = #colorLiteral(red: 1, green: 0.9019607843, blue: 0.9019607843, alpha: 0.91)
+public var ProductBgColor = #colorLiteral(red: 0.9843137255, green: 0.9098039216, blue: 0.9254901961, alpha: 1)
+public var AddToCartBtnBg = #colorLiteral(red: 1, green: 0.4196078431, blue: 0.568627451, alpha: 1)
