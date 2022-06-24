@@ -12,7 +12,8 @@ class CategoryCell: UICollectionViewCell {
     
     private let categoryNameLbl: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.text = "Cheesecake Cheesecake"
+        label.font = .systemFont(ofSize: 20, weight: .medium)
         label.textColor = .black
         label.textAlignment = .center
         label.numberOfLines = 3
@@ -21,14 +22,41 @@ class CategoryCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
          super.init(frame: frame)
-        
-        layer.cornerRadius = 20
-         contentView.addSubview(categoryNameLbl)
+         setupViews()
          setConstraints()
      }
      required init?(coder: NSCoder) {
          fatalError("not imp")
      }
+    
+    private func setupViews(){
+        layer.cornerRadius = 16
+        contentView.addSubview(categoryNameLbl)
+        let lblText = "Cheesecake"
+        self.categoryNameLbl.text = lblText
+        if lblText.count > 10 {
+            self.categoryNameLbl.font = .systemFont(ofSize: 15)
+        } else if lblText.count < 10 {
+            self.categoryNameLbl.font = .systemFont(ofSize: 20)
+        }
+            
+        
+    }
+    
+    override func layoutSubviews() {
+        
+        layer.shadowColor = UIColor.lightGray.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        layer.shadowRadius = 5.0
+        layer.shadowOpacity = 1.0
+        layer.masksToBounds = false
+        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
+        layer.backgroundColor = UIColor.clear.cgColor
+        self.layer.backgroundColor = UIColor.white.cgColor
+
+        contentView.layer.masksToBounds = true
+        layer.cornerRadius = 10
+    }
 }
 
 extension CategoryCell {
@@ -37,6 +65,6 @@ extension CategoryCell {
                                 leading: leadingAnchor,
                                 bottom: bottomAnchor,
                                 trailing: trailingAnchor,
-                                padding: .init(top: 5, left: 0, bottom: 10, right: 0))
+                                padding: .init(top: 2, left: 0, bottom: 2, right: 0))
     }
 }

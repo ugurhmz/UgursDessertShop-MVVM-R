@@ -44,7 +44,7 @@ class HomeVC: UIViewController {
         
         let inset: CGFloat = 1
       
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.18),
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3),
                                               heightDimension: .fractionalHeight(0.67))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 10,
@@ -52,7 +52,7 @@ class HomeVC: UIViewController {
                                                      bottom: inset,
                                                      trailing: 4)
      
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6),
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9),
                                                heightDimension: .fractionalHeight(0.10))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                        subitem:  item, count: 2)
@@ -126,10 +126,6 @@ extension HomeVC: UICollectionViewDataSource {
         switch indexPath.section {
         case Sections.CategoriesSection.rawValue:
             let categoryCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.identifier, for: indexPath) as! CategoryCell
-            categoryCell.backgroundColor = UIColor(hue: drand48(),
-                                                   saturation: 1,
-                                                   brightness: 1,
-                                                   alpha: 1)
             return categoryCell
         case Sections.ProductsSection.rawValue:
             let productsCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: ProductsCell.identifier, for: indexPath) as! ProductsCell
