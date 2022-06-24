@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		540805BFDC19DD5943D57E59 /* Pods_UgursDessertShop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EF46838F215E2B472DD9AD /* Pods_UgursDessertShop.framework */; };
 		6362A84128651E9300B12591 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6362A84028651E9300B12591 /* AppDelegate.swift */; };
 		6362A84328651E9300B12591 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6362A84228651E9300B12591 /* SceneDelegate.swift */; };
 		6362A84528651E9300B12591 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6362A84428651E9300B12591 /* HomeVC.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		01EF46838F215E2B472DD9AD /* Pods_UgursDessertShop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UgursDessertShop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6362A83D28651E9300B12591 /* UgursDessertShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UgursDessertShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6362A84028651E9300B12591 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6362A84228651E9300B12591 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -38,6 +40,8 @@
 		6384370C2865F8C30013179C /* ProductsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsCell.swift; sourceTree = "<group>"; };
 		6384370E2865F8D00013179C /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		6384371028662BCB0013179C /* SectionEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionEnums.swift; sourceTree = "<group>"; };
+		98FE681527163EAEB6985FE5 /* Pods-UgursDessertShop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UgursDessertShop.debug.xcconfig"; path = "Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop.debug.xcconfig"; sourceTree = "<group>"; };
+		FB7B0284D650D57AEC3CD51F /* Pods-UgursDessertShop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UgursDessertShop.release.xcconfig"; path = "Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,17 +49,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				540805BFDC19DD5943D57E59 /* Pods_UgursDessertShop.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		631C4F2AEC644F0733A657C9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				98FE681527163EAEB6985FE5 /* Pods-UgursDessertShop.debug.xcconfig */,
+				FB7B0284D650D57AEC3CD51F /* Pods-UgursDessertShop.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		6362A83428651E9300B12591 = {
 			isa = PBXGroup;
 			children = (
 				6362A83F28651E9300B12591 /* UgursDessertShop */,
 				6362A83E28651E9300B12591 /* Products */,
+				631C4F2AEC644F0733A657C9 /* Pods */,
+				9823557CB8701EFA6BE98041 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -208,6 +224,14 @@
 			path = Products;
 			sourceTree = "<group>";
 		};
+		9823557CB8701EFA6BE98041 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				01EF46838F215E2B472DD9AD /* Pods_UgursDessertShop.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -215,6 +239,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6362A85128651E9400B12591 /* Build configuration list for PBXNativeTarget "UgursDessertShop" */;
 			buildPhases = (
+				B2B5D251D15A3F57154BA52D /* [CP] Check Pods Manifest.lock */,
 				6362A83928651E9300B12591 /* Sources */,
 				6362A83A28651E9300B12591 /* Frameworks */,
 				6362A83B28651E9300B12591 /* Resources */,
@@ -271,6 +296,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B2B5D251D15A3F57154BA52D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-UgursDessertShop-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6362A83928651E9300B12591 /* Sources */ = {
@@ -413,6 +463,7 @@
 		};
 		6362A85228651E9400B12591 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 98FE681527163EAEB6985FE5 /* Pods-UgursDessertShop.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -440,6 +491,7 @@
 		};
 		6362A85328651E9400B12591 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB7B0284D650D57AEC3CD51F /* Pods-UgursDessertShop.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

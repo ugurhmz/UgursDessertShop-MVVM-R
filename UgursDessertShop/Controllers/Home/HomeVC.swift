@@ -8,6 +8,10 @@
 import UIKit
 
 class HomeVC: UIViewController {
+    var lastIndexActive:IndexPath = [1 ,0]
+    var selectedIndex = Int ()
+    
+    var myArr  = ["a","b","c","a","b","c","a"]
     
     private let generalCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -80,7 +84,6 @@ class HomeVC: UIViewController {
        
        let section = NSCollectionLayoutSection(group: group)
        section.contentInsets = .init(top: 2, leading: 16, bottom: 0, trailing: 0)
-       
        return section
     }
     
@@ -89,6 +92,7 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         setupViews()
         setConstraints()
+        generalCollectionView.allowsMultipleSelection = false
     }
     
     private func setupViews(){
@@ -105,7 +109,7 @@ extension HomeVC {
     }
 }
 
-extension HomeVC: UICollectionViewDataSource {
+extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
@@ -114,7 +118,7 @@ extension HomeVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case Sections.CategoriesSection.rawValue:
-            return 5
+            return myArr.count
         case Sections.ProductsSection.rawValue:
             return 8
         default:
@@ -126,6 +130,17 @@ extension HomeVC: UICollectionViewDataSource {
         switch indexPath.section {
         case Sections.CategoriesSection.rawValue:
             let categoryCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.identifier, for: indexPath) as! CategoryCell
+            
+            if selectedIndex == indexPath.row
+                {
+                categoryCell.configure(select: true)
+                }
+                else
+                {
+                    categoryCell.configure(select: false)
+                }
+            
+            
             return categoryCell
         case Sections.ProductsSection.rawValue:
             let productsCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: ProductsCell.identifier, for: indexPath) as! ProductsCell
@@ -154,6 +169,16 @@ extension HomeVC: UICollectionViewDataSource {
         }
         return view
     }
+  
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            selectedIndex = indexPath.row
+            self.generalCollectionView.reloadData()
+        }
+    }
+  
+   
 }
 
 extension HomeVC: UICollectionViewDelegateFlowLayout {

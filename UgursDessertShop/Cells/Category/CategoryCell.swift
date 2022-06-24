@@ -44,7 +44,10 @@ class CategoryCell: UICollectionViewCell {
     }
     
     override func layoutSubviews() {
-        
+        customlayer()
+    }
+    
+     func customlayer(){
         layer.shadowColor = UIColor.lightGray.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 2.0)
         layer.shadowRadius = 5.0
@@ -66,5 +69,23 @@ extension CategoryCell {
                                 bottom: bottomAnchor,
                                 trailing: trailingAnchor,
                                 padding: .init(top: 2, left: 0, bottom: 2, right: 0))
+    }
+}
+
+extension CategoryCell {
+    func configure(select: Bool) {
+        
+        if select {
+           
+            contentView.backgroundColor = AddToCartBtnBg
+            self.categoryNameLbl.textColor = .white
+            contentView.layer.cornerRadius = 10
+        } else {
+         
+            contentView.backgroundColor = .white
+            self.categoryNameLbl.textColor = .black
+            contentView.layer.cornerRadius = 10
+           
+        }
     }
 }
