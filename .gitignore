@@ -1,0 +1,60 @@
+Pods/Pods.xcodeproj/xcuserdata/ugur-pc.xcuserdatad/xcschemes/Pods-UgursDessertShop.xcscheme
+Pods/Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop-acknowledgements.markdown
+Pods/Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop-acknowledgements.plist
+Pods/Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop-dummy.m
+Pods/Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop-frameworks-Debug-input-files.xcfilelist
+Pods/Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop-frameworks-Debug-output-files.xcfilelist
+Pods/Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop-frameworks-Release-input-files.xcfilelist
+Pods/Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop-frameworks-Release-output-files.xcfilelist
+Pods/Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop-frameworks.sh
+Pods/Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop-Info.plist
+Pods/Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop-umbrella.h
+Pods/Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop.debug.xcconfig
+Pods/Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop.modulemap
+Pods/Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop.release.xcconfig
+Pods/Alamofire/LICENSE
+Pods/Alamofire/README.md
+Pods/Alamofire/Source/AFError.swift
+Pods/Alamofire/Source/Alamofire.swift
+Pods/Alamofire/Source/AlamofireExtended.swift
+Pods/Alamofire/Source/AuthenticationInterceptor.swift
+Pods/Alamofire/Source/CachedResponseHandler.swift
+Pods/Alamofire/Source/Combine.swift
+Pods/Alamofire/Source/Concurrency.swift
+Pods/Alamofire/Source/DispatchQueue+Alamofire.swift
+Pods/Alamofire/Source/EventMonitor.swift
+Pods/Alamofire/Source/HTTPHeaders.swift
+Pods/Alamofire/Source/HTTPMethod.swift
+Pods/Alamofire/Source/MultipartFormData.swift
+Pods/Alamofire/Source/MultipartUpload.swift
+Pods/Alamofire/Source/NetworkReachabilityManager.swift
+Pods/Alamofire/Source/Notifications.swift
+Pods/Alamofire/Source/OperationQueue+Alamofire.swift
+Pods/Alamofire/Source/ParameterEncoder.swift
+Pods/Alamofire/Source/ParameterEncoding.swift
+Pods/Alamofire/Source/Protected.swift
+Pods/Alamofire/Source/RedirectHandler.swift
+Pods/Alamofire/Source/Request.swift
+Pods/Alamofire/Source/RequestInterceptor.swift
+Pods/Alamofire/Source/RequestTaskMap.swift
+Pods/Alamofire/Source/Response.swift
+Pods/Alamofire/Source/ResponseSerialization.swift
+Pods/Alamofire/Source/Result+Alamofire.swift
+Pods/Alamofire/Source/RetryPolicy.swift
+Pods/Alamofire/Source/ServerTrustEvaluation.swift
+Pods/Alamofire/Source/Session.swift
+Pods/Alamofire/Source/SessionDelegate.swift
+Pods/Alamofire/Source/StringEncoding+Alamofire.swift
+Pods/Alamofire/Source/URLConvertible+URLRequestConvertible.swift
+Pods/Alamofire/Source/URLEncodedFormEncoder.swift
+Pods/Alamofire/Source/URLRequest+Alamofire.swift
+Pods/Alamofire/Source/URLSessionConfiguration+Alamofire.swift
+Pods/Alamofire/Source/Validation.swift
+Pods/Pods.xcodeproj/xcuserdata/ugur-pc.xcuserdatad/xcschemes/Alamofire.xcscheme
+Pods/Target Support Files/Alamofire/Alamofire-dummy.m
+Pods/Target Support Files/Alamofire/Alamofire-Info.plist
+Pods/Target Support Files/Alamofire/Alamofire-prefix.pch
+Pods/Target Support Files/Alamofire/Alamofire-umbrella.h
+Pods/Target Support Files/Alamofire/Alamofire.debug.xcconfig
+Pods/Target Support Files/Alamofire/Alamofire.modulemap
+Pods/Target Support Files/Alamofire/Alamofire.release.xcconfig

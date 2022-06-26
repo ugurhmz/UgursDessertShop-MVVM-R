@@ -6,5 +6,5 @@ target 'UgursDessertShop' do
   use_frameworks!
 
   # Pods for UgursDessertShop
-	
+  pod 'Alamofire'
 end

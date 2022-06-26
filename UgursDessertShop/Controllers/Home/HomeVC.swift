@@ -21,6 +21,7 @@ class HomeVC: UIViewController {
         //header
                cv.register(CellHeaderView.self, forSupplementaryViewOfKind: "header",
                            withReuseIdentifier:   CellHeaderView.identifier)
+        cv.register(SearchSectionCell.self, forCellWithReuseIdentifier: SearchSectionCell.identifier)
         cv.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.identifier)
         cv.register(ProductsCell.self, forCellWithReuseIdentifier: ProductsCell.identifier)
         return cv
@@ -35,13 +36,34 @@ class HomeVC: UIViewController {
     
     static func createSectionFor(index: Int, environment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
         switch index {
+            
         case 0:
-            return createCategoriesSection()
+            return createSearchSection()
         case 1:
+            return createCategoriesSection()
+        case 2:
             return createProductsSection()
         default:
             return  createProductsSection()
         }
+    }
+    
+    static func createSearchSection() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
+            item.contentInsets.trailing = 6
+            item.contentInsets.leading = 8
+       
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(125)), subitems: [item])
+       let section = NSCollectionLayoutSection(group: group)
+       section.orthogonalScrollingBehavior = .continuous
+      /*  // suplementary
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                                heightDimension: .absolute(55))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                 elementKind: "header",
+                                                                 alignment: .top)
+        section.boundarySupplementaryItems = [header] */
+       return section
     }
     
     static func createCategoriesSection() -> NSCollectionLayoutSection {
@@ -66,7 +88,7 @@ class HomeVC: UIViewController {
         
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                heightDimension: .absolute(60))
+                                                heightDimension: .absolute(80))
         
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
                                                                  elementKind: "header",
@@ -112,11 +134,13 @@ extension HomeVC {
 extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
+        case Sections.SearchSection.rawValue:
+            return 1
         case Sections.CategoriesSection.rawValue:
             return myArr.count
         case Sections.ProductsSection.rawValue:
@@ -128,18 +152,18 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
+        case  Sections.SearchSection.rawValue:
+            let searchCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: SearchSectionCell.identifier, for: indexPath) as! SearchSectionCell
+            return searchCell
         case Sections.CategoriesSection.rawValue:
             let categoryCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.identifier, for: indexPath) as! CategoryCell
             
-            if selectedIndex == indexPath.row
-                {
+            if selectedIndex == indexPath.row {
                 categoryCell.configure(select: true)
-                }
-                else
-                {
-                    categoryCell.configure(select: false)
-                }
-            
+            }
+            else {
+                categoryCell.configure(select: false)
+            }
             
             return categoryCell
         case Sections.ProductsSection.rawValue:
@@ -160,6 +184,8 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: "header", withReuseIdentifier: CellHeaderView.identifier, for: indexPath) as! CellHeaderView
         
         switch indexPath.section {
+        case Sections.SearchSection.rawValue:
+            view.titleLabel.text = ""
             case Sections.CategoriesSection.rawValue:
                 view.titleLabel.text = "Categories"
             case Sections.ProductsSection.rawValue:
@@ -172,7 +198,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
   
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
+        if indexPath.section == 1 {
             selectedIndex = indexPath.row
             self.generalCollectionView.reloadData()
         }

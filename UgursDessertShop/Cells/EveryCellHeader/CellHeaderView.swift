@@ -12,14 +12,23 @@ class CellHeaderView: UICollectionReusableView {
        
        public let titleLabel: UILabel = {
            let label = UILabel()
-           label.font = .systemFont(ofSize: 25, weight: .bold)
+           label.font = .systemFont(ofSize: 32, weight: .bold)
            label.textColor = .black
            return label
        }()
+    
+    public let viewAllLbl: UILabel = {
+        let label = UILabel()
+        label.text = "View All"
+        label.font = .systemFont(ofSize:20, weight: .medium)
+        label.textColor = .systemGreen
+        return label
+    }()
        
        override init(frame: CGRect) {
            super.init(frame: frame)
            addSubview(titleLabel)
+           addSubview(viewAllLbl)
            setConstraints()
        }
 
@@ -32,7 +41,13 @@ class CellHeaderView: UICollectionReusableView {
            titleLabel.anchor(top: topAnchor,
                              leading: leadingAnchor,
                              bottom: bottomAnchor,
-                             trailing: trailingAnchor,
+                             trailing: viewAllLbl.leadingAnchor,
                              padding: .init(top: 20, left: 16, bottom: 8, right: 0))
+           
+           viewAllLbl.anchor(top: topAnchor,
+                             leading: titleLabel.trailingAnchor,
+                             bottom: bottomAnchor,
+                             trailing: trailingAnchor,
+                             padding: .init(top: 20, left: 0, bottom: 8, right: 20))
        }
 }

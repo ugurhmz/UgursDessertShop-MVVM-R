@@ -8,7 +8,8 @@
 import UIKit
 
 enum Sections: Int {
-    case CategoriesSection = 0
-    case ProductsSection = 1
+    case SearchSection = 0
+    case CategoriesSection = 1
+    case ProductsSection = 2
   
 }
