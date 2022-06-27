@@ -14,7 +14,7 @@ import Alamofire
 //}
 
 typealias loginHandler = (LoginResponse?, String?) -> Void
-typealias registerHandler = (RegisterResponse?, String?) -> Void
+typealias registerHandler = (RegisterResponse? ,String?) -> Void
 
 final class WebService {
     let baseUrl = "http://localhost:3000/ugurapi"
@@ -60,49 +60,51 @@ final class WebService {
         }
     }
     
-//    //MARK: - REGISTER
-//    func callingRegisterAPI(register: RegisterModel){
-//        AF.request(baseUrl + "/auth/register", method: .post, parameters: register, encoder: JSONParameterEncoder.default, headers: headers).response { response in
-//            switch response.result {
-//            case .success(let data):
-//
-//                if response.response!.statusCode == 201 {
-//                   do {
-//
-//                        let res = try JSONDecoder().decode(RegisterResponse.self, from: data!)
-//                       print(res)
-//
-//                    } catch {
-//                        print(error.localizedDescription)
-//                    }
-//
-//                } else if response.response!.statusCode == 401 {
-//
-//                    do {
-//                        let res = try JSONDecoder().decode(AuthErr.self, from: data!)
-//                        if let msg = res.msg {
-//                            print(msg)
-//                        }
-//                     } catch {
-//                         print(error.localizedDescription)
-//                     }
-//                } else if response.response!.statusCode == 404 {
-//                    print("There is a problem with the api")
-//                } else {
-//                    do {
-//                        let res = try JSONDecoder().decode(AuthErr.self, from: data!)
-//                        if let msg = res.msg {
-//                            print(msg)
-//                        }
-//                     } catch {
-//                         print(error.localizedDescription)
-//                     }
-//                }
-//            case .failure(let err):
-//                print(err.localizedDescription)
-//            }
-//        }
-//    }
+    //MARK: - REGISTER
+    func callingRegisterAPI(register: RegisterModel, completionHandler: @escaping registerHandler){
+        AF.request(baseUrl + "/auth/register", method: .post, parameters: register, encoder: JSONParameterEncoder.default, headers: headers).response { response in
+            switch response.result {
+            case .success(let data):
+
+                if response.response!.statusCode == 201 {
+                   do {
+
+                        let res = try JSONDecoder().decode(RegisterResponse.self, from: data!)
+                       completionHandler(res,nil)
+
+                    } catch {
+                        print(error.localizedDescription)
+                        completionHandler(nil,"User not saved!")
+                    }
+
+                } else if response.response!.statusCode == 401 {
+
+                    do {
+                        let res = try JSONDecoder().decode(AuthErr.self, from: data!)
+                        if let msg = res.msg {
+                            completionHandler(nil,msg)
+                        }
+                     } catch {
+                         completionHandler(nil,error.localizedDescription)
+                     }
+                } else if response.response!.statusCode == 404 {
+                    completionHandler(nil,"There is a problem with the api")
+                } else {
+                    do {
+                        let res = try JSONDecoder().decode(AuthErr.self, from: data!)
+                        if let msg = res.msg {
+                            completionHandler(nil,msg)
+                        }
+                     } catch {
+                         completionHandler(nil,error.localizedDescription)
+                     }
+                }
+            case .failure(let err):
+                print(err.localizedDescription)
+                completionHandler(nil,err.localizedDescription)
+            }
+        }
+    }
     
     
     

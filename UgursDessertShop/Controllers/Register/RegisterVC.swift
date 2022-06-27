@@ -8,6 +8,7 @@
 import UIKit
 
 class RegisterVC: UIViewController {
+    lazy var authViewModel = AuthViewModel()
     
     private let navigationBar : UINavigationBar = {
                let navBar = UINavigationBar()
@@ -196,9 +197,8 @@ class RegisterVC: UIViewController {
              return
          }
         
-//        WebService.shared.callingRegisterAPI(register: RegisterModel(username: username,
-                                                              //       email: email,
-                                                                  //   password: rePassword))
+        authViewModel.fetchRegister(username: username, email: email, password: rePassword)
+        
     }
 }
 
@@ -214,6 +214,30 @@ extension RegisterVC {
         setupShadows()
         checkPaswoordFieldImg.isHidden = true
         checkRePasswordImg.isHidden = true
+        
+        self.authViewModel.errClosure = { [weak self] errMsg in
+            self?.createAlert(title: "",
+                              msg: errMsg,
+                              prefStyle: .alert,
+                              bgColor: .white,
+                              textColor: .brown,
+                              fontSize: 25)
+        }
+        
+        self.authViewModel.dataClosure = { [weak self]  in
+            self?.createAlert(title: "Success",
+                              msg: "User Saved",
+                              prefStyle: .alert,
+                              bgColor: .green,
+                              textColor: .black,
+                              fontSize: 25)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                       let view = LoginVC()
+                       let nav = UINavigationController(rootViewController: view)
+                       self?.view.window?.rootViewController = nav
+            }
+        }
     }
     
     private func setupShadows(){
