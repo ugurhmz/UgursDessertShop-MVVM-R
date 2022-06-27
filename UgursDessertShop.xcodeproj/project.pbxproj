@@ -28,6 +28,10 @@
 		6387780B2868B8EB0041E810 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6387780A2868B8EB0041E810 /* WebService.swift */; };
 		6387780D2868CFAA0041E810 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6387780C2868CFAA0041E810 /* LoginResponse.swift */; };
 		6387780F2868E1590041E810 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6387780E2868E1590041E810 /* AuthError.swift */; };
+		638778122868E9CE0041E810 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638778112868E9CE0041E810 /* RegisterVC.swift */; };
+		638778142868EAB40041E810 /* Extension+UIAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638778132868EAB40041E810 /* Extension+UIAlert.swift */; };
+		63A49F372869C15C00BACF73 /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A49F362869C15C00BACF73 /* RegisterModel.swift */; };
+		63A49F392869C60B00BACF73 /* RegisterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A49F382869C60B00BACF73 /* RegisterResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +58,10 @@
 		6387780A2868B8EB0041E810 /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		6387780C2868CFAA0041E810 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		6387780E2868E1590041E810 /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
+		638778112868E9CE0041E810 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
+		638778132868EAB40041E810 /* Extension+UIAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIAlert.swift"; sourceTree = "<group>"; };
+		63A49F362869C15C00BACF73 /* RegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
+		63A49F382869C60B00BACF73 /* RegisterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterResponse.swift; sourceTree = "<group>"; };
 		98FE681527163EAEB6985FE5 /* Pods-UgursDessertShop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UgursDessertShop.debug.xcconfig"; path = "Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop.debug.xcconfig"; sourceTree = "<group>"; };
 		FB7B0284D650D57AEC3CD51F /* Pods-UgursDessertShop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UgursDessertShop.release.xcconfig"; path = "Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,7 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				6362A8632865210B00B12591 /* Utilities */,
-				638778032868B5F80041E810 /* Login */,
 				6362A85828651EF200B12591 /* Resources */,
 				6362A85728651EEA00B12591 /* Network */,
 				6362A85628651EE500B12591 /* Models */,
@@ -114,6 +121,8 @@
 		6362A85428651EDB00B12591 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				638778102868E9C30041E810 /* Register */,
+				638778032868B5F80041E810 /* Login */,
 				6384371A28664DD00013179C /* Search */,
 				6362A85E2865200200B12591 /* Favourite */,
 				6362A85D28651FFE00B12591 /* Cart */,
@@ -138,6 +147,8 @@
 			children = (
 				638778082868B7A70041E810 /* LoginModel.swift */,
 				6387780C2868CFAA0041E810 /* LoginResponse.swift */,
+				63A49F362869C15C00BACF73 /* RegisterModel.swift */,
+				63A49F382869C60B00BACF73 /* RegisterResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -217,6 +228,7 @@
 			children = (
 				6362A8682865238100B12591 /* Extension+UIView.swift */,
 				638778062868B6920041E810 /* Extension+CustomTextField.swift */,
+				638778132868EAB40041E810 /* Extension+UIAlert.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -259,6 +271,14 @@
 				638778042868B6120041E810 /* LoginVC.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		638778102868E9C30041E810 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				638778112868E9CE0041E810 /* RegisterVC.swift */,
+			);
+			path = Register;
 			sourceTree = "<group>";
 		};
 		9823557CB8701EFA6BE98041 /* Frameworks */ = {
@@ -386,11 +406,15 @@
 				6362A84128651E9300B12591 /* AppDelegate.swift in Sources */,
 				6387780D2868CFAA0041E810 /* LoginResponse.swift in Sources */,
 				6362A8692865238100B12591 /* Extension+UIView.swift in Sources */,
+				63A49F392869C60B00BACF73 /* RegisterResponse.swift in Sources */,
 				638778072868B6920041E810 /* Extension+CustomTextField.swift in Sources */,
+				638778142868EAB40041E810 /* Extension+UIAlert.swift in Sources */,
+				63A49F372869C15C00BACF73 /* RegisterModel.swift in Sources */,
 				6387780B2868B8EB0041E810 /* WebService.swift in Sources */,
 				6362A8622865201C00B12591 /* FavouritesVC.swift in Sources */,
 				638778092868B7A70041E810 /* LoginModel.swift in Sources */,
 				6384371C28664DEF0013179C /* SearchSectionCell.swift in Sources */,
+				638778122868E9CE0041E810 /* RegisterVC.swift in Sources */,
 				6362A85C28651FB900B12591 /* TabBarVC.swift in Sources */,
 				6362A8662865211E00B12591 /* AppColors.swift in Sources */,
 				6362A8602865200D00B12591 /* CartVC.swift in Sources */,

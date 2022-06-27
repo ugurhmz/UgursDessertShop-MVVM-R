@@ -73,10 +73,10 @@ class LoginVC: UIViewController {
     }()
     
     @objc func clickLoginBtn(){
-        guard let name = self.txtEmail.text else {return }
+        guard let email = self.txtEmail.text else {return }
         guard let  pw = self.txtPassword.text else { return }
         
-        let loginModel = LoginModel(username: name, password: pw)
+        let loginModel = LoginModel(email: email, password: pw)
         WebService.shared.callingLoginAPI(login: loginModel)
        
     }
