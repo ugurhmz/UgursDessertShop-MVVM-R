@@ -196,9 +196,9 @@ class RegisterVC: UIViewController {
              return
          }
         
-        WebService.shared.callingRegisterAPI(register: RegisterModel(username: username,
-                                                                     email: email,
-                                                                     password: rePassword))
+//        WebService.shared.callingRegisterAPI(register: RegisterModel(username: username,
+                                                              //       email: email,
+                                                                  //   password: rePassword))
     }
 }
 

@@ -8,7 +8,8 @@
 import UIKit
 
 class LoginVC: UIViewController {
-    
+   lazy var authViewModel = AuthViewModel()
+   
     private let myview: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -76,9 +77,7 @@ class LoginVC: UIViewController {
         guard let email = self.txtEmail.text else {return }
         guard let  pw = self.txtPassword.text else { return }
         
-        let loginModel = LoginModel(email: email, password: pw)
-        WebService.shared.callingLoginAPI(login: loginModel)
-       
+        authViewModel.fetchLogin(email: email, password: pw)
     }
     
     private let registerBtn: UIButton = {
@@ -90,10 +89,15 @@ class LoginVC: UIViewController {
         btn.layer.borderWidth = 1
         btn.layer.borderColor = UIColor(red: 16/255, green: 129/255, blue: 49/255, alpha: 1).cgColor
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .medium)
-        //btn.addTarget(self, action: #selector(goRegisterVC), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(goRegisterVC), for: .touchUpInside)
         return btn
     }()
     
+    @objc func goRegisterVC(){
+        let view = RegisterVC()
+        let nav = UINavigationController(rootViewController: view)
+        self.view.window?.rootViewController = nav
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,6 +125,27 @@ class LoginVC: UIViewController {
         forgetPwTxtLabel.isUserInteractionEnabled = true
         //let guestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(clickForgotPw(_:)))
        // forgetPwTxtLabel.addGestureRecognizer(guestureRecognizer)
+        
+        
+        self.authViewModel.errClosure = { [weak self] errMsg in
+            self?.createAlert(title: "",
+                              msg: errMsg,
+                              prefStyle: .alert,
+                              bgColor: .white,
+                              textColor: .brown,
+                              fontSize: 25)
+        }
+        
+        self.authViewModel.dataClosure = { [weak self]  in
+            let currentMyUser = self?.authViewModel.currentUser
+            self?.createAlert(title: "Success",
+                              msg: currentMyUser?.username ?? "-",
+                              prefStyle: .alert,
+                              bgColor: .systemGreen,
+                              textColor: .black,
+                              fontSize: 25)
+        }
+        
     }
     
     private func setupShadows(){
