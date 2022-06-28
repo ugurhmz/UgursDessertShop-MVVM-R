@@ -11,7 +11,8 @@ struct ProductResponse: Codable {
     let id, title, description, prdImg: String?
     let categories: [String]?
     let size: String?
-    let voting, price: Int?
+    let voting: Int?
+    let price: Double?
     let createdAt, updatedAt: String?
 
     enum CodingKeys: String, CodingKey {

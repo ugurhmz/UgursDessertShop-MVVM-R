@@ -32,12 +32,12 @@ class ProductsCell: UICollectionViewCell {
        
        private let prdNameLbl: UILabel = {
            let label = UILabel()
-           label.font = .systemFont(ofSize: 20, weight: .bold)
+           label.font = .systemFont(ofSize: 19, weight: .bold)
            label.text = "Macarons"
            label.textColor = #colorLiteral(red: 0.1709887727, green: 0.1870856636, blue: 0.2076978542, alpha: 1)
            label.textAlignment = .left
            label.numberOfLines = 2
-         
+           
            return label
        }()
        
@@ -93,6 +93,19 @@ class ProductsCell: UICollectionViewCell {
            layer.cornerRadius = 12
        }
 }
+extension ProductsCell {
+    func configure(productModel: ProductResponse) {
+        self.prdNameLbl.text = productModel.title
+        if let price = productModel.price {
+            self.prdPriceLbl.text = "$ \(price) / gr"
+        }
+        if let img = productModel.prdImg {
+            self.prdimgView.image = UIImage(named: "\(img)")
+        }
+      
+    }
+}
+
 
 extension ProductsCell {
     private func setConstraints(){
@@ -105,13 +118,15 @@ extension ProductsCell {
            prdstackView.anchor(top: prdimgView.bottomAnchor,
                                leading: leadingAnchor,
                                bottom: bottomAnchor,
-                               trailing: trailingAnchor)
+                               trailing: addToCartBtn.leadingAnchor,
+                               padding: .init(top: 0, left: 0, bottom: 0, right: 5)
+           )
            
            addToCartBtn.anchor(top: nil,
                                leading: nil,
-                               bottom: prdstackView.bottomAnchor,
-                               trailing: prdstackView.trailingAnchor,
-                               padding: .init(top: 0, left:0, bottom: 12, right: 10 ),
+                               bottom: contentView.bottomAnchor,
+                               trailing: contentView.trailingAnchor,
+                               padding: .init(top: 0, left:0, bottom: 8, right: 8 ),
                                size: .init(width: 46, height: 46))
            
            addToFavouriteBtn.anchor(top: prdimgView.topAnchor,

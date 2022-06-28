@@ -239,7 +239,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
             return categoryCell
         case Sections.ProductsSection.rawValue:
             let productsCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: ProductsCell.identifier, for: indexPath) as! ProductsCell
-            
+            productsCell.configure(productModel: self.homeViewModel.productArray[indexPath.item])
             productsCell.backgroundColor = .white
             return productsCell
         default:
