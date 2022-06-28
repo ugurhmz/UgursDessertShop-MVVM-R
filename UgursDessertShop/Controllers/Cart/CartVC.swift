@@ -9,7 +9,8 @@ import UIKit
 
 class CartVC: UIViewController {
     private let checkOutView = CartView()
- 
+    var authViewModel = AuthViewModel()
+    var appDao = UserDao()
     
     // General CollectionView
     private let generalCollectionView: UICollectionView = {
@@ -37,7 +38,13 @@ class CartVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        let str = self.appDao.fetchUser()
         
+        self.authViewModel.fetchUsertCartItems(userId: str[0], token: str[1])
+        self.authViewModel.dataClosure = { [weak self] in
+            guard let self = self else { return }
+            self.generalCollectionView.reloadData()
+        }
     }
     
     private func setupViews(){
@@ -99,7 +106,11 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if let cartArr = self.authViewModel.userCartItemsArr {
+            return cartArr.count
+        }
+        
+        return 0
     }
    
     func collectionView(_ collectionView: UICollectionView,
@@ -107,6 +118,11 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         let cell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: CartCollectionCell.identifier, for: indexPath) as! CartCollectionCell
         
+        if let cartData = self.authViewModel.userCartItemsArr {
+            cell.fillData(cartItemModel: cartData[indexPath.item])
+        }
+            
+            
         return cell
     }
     

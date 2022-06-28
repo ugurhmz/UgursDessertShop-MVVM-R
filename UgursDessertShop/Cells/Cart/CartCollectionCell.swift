@@ -10,6 +10,7 @@ import UIKit
 class CartCollectionCell: UICollectionViewCell {
     
     static var identifier = "CartCollectionCell"
+    var webService = WebService()
     
     private let prdImgView: UIImageView = {
          let iv = UIImageView()
@@ -138,7 +139,41 @@ extension CartCollectionCell {
 }
 
 extension CartCollectionCell {
-   
+    func fillData(cartItemModel: CartProductResponse) {
+        if let quantity = cartItemModel.quantity {
+            self.stepperCountLbl.text = "\(quantity)"
+        }
+        
+        if let id = cartItemModel.productID {
+            webService.callingOneProduct(prdId: id) {[weak self] result, err in
+                guard let self = self else { return }
+               
+                guard err == nil else {
+                    if let myerr = err{
+                        print(myerr)
+                    }
+                    return
+                }
+                if let newresult  = result {
+                    if let prdimg = newresult.prdImg {
+                        self.prdImgView.image = UIImage(named: "\(prdimg)")
+                    }
+                    
+                    if let prdprice = newresult.price {
+                        self.prdPriceLbl.text = "\(prdprice)"
+                    }
+                    
+                    if let prdTitle = newresult.title {
+                        self.prdTitleLbl.text = prdTitle
+                    }
+                    
+                    if let prdDescrip = newresult.description {
+                        self.prdDescriptionLbl.text = prdDescrip
+                    }
+                }
+            }
+        }
+    }
 }
 
 //MARK: -

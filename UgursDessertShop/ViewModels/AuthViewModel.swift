@@ -21,6 +21,7 @@ final class AuthViewModel{
     var dataClosure: VoidClosure?
     var currentUser: LoginResponse?
     var userInfos: LoginResponse?
+    var userCartItemsArr: [CartProductResponse]?
     
     init() {
         webService = WebService()
@@ -82,6 +83,23 @@ final class AuthViewModel{
                 return
             }
             self.userInfos = result
+            self.dataClosure?()
+        }
+    }
+    
+    // USER CART
+    func fetchUsertCartItems(userId: String, token: String){
+
+        webService.callingUserCartItems(userId: userId, userToken: token) { [weak self] (result,err)  in
+            guard let self = self else { return }
+           
+            guard err == nil else {
+                if let myerr = err{
+                    self.errClosure?(myerr)
+                }
+                return
+            }
+            self.userCartItemsArr = result
             self.dataClosure?()
         }
     }

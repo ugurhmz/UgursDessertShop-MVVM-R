@@ -154,12 +154,9 @@ class HomeVC: UIViewController {
                     }
                 }
             }
-            
-            
-            
-          
-                
         }
+        
+        self.authViewModel.fetchUsertCartItems(userId: str[0], token: str[1])
         
         self.homeViewModel.prdClosure =  { [weak self] in
             guard let self = self else { return }
@@ -175,6 +172,7 @@ class HomeVC: UIViewController {
         super.viewDidAppear(animated)
        
         homeViewModel.fetchProducts()
+        
     }
     
     private func  searchBarConfigure() {

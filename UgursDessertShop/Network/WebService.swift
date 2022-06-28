@@ -16,6 +16,9 @@ import Alamofire
 typealias loginHandler = (LoginResponse?, String?) -> Void
 typealias registerHandler = (RegisterResponse? ,String?) -> Void
 typealias productHandler = ([ProductResponse]?, String?) -> Void
+typealias cartProductHandler = ([CartProductResponse]?, String?) -> Void
+
+typealias oneProductHandler = (ProductResponse?, String?) -> Void
 
 final class WebService {
     let baseUrl = "http://localhost:3000/ugurapi"
@@ -188,22 +191,88 @@ final class WebService {
         }
     }
     
+    // FETCH CART ITEMS CURRENT USER
+    func callingUserCartItems(userId: String, userToken: String, completionHandler: @escaping cartProductHandler ) {
+        
+        let myheaders: HTTPHeaders = [
+            "token": "Bearer \(userToken)",
+            "Accept": "application/json"
+        ]
+
+        AF.request(baseUrl + "/carts/user-cart/\(userId)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: myheaders).response {
+                   response in
+
+                switch response.result {
+                case .success(let data):
+
+                    if response.response!.statusCode == 200 {
+                       do {
+                           let res = try JSONDecoder().decode(CartResponse.self, from: data!)
+                           let newArr = res.products?.map({
+                               return CartProductResponse(productID: $0.productID, quantity: $0.quantity, id: $0.id)
+                           })
+                           
+                           completionHandler(newArr, nil)
+                          
+                        } catch {
+                            completionHandler(nil, error.localizedDescription)
+                        }
+
+                    } else if response.response!.statusCode == 401 {
+
+                        do {
+                            let res = try JSONDecoder().decode(AuthErr.self, from: data!)
+                            if let msg = res.msg {
+                                completionHandler(nil, msg)
+                            }
+                         } catch {
+                             completionHandler(nil, error.localizedDescription)
+                         }
+                    } else if response.response!.statusCode == 404 {
+                        completionHandler(nil, "404")
+                    }
+                case .failure(let err):
+                    completionHandler(nil, err.localizedDescription)
+                }
+        }
+    }
+    
+    
+    func callingOneProduct(prdId: String, completionHandler: @escaping oneProductHandler){
+        AF.request(baseUrl + "/product/\(prdId)", method: .get, parameters: nil, encoding: JSONEncoding.default).response {
+                   response in
+
+                switch response.result {
+                case .success(let data):
+
+                    if response.response!.statusCode == 200 {
+                       do {
+                           let res = try JSONDecoder().decode(ProductResponse.self, from: data!)
+                           completionHandler(res, nil)
+                           print("one product",res)
+                          
+                        } catch {
+                            completionHandler(nil, error.localizedDescription)
+                        }
+
+                    } else if response.response!.statusCode == 401 {
+
+                        do {
+                            let res = try JSONDecoder().decode(AuthErr.self, from: data!)
+                            if let msg = res.msg {
+                                completionHandler(nil, msg)
+                            }
+                         } catch {
+                             completionHandler(nil, error.localizedDescription)
+                         }
+                    } else if response.response!.statusCode == 404 {
+                        completionHandler(nil," err.localizedDescription")
+                    }
+                case .failure(let err):
+                    completionHandler(nil, err.localizedDescription)
+                }
+        }
+    }
+    
 }
 
-
-// METHOD 2 FOR GET USER WITH TOKEN
-//        let  url = URL(string: "\(baseUrl)/users/\(userId)")
-//        var request = URLRequest(url: url!)
-//        request.setValue("Bearer \(userToken)", forHTTPHeaderField: "token")
-//
-//        URLSession.shared.dataTask(with: request) { data, response, error in
-//            if let data = data {
-//                if let jsonString = String(data: data, encoding: .utf8) {
-//                    print(jsonString)
-//                } else {
-//                    print("myerr", error)
-//                }
-//            } else {
-//                print("myerr", error)
-//            }
-//        }.resume()

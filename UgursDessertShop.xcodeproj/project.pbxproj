@@ -41,6 +41,7 @@
 		63E044C1286B6E25008D9499 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E044C0286B6E25008D9499 /* CartView.swift */; };
 		63E044C3286B6E50008D9499 /* CheckOutReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E044C2286B6E50008D9499 /* CheckOutReusableView.swift */; };
 		63E044C5286B6EC2008D9499 /* Extension+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E044C4286B6EC2008D9499 /* Extension+UIButton.swift */; };
+		63E044C8286B76B2008D9499 /* CartResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E044C7286B76B2008D9499 /* CartResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		63E044C0286B6E25008D9499 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
 		63E044C2286B6E50008D9499 /* CheckOutReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutReusableView.swift; sourceTree = "<group>"; };
 		63E044C4286B6EC2008D9499 /* Extension+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIButton.swift"; sourceTree = "<group>"; };
+		63E044C7286B76B2008D9499 /* CartResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartResponse.swift; sourceTree = "<group>"; };
 		98FE681527163EAEB6985FE5 /* Pods-UgursDessertShop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UgursDessertShop.debug.xcconfig"; path = "Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop.debug.xcconfig"; sourceTree = "<group>"; };
 		FB7B0284D650D57AEC3CD51F /* Pods-UgursDessertShop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UgursDessertShop.release.xcconfig"; path = "Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -153,11 +155,11 @@
 		6362A85528651EE000B12591 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				63E044C6286B74EA008D9499 /* Cart */,
 				6384371A28664DD00013179C /* NavBar */,
 				6384370B2865F8A90013179C /* Products */,
 				6384370A2865F89C0013179C /* Category */,
 				638437072865F85B0013179C /* EveryCellHeader */,
-				63E044BD286B6DDC008D9499 /* CartCollectionCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -309,6 +311,7 @@
 				63A49F382869C60B00BACF73 /* RegisterResponse.swift */,
 				6387780C2868CFAA0041E810 /* LoginResponse.swift */,
 				63E044B9286B3547008D9499 /* ProductResponse.swift */,
+				63E044C7286B76B2008D9499 /* CartResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -330,6 +333,14 @@
 				63E044C2286B6E50008D9499 /* CheckOutReusableView.swift */,
 			);
 			path = CartUIView;
+			sourceTree = "<group>";
+		};
+		63E044C6286B74EA008D9499 /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				63E044BD286B6DDC008D9499 /* CartCollectionCell.swift */,
+			);
+			path = Cart;
 			sourceTree = "<group>";
 		};
 		9823557CB8701EFA6BE98041 /* Frameworks */ = {
@@ -477,6 +488,7 @@
 				63E044C5286B6EC2008D9499 /* Extension+UIButton.swift in Sources */,
 				6362A84328651E9300B12591 /* SceneDelegate.swift in Sources */,
 				6384370D2865F8C30013179C /* ProductsCell.swift in Sources */,
+				63E044C8286B76B2008D9499 /* CartResponse.swift in Sources */,
 				63A49F3F2869E32F00BACF73 /* AuthViewModel.swift in Sources */,
 				63E044BC286B418A008D9499 /* HomeViewModel.swift in Sources */,
 				6387780F2868E1590041E810 /* AuthError.swift in Sources */,
