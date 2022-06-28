@@ -10,8 +10,10 @@ import UIKit
 class HomeVC: UIViewController {
     var lastIndexActive:IndexPath = [1 ,0]
     var selectedIndex = Int ()
-    
+    var authViewModel = AuthViewModel()
     var myArr  = ["a","b","c","a","b","c","a"]
+    var appDao = UserDao()
+   var webService = WebService()
     
     private let generalCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -115,13 +117,50 @@ class HomeVC: UIViewController {
         setupViews()
         setConstraints()
         generalCollectionView.allowsMultipleSelection = false
+        settingsNavigateBar()
     }
+    
     
     private func setupViews(){
         view.addSubview(generalCollectionView)
         generalCollectionView.dataSource = self
         generalCollectionView.delegate = self
         generalCollectionView.collectionViewLayout = HomeVC.createCompositionalLayout()
+        let str = self.appDao.fetchUser()
+        
+        self.authViewModel.fetchCurrentUser(userId: str[0], token: str[1])
+        self.authViewModel.dataClosure = { [weak self] in
+            guard let self = self else { return }
+            if let userInfos = self.authViewModel.userInfos {
+                self.navigationItem.title = userInfos.username
+            }
+        }
+    }
+    
+    private func settingsNavigateBar() {
+        let logOutImage = UIImage(systemName: "person")?.withRenderingMode(.alwaysOriginal)
+       // left icon
+       navigationItem.leftBarButtonItem = UIBarButtonItem(image: logOutImage, style: .done,
+                                                          target: self, action: nil)
+        //navigationItem.leftBarButtonItem?.action = #selector(clickLogoutBtn)
+       // right two icons
+        if #available(iOS 13.0, *) {
+          let navBarAppearance = UINavigationBarAppearance()
+            //navBarAppearance.configureWithDefaultBackground()
+           navBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.orange,NSAttributedString.Key.font: UIFont(name: "Charter-Black", size: 26)!]
+           
+          // navigationController?.navigationBar.barStyle = .black
+          //navigationController?.navigationBar.standardAppearance = navBarAppearance
+          navigationController?.navigationBar.compactAppearance = navBarAppearance
+          navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+
+          navigationController?.navigationBar.prefersLargeTitles = false
+            
+            
+          }
+       // icons color
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.7254902124, green: 0.3210115628, blue: 0.07575775568, alpha: 1)
     }
 }
 
@@ -206,8 +245,3 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
   
    
 }
-
-extension HomeVC: UICollectionViewDelegateFlowLayout {
-    
-}
-

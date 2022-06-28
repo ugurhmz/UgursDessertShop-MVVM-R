@@ -34,6 +34,7 @@
 		63A49F392869C60B00BACF73 /* RegisterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A49F382869C60B00BACF73 /* RegisterResponse.swift */; };
 		63A49F3C2869E14900BACF73 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A49F3B2869E14900BACF73 /* Closures.swift */; };
 		63A49F3F2869E32F00BACF73 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A49F3E2869E32F00BACF73 /* AuthViewModel.swift */; };
+		63A49F41286A2FB900BACF73 /* UserDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A49F40286A2FB900BACF73 /* UserDao.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		63A49F382869C60B00BACF73 /* RegisterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterResponse.swift; sourceTree = "<group>"; };
 		63A49F3B2869E14900BACF73 /* Closures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Closures.swift; sourceTree = "<group>"; };
 		63A49F3E2869E32F00BACF73 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		63A49F40286A2FB900BACF73 /* UserDao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDao.swift; sourceTree = "<group>"; };
 		98FE681527163EAEB6985FE5 /* Pods-UgursDessertShop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UgursDessertShop.debug.xcconfig"; path = "Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop.debug.xcconfig"; sourceTree = "<group>"; };
 		FB7B0284D650D57AEC3CD51F /* Pods-UgursDessertShop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UgursDessertShop.release.xcconfig"; path = "Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -299,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				63A49F3E2869E32F00BACF73 /* AuthViewModel.swift */,
+				63A49F40286A2FB900BACF73 /* UserDao.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63A49F41286A2FB900BACF73 /* UserDao.swift in Sources */,
 				6362A84528651E9300B12591 /* HomeVC.swift in Sources */,
 				6362A84128651E9300B12591 /* AppDelegate.swift in Sources */,
 				6387780D2868CFAA0041E810 /* LoginResponse.swift in Sources */,

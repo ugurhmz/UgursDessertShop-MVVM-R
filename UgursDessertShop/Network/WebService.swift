@@ -21,6 +21,8 @@ final class WebService {
     let headers: HTTPHeaders = [
         .contentType("application/json")
     ]
+    
+    
     static let shared = WebService()
     
     //MARK: - LOGIN
@@ -106,6 +108,69 @@ final class WebService {
         }
     }
     
+    //  CURRENT USER
+    func callingUser(userId: String, userToken: String, completionHandler: @escaping loginHandler) {
     
+        
+        let myheaders: HTTPHeaders = [
+            "token": "Bearer \(userToken)",
+            "Accept": "application/json"
+        ]
+
+        
+        
+        AF.request(baseUrl + "/users/\(userId)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: myheaders).response {
+                   response in
+
+                        switch response.result {
+                        case .success(let data):
+
+                            if response.response!.statusCode == 200 {
+                               do {
+                                   let res = try JSONDecoder().decode(LoginResponse.self, from: data!)
+
+                                   completionHandler(res, nil)
+                                } catch {
+                                    print(error.localizedDescription)
+                                }
+
+                            } else if response.response!.statusCode == 401 {
+
+                                do {
+                                    let res = try JSONDecoder().decode(AuthErr.self, from: data!)
+                                    if let msg = res.msg {
+                                        completionHandler(nil, msg)
+                                    }
+                                 } catch {
+                                     print(error.localizedDescription)
+                                 }
+                            } else if response.response!.statusCode == 404 {
+                                completionHandler(nil, "404")
+                            }
+                        case .failure(let err):
+                            completionHandler(nil, err.localizedDescription)
+                        }
+        }
+
+        
+    }
     
 }
+
+
+// METHOD 2 FOR GET USER WITH TOKEN
+//        let  url = URL(string: "\(baseUrl)/users/\(userId)")
+//        var request = URLRequest(url: url!)
+//        request.setValue("Bearer \(userToken)", forHTTPHeaderField: "token")
+//
+//        URLSession.shared.dataTask(with: request) { data, response, error in
+//            if let data = data {
+//                if let jsonString = String(data: data, encoding: .utf8) {
+//                    print(jsonString)
+//                } else {
+//                    print("myerr", error)
+//                }
+//            } else {
+//                print("myerr", error)
+//            }
+//        }.resume()

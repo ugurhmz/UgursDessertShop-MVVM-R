@@ -12,11 +12,11 @@ struct LoginResponse: Codable {
     let isAdmin: Bool?
     let userImg, createdAt, updatedAt: String?
     let accessToken, loginMsg: String?
-
+   
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case username, email, isAdmin, userImg, createdAt, updatedAt
         case accessToken, loginMsg
     }
-    
+   
 }

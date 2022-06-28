@@ -9,6 +9,9 @@ import UIKit
 
 class LoginVC: UIViewController {
    lazy var authViewModel = AuthViewModel()
+    var userId: String = ""
+    var strClosure: StringClosure?
+    
    
     private let myview: UIView = {
         let view = UIView()
@@ -144,14 +147,19 @@ class LoginVC: UIViewController {
                               bgColor: .systemGreen,
                               textColor: .black,
                               fontSize: 25)
+            
+            print("CURRENT USER", currentMyUser)
+          
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                   let view = TabBarVC()
+                   let nav = UINavigationController(rootViewController: view)
+                   self?.view.window?.rootViewController = nav
+            }
         }
         
     }
     
     private func setupShadows(){
-//        myview.layer.shadowOpacity = 145
-//        myview.layer.shadowRadius = 170
-//        myview.layer.shadowColor = UIColor.red.cgColor
         view.backgroundColor = .white
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2)
