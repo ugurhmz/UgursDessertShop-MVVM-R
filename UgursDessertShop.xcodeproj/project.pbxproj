@@ -21,7 +21,7 @@
 		6384370D2865F8C30013179C /* ProductsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384370C2865F8C30013179C /* ProductsCell.swift */; };
 		6384370F2865F8D00013179C /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384370E2865F8D00013179C /* CategoryCell.swift */; };
 		6384371128662BCB0013179C /* SectionEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384371028662BCB0013179C /* SectionEnums.swift */; };
-		6384371C28664DEF0013179C /* SearchSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384371B28664DEF0013179C /* SearchSectionCell.swift */; };
+		6384371C28664DEF0013179C /* NavBarCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6384371B28664DEF0013179C /* NavBarCollectionCell.swift */; };
 		638778052868B6120041E810 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638778042868B6120041E810 /* LoginVC.swift */; };
 		638778072868B6920041E810 /* Extension+CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638778062868B6920041E810 /* Extension+CustomTextField.swift */; };
 		638778092868B7A70041E810 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638778082868B7A70041E810 /* LoginModel.swift */; };
@@ -54,7 +54,7 @@
 		6384370C2865F8C30013179C /* ProductsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsCell.swift; sourceTree = "<group>"; };
 		6384370E2865F8D00013179C /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		6384371028662BCB0013179C /* SectionEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionEnums.swift; sourceTree = "<group>"; };
-		6384371B28664DEF0013179C /* SearchSectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSectionCell.swift; sourceTree = "<group>"; };
+		6384371B28664DEF0013179C /* NavBarCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarCollectionCell.swift; sourceTree = "<group>"; };
 		638778042868B6120041E810 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		638778062868B6920041E810 /* Extension+CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CustomTextField.swift"; sourceTree = "<group>"; };
 		638778082868B7A70041E810 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
@@ -130,7 +130,6 @@
 			children = (
 				638778102868E9C30041E810 /* Register */,
 				638778032868B5F80041E810 /* Login */,
-				6384371A28664DD00013179C /* Search */,
 				6362A85E2865200200B12591 /* Favourite */,
 				6362A85D28651FFE00B12591 /* Cart */,
 				6362A85A28651F8C00B12591 /* TabBar */,
@@ -142,6 +141,7 @@
 		6362A85528651EE000B12591 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				6384371A28664DD00013179C /* NavBar */,
 				6384370B2865F8A90013179C /* Products */,
 				6384370A2865F89C0013179C /* Category */,
 				638437072865F85B0013179C /* EveryCellHeader */,
@@ -264,12 +264,12 @@
 			path = Products;
 			sourceTree = "<group>";
 		};
-		6384371A28664DD00013179C /* Search */ = {
+		6384371A28664DD00013179C /* NavBar */ = {
 			isa = PBXGroup;
 			children = (
-				6384371B28664DEF0013179C /* SearchSectionCell.swift */,
+				6384371B28664DEF0013179C /* NavBarCollectionCell.swift */,
 			);
-			path = Search;
+			path = NavBar;
 			sourceTree = "<group>";
 		};
 		638778032868B5F80041E810 /* Login */ = {
@@ -439,7 +439,7 @@
 				6387780B2868B8EB0041E810 /* WebService.swift in Sources */,
 				6362A8622865201C00B12591 /* FavouritesVC.swift in Sources */,
 				638778092868B7A70041E810 /* LoginModel.swift in Sources */,
-				6384371C28664DEF0013179C /* SearchSectionCell.swift in Sources */,
+				6384371C28664DEF0013179C /* NavBarCollectionCell.swift in Sources */,
 				638778122868E9CE0041E810 /* RegisterVC.swift in Sources */,
 				6362A85C28651FB900B12591 /* TabBarVC.swift in Sources */,
 				6362A8662865211E00B12591 /* AppColors.swift in Sources */,

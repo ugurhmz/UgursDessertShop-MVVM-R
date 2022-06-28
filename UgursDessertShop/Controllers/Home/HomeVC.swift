@@ -13,7 +13,9 @@ class HomeVC: UIViewController {
     var authViewModel = AuthViewModel()
     var myArr  = ["a","b","c","a","b","c","a"]
     var appDao = UserDao()
-   var webService = WebService()
+    var webService = WebService()
+    
+    private let searchController = UISearchController(searchResultsController: nil)
     
     private let generalCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -23,7 +25,7 @@ class HomeVC: UIViewController {
         //header
                cv.register(CellHeaderView.self, forSupplementaryViewOfKind: "header",
                            withReuseIdentifier:   CellHeaderView.identifier)
-        cv.register(SearchSectionCell.self, forCellWithReuseIdentifier: SearchSectionCell.identifier)
+        cv.register(NavBarCollectionCell.self, forCellWithReuseIdentifier: NavBarCollectionCell.identifier)
         cv.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.identifier)
         cv.register(ProductsCell.self, forCellWithReuseIdentifier: ProductsCell.identifier)
         return cv
@@ -40,7 +42,7 @@ class HomeVC: UIViewController {
         switch index {
             
         case 0:
-            return createSearchSection()
+            return createNavBarSection()
         case 1:
             return createCategoriesSection()
         case 2:
@@ -50,12 +52,11 @@ class HomeVC: UIViewController {
         }
     }
     
-    static func createSearchSection() -> NSCollectionLayoutSection {
+    static func createNavBarSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-            item.contentInsets.trailing = 6
-            item.contentInsets.leading = 8
+            
        
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(125)), subitems: [item])
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200)), subitems: [item])
        let section = NSCollectionLayoutSection(group: group)
        section.orthogonalScrollingBehavior = .continuous
       /*  // suplementary
@@ -117,7 +118,7 @@ class HomeVC: UIViewController {
         setupViews()
         setConstraints()
         generalCollectionView.allowsMultipleSelection = false
-        settingsNavigateBar()
+        searchBarConfigure()
     }
     
     
@@ -135,32 +136,49 @@ class HomeVC: UIViewController {
                 self.navigationItem.title = userInfos.username
             }
         }
+        
+        
     }
     
-    private func settingsNavigateBar() {
-        let logOutImage = UIImage(systemName: "person")?.withRenderingMode(.alwaysOriginal)
-       // left icon
-       navigationItem.leftBarButtonItem = UIBarButtonItem(image: logOutImage, style: .done,
-                                                          target: self, action: nil)
-        //navigationItem.leftBarButtonItem?.action = #selector(clickLogoutBtn)
-       // right two icons
-        if #available(iOS 13.0, *) {
-          let navBarAppearance = UINavigationBarAppearance()
-            //navBarAppearance.configureWithDefaultBackground()
-           navBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.orange,NSAttributedString.Key.font: UIFont(name: "Charter-Black", size: 26)!]
+    private func  searchBarConfigure() {
+        customSearchBarStyle()
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.searchController = self.searchController
+        searchController.searchBar.tintColor  = .black
+        //searchController.searchBar.delegate = self
+        searchController.searchBar.searchBarStyle = .default
+        searchController.searchBar.searchTextField.backgroundColor = .white
+        searchController.searchBar.searchTextField.defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        searchController.searchBar.barTintColor = .black
+            let img = UIImage(named: "avatar")
+            let imageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0))
+            
+            // NEW CODE HERE: Setting the constraints
+            imageView.widthAnchor.constraint(equalToConstant: 44).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: 44).isActive = true
+            imageView.layer.borderWidth = 1
+            imageView.image = img
+            imageView.layer.cornerRadius = imageView.frame.width / 2
+            imageView.layer.masksToBounds = true
+            let barButton = UIBarButtonItem(customView: imageView)
+            self.navigationItem.rightBarButtonItems = [barButton]
+    }
+    
+    private func customSearchBarStyle(){
+        
+         if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            //navBarAppearance.configureWithOpaqueBackground()
+             navBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemYellow,NSAttributedString.Key.font: UIFont(name: "Charter-Black", size: 30)!]
            
-          // navigationController?.navigationBar.barStyle = .black
-          //navigationController?.navigationBar.standardAppearance = navBarAppearance
-          navigationController?.navigationBar.compactAppearance = navBarAppearance
-          navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+             navigationController?.navigationBar.barStyle = .black
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.compactAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
 
-          navigationController?.navigationBar.prefersLargeTitles = false
-            
-            
-          }
-       // icons color
-        navigationController?.navigationBar.tintColor = .white
-        navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.7254902124, green: 0.3210115628, blue: 0.07575775568, alpha: 1)
+            navigationController?.navigationBar.prefersLargeTitles = true
+           
+            }
     }
 }
 
@@ -192,7 +210,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case  Sections.SearchSection.rawValue:
-            let searchCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: SearchSectionCell.identifier, for: indexPath) as! SearchSectionCell
+            let searchCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: NavBarCollectionCell.identifier, for: indexPath) as! NavBarCollectionCell
             return searchCell
         case Sections.CategoriesSection.rawValue:
             let categoryCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.identifier, for: indexPath) as! CategoryCell
@@ -242,6 +260,4 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
             self.generalCollectionView.reloadData()
         }
     }
-  
-   
 }
