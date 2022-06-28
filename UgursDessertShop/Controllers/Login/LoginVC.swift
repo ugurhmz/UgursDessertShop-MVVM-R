@@ -141,20 +141,34 @@ class LoginVC: UIViewController {
         
         self.authViewModel.dataClosure = { [weak self]  in
             let currentMyUser = self?.authViewModel.currentUser
-            self?.createAlert(title: "Success",
-                              msg: currentMyUser?.username ?? "-",
-                              prefStyle: .alert,
-                              bgColor: .systemGreen,
-                              textColor: .black,
-                              fontSize: 25)
-            
-            print("CURRENT USER", currentMyUser)
+           
           
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                   let view = TabBarVC()
-                   let nav = UINavigationController(rootViewController: view)
-                   self?.view.window?.rootViewController = nav
+            if (currentMyUser != nil) {
+                self?.createAlert(title: "Success",
+                                  msg: currentMyUser?.username ?? "-",
+                                  prefStyle: .alert,
+                                  bgColor: .systemGreen,
+                                  textColor: .black,
+                                  fontSize: 25)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                       let view = TabBarVC()
+                       let nav = UINavigationController(rootViewController: view)
+                       self?.view.window?.rootViewController = nav
+                }
+            } else {
+                self?.createAlert(title: "Check User infos in DB!",
+                                  msg: "Current User Err!",
+                                  prefStyle: .alert,
+                                  bgColor: .white,
+                                  textColor: .red,
+                                  fontSize: 28)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
+                       let view = LoginVC()
+                       let nav = UINavigationController(rootViewController: view)
+                       self?.view.window?.rootViewController = nav
+                }
             }
+           
         }
         
     }
