@@ -11,6 +11,7 @@ class HomeVC: UIViewController {
     var lastIndexActive:IndexPath = [1 ,0]
     var selectedIndex = Int ()
     var authViewModel = AuthViewModel()
+    var homeViewModel = HomeViewModel()
     var myArr  = ["a","b","c","a","b","c","a"]
     var appDao = UserDao()
     var webService = WebService()
@@ -137,7 +138,20 @@ class HomeVC: UIViewController {
             }
         }
         
+        self.homeViewModel.prdClosure =  { [weak self] in
+            guard let self = self else { return }
+            print("reload")
+            self.generalCollectionView.reloadData()
+
+        }
         
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+       
+        homeViewModel.fetchProducts()
     }
     
     private func  searchBarConfigure() {
@@ -201,7 +215,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         case Sections.CategoriesSection.rawValue:
             return myArr.count
         case Sections.ProductsSection.rawValue:
-            return 8
+            return self.homeViewModel.productArray.count
         default:
             return 5
         }

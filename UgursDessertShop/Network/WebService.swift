@@ -15,6 +15,7 @@ import Alamofire
 
 typealias loginHandler = (LoginResponse?, String?) -> Void
 typealias registerHandler = (RegisterResponse? ,String?) -> Void
+typealias productHandler = ([ProductResponse]?, String?) -> Void
 
 final class WebService {
     let baseUrl = "http://localhost:3000/ugurapi"
@@ -110,49 +111,81 @@ final class WebService {
     
     //  CURRENT USER
     func callingUser(userId: String, userToken: String, completionHandler: @escaping loginHandler) {
-    
         
         let myheaders: HTTPHeaders = [
             "token": "Bearer \(userToken)",
             "Accept": "application/json"
         ]
 
-        
-        
         AF.request(baseUrl + "/users/\(userId)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: myheaders).response {
                    response in
 
-                        switch response.result {
-                        case .success(let data):
+                switch response.result {
+                case .success(let data):
 
-                            if response.response!.statusCode == 200 {
-                               do {
-                                   let res = try JSONDecoder().decode(LoginResponse.self, from: data!)
+                    if response.response!.statusCode == 200 {
+                       do {
+                           let res = try JSONDecoder().decode(LoginResponse.self, from: data!)
 
-                                   completionHandler(res, nil)
-                                } catch {
-                                    print(error.localizedDescription)
-                                }
-
-                            } else if response.response!.statusCode == 401 {
-
-                                do {
-                                    let res = try JSONDecoder().decode(AuthErr.self, from: data!)
-                                    if let msg = res.msg {
-                                        completionHandler(nil, msg)
-                                    }
-                                 } catch {
-                                     print(error.localizedDescription)
-                                 }
-                            } else if response.response!.statusCode == 404 {
-                                completionHandler(nil, "404")
-                            }
-                        case .failure(let err):
-                            completionHandler(nil, err.localizedDescription)
+                           completionHandler(res, nil)
+                        } catch {
+                            print(error.localizedDescription)
                         }
-        }
 
+                    } else if response.response!.statusCode == 401 {
+
+                        do {
+                            let res = try JSONDecoder().decode(AuthErr.self, from: data!)
+                            if let msg = res.msg {
+                                completionHandler(nil, msg)
+                            }
+                         } catch {
+                             print(error.localizedDescription)
+                         }
+                    } else if response.response!.statusCode == 404 {
+                        completionHandler(nil, "404")
+                    }
+                case .failure(let err):
+                    completionHandler(nil, err.localizedDescription)
+                }
+        }
+    }
+    
+    // FETCH ALL USER
+    func callingAllProducts(completionHandler: @escaping productHandler){
         
+        AF.request(baseUrl + "/product/all", method: .get, parameters: nil, encoding: JSONEncoding.default).response { response in
+            switch response.result {
+            case .success(let data):
+
+                if response.response!.statusCode == 200 {
+                   do {
+                       let res = try JSONDecoder().decode([ProductResponse].self, from: data!)
+                      print("RES", res)
+                       completionHandler(res, nil)
+                       
+                    } catch {
+                        completionHandler(nil,"Error showing product!")
+                        print(error.localizedDescription)
+                    }
+
+                } else if response.response!.statusCode == 401 {
+
+                    do {
+                        let res = try JSONDecoder().decode(AuthErr.self, from: data!)
+                        if let msg = res.msg {
+                            completionHandler(nil,msg)
+                        }
+                     } catch {
+                         completionHandler(nil,error.localizedDescription)
+                     }
+                } else if response.response!.statusCode == 404 {
+                    completionHandler(nil, "404 Error!")
+                }
+            case .failure(let err):
+                completionHandler(nil,err.localizedDescription)
+            }
+        }
     }
     
 }

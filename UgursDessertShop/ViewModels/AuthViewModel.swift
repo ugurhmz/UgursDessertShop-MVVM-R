@@ -85,5 +85,4 @@ final class AuthViewModel{
             self.dataClosure?()
         }
     }
-  
 }
