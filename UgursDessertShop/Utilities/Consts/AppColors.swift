@@ -16,3 +16,5 @@ public var ProgressRingendColor = #colorLiteral(red: 0.4191666921, green: 0.3532
 public var TabBarBG = #colorLiteral(red: 1, green: 0.9019607843, blue: 0.9019607843, alpha: 0.91)
 public var ProductBgColor = #colorLiteral(red: 0.9843137255, green: 0.9098039216, blue: 0.9254901961, alpha: 1)
 public var AddToCartBtnBg = #colorLiteral(red: 1, green: 0.4196078431, blue: 0.568627451, alpha: 1)
+public var CheckOutCartOneBG = #colorLiteral(red: 0.8301720023, green: 0.2000095248, blue: 0.592361033, alpha: 1)
+public var CartDeleteAllTintColor =  #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)

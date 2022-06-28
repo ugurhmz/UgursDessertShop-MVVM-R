@@ -133,9 +133,32 @@ class HomeVC: UIViewController {
         self.authViewModel.fetchCurrentUser(userId: str[0], token: str[1])
         self.authViewModel.dataClosure = { [weak self] in
             guard let self = self else { return }
-            if let userInfos = self.authViewModel.userInfos {
-                self.navigationItem.title = userInfos.username
+            if let currentUserName = self.authViewModel.userInfos {
+                if let name  = currentUserName.username?.capitalized {
+                    self.navigationItem.title = "Welcome, \(name)"
+    
+                    
+                    if let img = currentUserName.userImg {
+                        let img = UIImage(named: "\(img)")
+                        let imageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0))
+                        
+                        // NEW CODE HERE: Setting the constraints
+                        imageView.widthAnchor.constraint(equalToConstant: 44).isActive = true
+                        imageView.heightAnchor.constraint(equalToConstant: 44).isActive = true
+                        imageView.layer.borderWidth = 1
+                        imageView.image = img
+                        imageView.layer.cornerRadius = imageView.frame.width / 2
+                        imageView.layer.masksToBounds = true
+                        let barButton = UIBarButtonItem(customView: imageView)
+                        self.navigationItem.rightBarButtonItems = [barButton]
+                    }
+                }
             }
+            
+            
+            
+          
+                
         }
         
         self.homeViewModel.prdClosure =  { [weak self] in
@@ -164,18 +187,7 @@ class HomeVC: UIViewController {
         searchController.searchBar.searchTextField.backgroundColor = .white
         searchController.searchBar.searchTextField.defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         searchController.searchBar.barTintColor = .black
-            let img = UIImage(named: "avatar")
-            let imageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0))
-            
-            // NEW CODE HERE: Setting the constraints
-            imageView.widthAnchor.constraint(equalToConstant: 44).isActive = true
-            imageView.heightAnchor.constraint(equalToConstant: 44).isActive = true
-            imageView.layer.borderWidth = 1
-            imageView.image = img
-            imageView.layer.cornerRadius = imageView.frame.width / 2
-            imageView.layer.masksToBounds = true
-            let barButton = UIBarButtonItem(customView: imageView)
-            self.navigationItem.rightBarButtonItems = [barButton]
+       
     }
     
     private func customSearchBarStyle(){
@@ -183,7 +195,7 @@ class HomeVC: UIViewController {
          if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
             //navBarAppearance.configureWithOpaqueBackground()
-             navBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemYellow,NSAttributedString.Key.font: UIFont(name: "Charter-Black", size: 30)!]
+             navBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,NSAttributedString.Key.font: UIFont(name: "Charter-Black", size: 30)!]
            
              navigationController?.navigationBar.barStyle = .black
             navigationController?.navigationBar.standardAppearance = navBarAppearance
