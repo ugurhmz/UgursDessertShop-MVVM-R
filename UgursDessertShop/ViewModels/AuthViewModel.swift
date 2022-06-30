@@ -100,6 +100,7 @@ final class AuthViewModel{
                 return
             }
             self.userCartItemsArr = result
+            print("MYLOG", result)
             self.dataClosure?()
         }
     }

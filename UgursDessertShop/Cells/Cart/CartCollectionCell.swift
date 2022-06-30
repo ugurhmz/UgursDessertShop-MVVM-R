@@ -18,6 +18,7 @@ class CartCollectionCell: UICollectionViewCell {
          iv.contentMode = .scaleToFill
          iv.clipsToBounds = true
          iv.layer.cornerRadius = 15
+        iv.backgroundColor =  ProductBgColor
          return iv
     }()
     
@@ -140,39 +141,63 @@ extension CartCollectionCell {
 
 extension CartCollectionCell {
     func fillData(cartItemModel: CartProductResponse) {
-        if let quantity = cartItemModel.quantity {
-            self.stepperCountLbl.text = "\(quantity)"
-        }
         
-        if let id = cartItemModel.productID {
-            webService.callingOneProduct(prdId: id) {[weak self] result, err in
-                guard let self = self else { return }
-               
-                guard err == nil else {
-                    if let myerr = err{
-                        print(myerr)
-                    }
-                    return
-                }
-                if let newresult  = result {
-                    if let prdimg = newresult.prdImg {
-                        self.prdImgView.image = UIImage(named: "\(prdimg)")
-                    }
-                    
-                    if let prdprice = newresult.price {
-                        self.prdPriceLbl.text = "\(prdprice)"
-                    }
-                    
-                    if let prdTitle = newresult.title {
-                        self.prdTitleLbl.text = prdTitle
-                    }
-                    
-                    if let prdDescrip = newresult.description {
-                        self.prdDescriptionLbl.text = prdDescrip
-                    }
-                }
+        guard let quantity = cartItemModel.quantity  else  { return }
+        self.stepperCountLbl.text = "\(quantity)"
+        
+        
+        if let cartProduct = cartItemModel.prd {
+            self.prdTitleLbl.text = cartProduct.title
+           
+            if let  prdPrice = cartProduct.price {
+                let totalPrice = Double(quantity) * prdPrice
+                self.prdPriceLbl.text = "$ \(totalPrice)"
             }
+            
+            if let  prdDescription = cartProduct.prdDescription {
+                self.prdDescriptionLbl.text = prdDescription
+            }
+            
+            if let prdImg = cartProduct.prdImg {
+                self.prdImgView.image = UIImage(named: "\(prdImg)")
+            }
+                
         }
+      
+        
+       
+
+
+        
+//        if let id = cartItemModel.productID {
+//            webService.callingOneProduct(prdId: id) {[weak self] result, err in
+//                guard let self = self else { return }
+//
+//                guard err == nil else {
+//                    if let myerr = err{
+//                        print(myerr)
+//                    }
+//                    return
+//                }
+//                if let newresult  = result {
+//                    if let prdimg = newresult.prdImg {
+//                        self.prdImgView.image = UIImage(named: "\(prdimg)")
+//                    }
+//
+//                    if let prdprice = newresult.price {
+//                        self.prdPriceLbl.text = "\(prdprice)"
+//                    }
+//
+//                    if let prdTitle = newresult.title {
+//                        self.prdTitleLbl.text = prdTitle
+//                    }
+//
+//                    if let prdDescrip = newresult.description {
+//                        self.prdDescriptionLbl.text = prdDescrip
+//                    }
+//                }
+//            }
+//        }
     }
 }
 

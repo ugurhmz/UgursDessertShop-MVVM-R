@@ -9,7 +9,7 @@ import Foundation
 
 struct ProductResponse: Codable {
     let id, title, description, prdImg: String?
-    let categories: [String]?
+    let categories: [Category]?
     let size: String?
     let voting: Int?
     let price: Double?
@@ -23,3 +23,14 @@ struct ProductResponse: Codable {
     }
 }
 
+// MARK: - Category
+struct Category: Codable {
+    let id, name, categoryImg, createdAt: String?
+    let updatedAt: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case name, categoryImg, createdAt, updatedAt
+
+    }
+}

@@ -199,7 +199,7 @@ final class WebService {
             "Accept": "application/json"
         ]
 
-        AF.request(baseUrl + "/carts/user-cart/\(userId)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: myheaders).response {
+        AF.request(baseUrl + "/carts/user-id/\(userId)", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: myheaders).response {
                    response in
 
                 switch response.result {
@@ -208,12 +208,7 @@ final class WebService {
                     if response.response!.statusCode == 200 {
                        do {
                            let res = try JSONDecoder().decode(CartResponse.self, from: data!)
-                           let newArr = res.products?.map({
-                               return CartProductResponse(productID: $0.productID, quantity: $0.quantity, id: $0.id)
-                           })
-                           
-                           completionHandler(newArr, nil)
-                          
+                           completionHandler(res.products, nil)
                         } catch {
                             completionHandler(nil, error.localizedDescription)
                         }

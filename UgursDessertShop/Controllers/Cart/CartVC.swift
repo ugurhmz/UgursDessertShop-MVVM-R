@@ -41,6 +41,10 @@ class CartVC: UIViewController {
         let str = self.appDao.fetchUser()
         
         self.authViewModel.fetchUsertCartItems(userId: str[0], token: str[1])
+        
+        print("str", str[0])
+        
+        print("str2", str[1])
         self.authViewModel.dataClosure = { [weak self] in
             guard let self = self else { return }
             self.generalCollectionView.reloadData()
@@ -121,7 +125,7 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
         if let cartData = self.authViewModel.userCartItemsArr {
             cell.fillData(cartItemModel: cartData[indexPath.item])
         }
-            
+
             
         return cell
     }
