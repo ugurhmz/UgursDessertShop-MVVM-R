@@ -22,6 +22,7 @@ typealias oneProductHandler = (ProductResponse?, String?) -> Void
 
 final class WebService {
     let baseUrl = "http://localhost:3000/ugurapi"
+    var reloadAddToCartClosure: VoidClosure?
     let headers: HTTPHeaders = [
         .contentType("application/json")
     ]
@@ -164,7 +165,6 @@ final class WebService {
                 if response.response!.statusCode == 200 {
                    do {
                        let res = try JSONDecoder().decode([ProductResponse].self, from: data!)
-                      print("RES", res)
                        completionHandler(res, nil)
                        
                     } catch {
@@ -287,7 +287,7 @@ final class WebService {
             "quantity": prdQuantity
         ]
         
-        AF.request("http://localhost:3000/ugurapi/carts",
+        AF.request(baseUrl + "/carts",
                    method: .post,
                    parameters: params,
                    encoding: JSONEncoding.default, headers: myheaders).response {
@@ -325,39 +325,41 @@ final class WebService {
             
         }
     }
-    // UPDATE CART
     
-    func callingUpdateToCart(currentUserId: String,userToken: String,prdQuantity: Int, clickingProduct: ProductResponse) {
-        guard let clickPrdId = clickingProduct.id else {return }
+    
+    func callingAddToCartTwo(currentUserId: String,
+                          userToken: String,
+                          prdQuantity: Int,
+                          clickingProduct: CartProductResponse ,
+                             completionHandler: @escaping VoidClosure
+    ) {
+        
+        guard let clickThisPrd = clickingProduct.itemId?.id else { return }
         
         let myheaders: HTTPHeaders = [
             "token": "Bearer \(userToken)",
             "Accept": "application/json"
         ]
-        
+
         let params: [String: Any] = [
-            "userId" : currentUserId,
-            "products": [[
-                "prd": clickPrdId,
-                "quantity": prdQuantity
-            ]]
+            "owner" : currentUserId,
+            "itemId": clickThisPrd,
+            "quantity": prdQuantity
         ]
-        
-        AF.request("http://localhost:3000/ugurapi/carts/update/cartId/62be3386bb7f2de58e5087c6",
+
+        AF.request("http://localhost:3000/ugurapi/carts",
                    method: .post,
                    parameters: params,
                    encoding: JSONEncoding.default, headers: myheaders).response {
                    response in
-            
+
             switch response.result {
             case .success(let data):
 
                 if response.response!.statusCode == 200 {
                    do {
-                       let res = try JSONDecoder().decode(CartResponse.self, from: data!)
-                     
-                       print("one product",res)
-                      
+                      completionHandler()
+                       
                     } catch {
                        print(error.localizedDescription)
                     }
@@ -378,8 +380,9 @@ final class WebService {
             case .failure(let err):
                 print(err.localizedDescription)
             }
-            
+
         }
     }
+    
 }
 

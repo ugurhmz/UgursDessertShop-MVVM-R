@@ -15,6 +15,7 @@ class HomeVC: UIViewController {
     var myArr  = ["a","b","c","a","b","c","a"]
     var appDao = UserDao()
     var webService = WebService()
+    var userIdAndTokenStr: [String] = []
     
     var allCartItemsCurrentUser: [CartProductResponse] = []
     
@@ -125,62 +126,57 @@ class HomeVC: UIViewController {
     }
     
     
+    private func userProfileIconSettings(_ img: String) {
+        let img = UIImage(named: "\(img)")
+        let imageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0))
+        
+        // NEW CODE HERE: Setting the constraints
+        imageView.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        imageView.layer.borderWidth = 1
+        imageView.image = img
+        imageView.layer.cornerRadius = imageView.frame.width / 2
+        imageView.layer.masksToBounds = true
+        let barButton = UIBarButtonItem(customView: imageView)
+        self.navigationItem.rightBarButtonItems = [barButton]
+    }
+    
     private func setupViews(){
         view.addSubview(generalCollectionView)
         generalCollectionView.dataSource = self
         generalCollectionView.delegate = self
         generalCollectionView.collectionViewLayout = HomeVC.createCompositionalLayout()
-        let str = self.appDao.fetchUser()
+   
+         userIdAndTokenStr = self.appDao.fetchUser()
         
-        self.authViewModel.fetchCurrentUser(userId: str[0], token: str[1])
+        self.authViewModel.fetchCurrentUser(userId: userIdAndTokenStr[0], token: userIdAndTokenStr[1])
         self.authViewModel.dataClosure = { [weak self] in
             guard let self = self else { return }
             if let currentUserName = self.authViewModel.userInfos {
                 if let name  = currentUserName.username?.capitalized {
                     self.navigationItem.title = "Welcome, \(name)"
-    
+
                     if let img = currentUserName.userImg {
-                        let img = UIImage(named: "\(img)")
-                        let imageView = UIImageView(frame: CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0))
-                        
-                        // NEW CODE HERE: Setting the constraints
-                        imageView.widthAnchor.constraint(equalToConstant: 44).isActive = true
-                        imageView.heightAnchor.constraint(equalToConstant: 44).isActive = true
-                        imageView.layer.borderWidth = 1
-                        imageView.image = img
-                        imageView.layer.cornerRadius = imageView.frame.width / 2
-                        imageView.layer.masksToBounds = true
-                        let barButton = UIBarButtonItem(customView: imageView)
-                        self.navigationItem.rightBarButtonItems = [barButton]
+                        self.userProfileIconSettings(img)
                     }
                 }
             }
-            
             
             if let cartItem = self.authViewModel.userCartItemsArr {
                 self.allCartItemsCurrentUser = cartItem
             }
         }
         
-        self.authViewModel.fetchUsertCartItems(userId: str[0], token: str[1])
-        
+        self.authViewModel.fetchUsertCartItems(userId: userIdAndTokenStr[0], token: userIdAndTokenStr[1])
         self.homeViewModel.prdClosure =  { [weak self] in
             guard let self = self else { return }
-            print("reload")
             self.generalCollectionView.reloadData()
-
         }
-        
-        
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-       
         homeViewModel.fetchProducts()
-        
     }
     
     private func  searchBarConfigure() {
@@ -262,8 +258,10 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
             
             productsCell.addToCartClosure = {  [weak self]  in
                 guard let self = self else { return }
-                
+               
                 productsCell.checkPrdAndCartItem(
+                    userID: self.userIdAndTokenStr[0],
+                    userTOKEN: self.userIdAndTokenStr[1],
                     clickedPrd:self.homeViewModel.productArray[indexPath.item],
                     allCartItems: self.allCartItemsCurrentUser
                 )

@@ -9,11 +9,9 @@ import UIKit
 
 class ProductsCell: UICollectionViewCell {
       static var identifier  = "ProductsCell"
-    var cartQ = 0
       var addToCartClosure: VoidClosure?
-    var webService = WebService()
-    var newQuantity = 0
-   
+      var webService = WebService()
+
     
       public var prdimgView: UIImageView = {
            let iv = UIImageView()
@@ -119,8 +117,11 @@ extension ProductsCell {
     
     
     //MARK: - ADD TO CART
-    func checkPrdAndCartItem(clickedPrd: ProductResponse,
-                             allCartItems: [CartProductResponse]) {
+    func checkPrdAndCartItem(
+        userID: String,
+        userTOKEN: String,
+        clickedPrd: ProductResponse,
+        allCartItems: [CartProductResponse]) {
         var count = 0
         var toplamMiktar = 0
         guard let clickItemId  = clickedPrd.id else { return }
@@ -135,13 +136,14 @@ extension ProductsCell {
         })
        
        if count == 1 {
-       webService.callingAddToCart(currentUserId: "62b7415c4e4b14a73a91aeff",
-                                   userToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjc0MTVjNGU0YjE0YTczYTkxYWVmZiIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NTY2Mjc5MDMsImV4cCI6MTY1NzIzMjcwM30.2gDhg3ol_PrwOJ4R-4O92eTyW9bCW0VlmbFYRlJFBp4",
+          
+       webService.callingAddToCart(currentUserId: userID,
+                                   userToken: userTOKEN,
                                    prdQuantity: toplamMiktar,
                                    clickingProduct: clickedPrd)
        } else {
-       webService.callingAddToCart(currentUserId: "62b7415c4e4b14a73a91aeff",
-                                   userToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjc0MTVjNGU0YjE0YTczYTkxYWVmZiIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NTY2Mjc5MDMsImV4cCI6MTY1NzIzMjcwM30.2gDhg3ol_PrwOJ4R-4O92eTyW9bCW0VlmbFYRlJFBp4",
+       webService.callingAddToCart(currentUserId: userID,
+                                   userToken: userTOKEN,
                                    prdQuantity: 1,
                                    clickingProduct: clickedPrd)
        }
@@ -180,13 +182,4 @@ extension ProductsCell {
                                     padding: .init(top: 10, left:0, bottom: 0, right: 10 ),
                                     size: .init(width: 28, height: 28))
        }
-}
-
-extension UIView {
-    func roundCorners(corners:UIRectCorner, radius: CGFloat) {
-        let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        let mask = CAShapeLayer()
-        mask.path = path.cgPath
-        self.layer.mask = mask
-    }
 }

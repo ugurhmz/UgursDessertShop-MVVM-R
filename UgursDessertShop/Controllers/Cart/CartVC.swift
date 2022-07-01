@@ -11,6 +11,9 @@ class CartVC: UIViewController {
     private let checkOutView = CartView()
     var authViewModel = AuthViewModel()
     var appDao = UserDao()
+    var webService = WebService()
+    var str: [String] = []
+    var cartItemArr:[CartProductResponse] = []
     
     // General CollectionView
     private let generalCollectionView: UICollectionView = {
@@ -38,17 +41,25 @@ class CartVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let str = self.appDao.fetchUser()
+         str = self.appDao.fetchUser()
         
         self.authViewModel.fetchUsertCartItems(userId: str[0], token: str[1])
         
-        print("str", str[0])
-        
-        print("str2", str[1])
         self.authViewModel.dataClosure = { [weak self] in
             guard let self = self else { return }
+            
+            if let  cartItem = self.authViewModel.userCartItemsArr {
+                self.cartItemArr = cartItem
+            }
             self.generalCollectionView.reloadData()
         }
+        
+        self.webService.reloadAddToCartClosure = { [weak self] in
+
+            print("RELOADD")
+            self?.generalCollectionView.reloadData()
+        }
+        
      
     }
     
@@ -125,6 +136,23 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         if let cartData = self.authViewModel.userCartItemsArr {
             cell.fillData(cartItemModel: cartData[indexPath.item])
+        }
+       
+        cell.addToCartClosure = { [weak self]  in
+            guard let self = self else { return }
+
+            guard let quanti = self.cartItemArr[indexPath.item].quantity else { return }
+           
+            
+            
+            guard let cartItem = self.authViewModel.userCartItemsArr else {return }
+            cell.checkPrdAndCartItem(
+                userID: self.str[0],
+                userTOKEN: self.str[1],
+                clickedPrd:cartItem[indexPath.item],
+                allCartItems: cartItem
+            )
+            
         }
 
             

@@ -11,6 +11,7 @@ class CartCollectionCell: UICollectionViewCell {
     
     static var identifier = "CartCollectionCell"
     var addToCartClosure: VoidClosure?
+    var webService = WebService()
     
     private let prdImgView: UIImageView = {
          let iv = UIImageView()
@@ -135,6 +136,7 @@ extension CartCollectionCell {
         
     }
     @objc func clickPlusBtn(){
+        print("clickl")
         if let addCartAction = addToCartClosure {
              addCartAction()
         }
@@ -169,6 +171,52 @@ extension CartCollectionCell {
             }
                 
         }
+    }
+    
+    
+    //MARK: - ADD TO CART
+    func checkPrdAndCartItem(
+        userID: String,
+        userTOKEN: String,
+        clickedPrd: CartProductResponse,
+        allCartItems: [CartProductResponse]) {
+        var count = 0
+        var toplamMiktar = 0
+            
+         
+            guard let clickItemId  = clickedPrd.itemId?.id else { return }
+            print("clickItemId",clickItemId)
+            
+        allCartItems.forEach({
+      
+            guard let  cartItemId = $0.itemId?.id else { return }
+            print("cartItemId",cartItemId)
+            if clickItemId == cartItemId {
+                    count += 1
+                toplamMiktar += 1
+                    return
+                 }
+        })
+       
+       if count == 1 {
+           print("cartcellclickedPrd", clickedPrd)
+          
+       webService.callingAddToCartTwo(currentUserId: userID,
+                                   userToken: userTOKEN,
+                                   prdQuantity: toplamMiktar,
+                                      clickingProduct: clickedPrd) {
+           self.webService.reloadAddToCartClosure?()
+       }
+       } else {
+           print("cartcellclixPrd", clickedPrd)
+       webService.callingAddToCartTwo(currentUserId: userID,
+                                   userToken: userTOKEN,
+                                   prdQuantity: 1,
+                                      clickingProduct: clickedPrd) {
+           self.webService.reloadAddToCartClosure?()
+       }
+       }
+        
     }
 }
 
