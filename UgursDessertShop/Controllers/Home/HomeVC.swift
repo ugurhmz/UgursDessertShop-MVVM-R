@@ -16,6 +16,8 @@ class HomeVC: UIViewController {
     var appDao = UserDao()
     var webService = WebService()
     
+    var allCartItemsCurrentUser: [CartProductResponse] = []
+    
     private let searchController = UISearchController(searchResultsController: nil)
     
     private let generalCollectionView: UICollectionView = {
@@ -153,6 +155,11 @@ class HomeVC: UIViewController {
                     }
                 }
             }
+            
+            
+            if let cartItem = self.authViewModel.userCartItemsArr {
+                self.allCartItemsCurrentUser = cartItem
+            }
         }
         
         self.authViewModel.fetchUsertCartItems(userId: str[0], token: str[1])
@@ -163,6 +170,8 @@ class HomeVC: UIViewController {
             self.generalCollectionView.reloadData()
 
         }
+        
+        
         
         
     }
@@ -250,6 +259,16 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
             let productsCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: ProductsCell.identifier, for: indexPath) as! ProductsCell
             productsCell.configure(productModel: self.homeViewModel.productArray[indexPath.item])
             productsCell.backgroundColor = .white
+            
+            productsCell.addToCartClosure = {  [weak self]  in
+                guard let self = self else { return }
+                
+                productsCell.checkPrdAndCartItem(
+                    clickedPrd:self.homeViewModel.productArray[indexPath.item],
+                    allCartItems: self.allCartItemsCurrentUser
+                )
+            }
+            
             return productsCell
         default:
            return UICollectionViewCell()

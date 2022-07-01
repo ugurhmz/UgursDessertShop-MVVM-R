@@ -208,7 +208,7 @@ final class WebService {
                     if response.response!.statusCode == 200 {
                        do {
                            let res = try JSONDecoder().decode(CartResponse.self, from: data!)
-                           completionHandler(res.products, nil)
+                           completionHandler(res.items, nil)
                         } catch {
                             completionHandler(nil, error.localizedDescription)
                         }
@@ -269,5 +269,117 @@ final class WebService {
         }
     }
     
+    func callingAddToCart(currentUserId: String,
+                          userToken: String,
+                          prdQuantity: Int,
+                          clickingProduct: ProductResponse) {
+        
+        guard let clickPrdId = clickingProduct.id else {return }
+        
+        let myheaders: HTTPHeaders = [
+            "token": "Bearer \(userToken)",
+            "Accept": "application/json"
+        ]
+        
+        let params: [String: Any] = [
+            "owner" : currentUserId,
+            "itemId": clickPrdId,
+            "quantity": prdQuantity
+        ]
+        
+        AF.request("http://localhost:3000/ugurapi/carts",
+                   method: .post,
+                   parameters: params,
+                   encoding: JSONEncoding.default, headers: myheaders).response {
+                   response in
+            
+            switch response.result {
+            case .success(let data):
+
+                if response.response!.statusCode == 200 {
+                   do {
+                       let res = try JSONDecoder().decode(CartResponse.self, from: data!)
+                     
+                       print("one product",res)
+                      
+                    } catch {
+                       print(error.localizedDescription)
+                    }
+
+                } else if response.response!.statusCode == 401 {
+
+                    do {
+                        let res = try JSONDecoder().decode(AuthErr.self, from: data!)
+                        if let msg = res.msg {
+                            print(msg)
+                        }
+                     } catch {
+                         print(error.localizedDescription)
+                     }
+                } else if response.response!.statusCode == 404 {
+                    print("error.localizedDescription")
+                }
+            case .failure(let err):
+                print(err.localizedDescription)
+            }
+            
+        }
+    }
+    // UPDATE CART
+    
+    func callingUpdateToCart(currentUserId: String,userToken: String,prdQuantity: Int, clickingProduct: ProductResponse) {
+        guard let clickPrdId = clickingProduct.id else {return }
+        
+        let myheaders: HTTPHeaders = [
+            "token": "Bearer \(userToken)",
+            "Accept": "application/json"
+        ]
+        
+        let params: [String: Any] = [
+            "userId" : currentUserId,
+            "products": [[
+                "prd": clickPrdId,
+                "quantity": prdQuantity
+            ]]
+        ]
+        
+        AF.request("http://localhost:3000/ugurapi/carts/update/cartId/62be3386bb7f2de58e5087c6",
+                   method: .post,
+                   parameters: params,
+                   encoding: JSONEncoding.default, headers: myheaders).response {
+                   response in
+            
+            switch response.result {
+            case .success(let data):
+
+                if response.response!.statusCode == 200 {
+                   do {
+                       let res = try JSONDecoder().decode(CartResponse.self, from: data!)
+                     
+                       print("one product",res)
+                      
+                    } catch {
+                       print(error.localizedDescription)
+                    }
+
+                } else if response.response!.statusCode == 401 {
+
+                    do {
+                        let res = try JSONDecoder().decode(AuthErr.self, from: data!)
+                        if let msg = res.msg {
+                            print(msg)
+                        }
+                     } catch {
+                         print(error.localizedDescription)
+                     }
+                } else if response.response!.statusCode == 404 {
+                    print("error.localizedDescription")
+                }
+            case .failure(let err):
+                print(err.localizedDescription)
+            }
+            
+        }
+    }
 }
 

@@ -49,6 +49,7 @@ class CartVC: UIViewController {
             guard let self = self else { return }
             self.generalCollectionView.reloadData()
         }
+     
     }
     
     private func setupViews(){

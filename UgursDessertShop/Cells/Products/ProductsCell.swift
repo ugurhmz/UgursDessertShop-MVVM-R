@@ -9,6 +9,11 @@ import UIKit
 
 class ProductsCell: UICollectionViewCell {
       static var identifier  = "ProductsCell"
+    var cartQ = 0
+      var addToCartClosure: VoidClosure?
+    var webService = WebService()
+    var newQuantity = 0
+   
     
       public var prdimgView: UIImageView = {
            let iv = UIImageView()
@@ -47,10 +52,16 @@ class ProductsCell: UICollectionViewCell {
            btn.tintColor = AddToCartBtnBg
           // btn.backgroundColor = .white
            btn.layer.cornerRadius = 15
-          //btn.addTarget(self, action: #selector(clickAddToCartBtn), for: .touchUpInside)
+          btn.addTarget(self, action: #selector(clickAddToCartBtn), for: .touchUpInside)
           
           return btn
       }()
+    
+    @objc func clickAddToCartBtn() {
+        if let addCartAction = addToCartClosure {
+             addCartAction()
+        }
+    }
        
        private let addToFavouriteBtn: UIButton = {
            let btn = UIButton(type: .system)
@@ -104,6 +115,39 @@ extension ProductsCell {
         }
       
     }
+    
+    
+    
+    //MARK: - ADD TO CART
+    func checkPrdAndCartItem(clickedPrd: ProductResponse,
+                             allCartItems: [CartProductResponse]) {
+        var count = 0
+        var toplamMiktar = 0
+        guard let clickItemId  = clickedPrd.id else { return }
+
+        allCartItems.forEach({
+
+            if clickItemId == $0.itemId?.id {
+                    count += 1
+                toplamMiktar += 1
+                    return
+                 }
+        })
+       
+       if count == 1 {
+       webService.callingAddToCart(currentUserId: "62b7415c4e4b14a73a91aeff",
+                                   userToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjc0MTVjNGU0YjE0YTczYTkxYWVmZiIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NTY2Mjc5MDMsImV4cCI6MTY1NzIzMjcwM30.2gDhg3ol_PrwOJ4R-4O92eTyW9bCW0VlmbFYRlJFBp4",
+                                   prdQuantity: toplamMiktar,
+                                   clickingProduct: clickedPrd)
+       } else {
+       webService.callingAddToCart(currentUserId: "62b7415c4e4b14a73a91aeff",
+                                   userToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjc0MTVjNGU0YjE0YTczYTkxYWVmZiIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE2NTY2Mjc5MDMsImV4cCI6MTY1NzIzMjcwM30.2gDhg3ol_PrwOJ4R-4O92eTyW9bCW0VlmbFYRlJFBp4",
+                                   prdQuantity: 1,
+                                   clickingProduct: clickedPrd)
+       }
+        
+    }
+    
 }
 
 

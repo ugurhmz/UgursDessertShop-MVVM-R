@@ -9,25 +9,25 @@ import Foundation
 // MARK: - Welcome
 struct CartResponse: Codable {
     let id: String?
-    let userID: UserCart?
-    let products: [CartProductResponse]?
+    let owner: UserCart?
+    let items: [CartProductResponse]?
     let createdAt, updatedAt: String?
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
-        case userID = "userId"
-        case products, createdAt, updatedAt
+        case owner = "owner"
+        case items, createdAt, updatedAt
     }
 }
 
 // MARK: - Product
 struct CartProductResponse: Codable {
-    let prd: Prd?
+    let itemId: Prd?
     let quantity: Int?
     let id: String?
 
     enum CodingKeys: String, CodingKey {
-        case prd, quantity
+        case itemId, quantity
         case id = "_id"
     }
 }

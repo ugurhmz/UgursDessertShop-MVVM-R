@@ -10,7 +10,7 @@ import UIKit
 class CartCollectionCell: UICollectionViewCell {
     
     static var identifier = "CartCollectionCell"
-    var webService = WebService()
+    var addToCartClosure: VoidClosure?
     
     private let prdImgView: UIImageView = {
          let iv = UIImageView()
@@ -24,7 +24,7 @@ class CartCollectionCell: UICollectionViewCell {
     
     private let prdPriceLbl: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = .systemFont(ofSize: 16, weight: .bold)
         label.text = "1020.50 TL"
         label.textColor = .black
         label.textAlignment = .center
@@ -58,8 +58,8 @@ class CartCollectionCell: UICollectionViewCell {
          buton.setTitle("+", for: .normal)
          buton.backgroundColor = #colorLiteral(red: 0.8086332071, green: 0.3559194398, blue: 0.1270762815, alpha: 1)
          buton.setTitleColor(.white, for: .normal)
-         buton.layer.cornerRadius = 12
-         buton.titleLabel?.font = .systemFont(ofSize: 22, weight: .bold)
+         buton.layer.cornerRadius = 18
+         buton.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
          
          buton.addTarget(self, action: #selector(clickPlusBtn), for: .touchUpInside)
          return buton
@@ -70,8 +70,8 @@ class CartCollectionCell: UICollectionViewCell {
          buton.setTitle("-", for: .normal)
          buton.backgroundColor = #colorLiteral(red: 0.8086332071, green: 0.3559194398, blue: 0.1270762815, alpha: 1)
          buton.setTitleColor(.white, for: .normal)
-         buton.layer.cornerRadius = 12
-         buton.titleLabel?.font = .systemFont(ofSize: 22, weight: .bold)
+         buton.layer.cornerRadius = 18
+         buton.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
          buton.addTarget(self, action: #selector(clickMinusBtn), for: .touchUpInside)
          return buton
      }()
@@ -135,7 +135,9 @@ extension CartCollectionCell {
         
     }
     @objc func clickPlusBtn(){
-       
+        if let addCartAction = addToCartClosure {
+             addCartAction()
+        }
     }
 }
 
@@ -143,15 +145,19 @@ extension CartCollectionCell {
     func fillData(cartItemModel: CartProductResponse) {
         
         guard let quantity = cartItemModel.quantity  else  { return }
+        
+        if String(quantity).count > 4 {
+            self.stepperCountLbl.font = .systemFont(ofSize: 15)
+        }
         self.stepperCountLbl.text = "\(quantity)"
         
         
-        if let cartProduct = cartItemModel.prd {
+        if let cartProduct = cartItemModel.itemId {
             self.prdTitleLbl.text = cartProduct.title
            
             if let  prdPrice = cartProduct.price {
                 let totalPrice = Double(quantity) * prdPrice
-                self.prdPriceLbl.text = "$ \(totalPrice)"
+                self.prdPriceLbl.text = "$ \(numberFormat(totalPrice))"
             }
             
             if let  prdDescription = cartProduct.prdDescription {
@@ -163,41 +169,6 @@ extension CartCollectionCell {
             }
                 
         }
-      
-        
-       
-
-
-        
-//        if let id = cartItemModel.productID {
-//            webService.callingOneProduct(prdId: id) {[weak self] result, err in
-//                guard let self = self else { return }
-//
-//                guard err == nil else {
-//                    if let myerr = err{
-//                        print(myerr)
-//                    }
-//                    return
-//                }
-//                if let newresult  = result {
-//                    if let prdimg = newresult.prdImg {
-//                        self.prdImgView.image = UIImage(named: "\(prdimg)")
-//                    }
-//
-//                    if let prdprice = newresult.price {
-//                        self.prdPriceLbl.text = "\(prdprice)"
-//                    }
-//
-//                    if let prdTitle = newresult.title {
-//                        self.prdTitleLbl.text = prdTitle
-//                    }
-//
-//                    if let prdDescrip = newresult.description {
-//                        self.prdDescriptionLbl.text = prdDescrip
-//                    }
-//                }
-//            }
-//        }
     }
 }
 
@@ -218,6 +189,7 @@ extension CartCollectionCell {
         let deleteIconTap = UITapGestureRecognizer(target: self, action: #selector(clickDeleteIcon))
         deleteIcon.isUserInteractionEnabled = true
         deleteIcon.addGestureRecognizer(deleteIconTap)
+     
     }
     
     @objc func clickDeleteIcon(){
@@ -251,8 +223,8 @@ extension CartCollectionCell {
                             leading: prdImgView.trailingAnchor,
                            bottom: bottomAnchor,
                            trailing: nil,
-                           padding: .init(top: 2, left: 8, bottom: 2, right: 10),
-                           size: .init(width: 100, height: 0))
+                           padding: .init(top: 2, left: 8, bottom: 2, right: 5),
+                           size: .init(width: 140, height: 0))
         
         prdPriceLbl.anchor(top: topstackView.bottomAnchor,
                           leading: prdstackView.trailingAnchor,
