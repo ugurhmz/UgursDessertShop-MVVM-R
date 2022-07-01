@@ -14,9 +14,12 @@ class CartVC: UIViewController {
     var webService = WebService()
     var str: [String] = []
     var cartItemArr:[CartProductResponse] = []
+    var collectionCell  = CartCollectionCell()
+    var homeViewModel = HomeViewModel()
+    
     
     // General CollectionView
-    private let generalCollectionView: UICollectionView = {
+    private var generalCollectionView: UICollectionView = {
           let layout = UICollectionViewFlowLayout()
           layout.scrollDirection = .vertical
           let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -37,6 +40,7 @@ class CartVC: UIViewController {
         generalCollectionView.delegate = self
         generalCollectionView.dataSource = self
         
+      
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -54,13 +58,26 @@ class CartVC: UIViewController {
             self.generalCollectionView.reloadData()
         }
         
-        self.webService.reloadAddToCartClosure = { [weak self] in
-
-            print("RELOADD")
-            self?.generalCollectionView.reloadData()
-        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-     
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("refresh"), object: nil, queue: nil) { _ in
+             print("NotificationCenter")
+           
+//            self.str = self.appDao.fetchUser()
+//
+//           self.authViewModel.fetchUsertCartItems(userId: self.str[0], token: self.str[1])
+//
+//          self.authViewModel.dataClosure = { [weak self] in
+//              guard let self = self else { return }
+//
+//              if let  cartItem = self.authViewModel.userCartItemsArr {
+//                  self.cartItemArr = cartItem
+//              }
+//              self.generalCollectionView.reloadData()
+//          }
+       }
     }
     
     private func setupViews(){
@@ -68,7 +85,6 @@ class CartVC: UIViewController {
         view.addSubview(checkOutView)
         checkOutView.layer.cornerRadius = 40
         settingsNavigateBar()
-        
     }
     
     private func settingsNavigateBar(){
@@ -137,14 +153,10 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
         if let cartData = self.authViewModel.userCartItemsArr {
             cell.fillData(cartItemModel: cartData[indexPath.item])
         }
+        
        
         cell.addToCartClosure = { [weak self]  in
             guard let self = self else { return }
-
-            guard let quanti = self.cartItemArr[indexPath.item].quantity else { return }
-           
-            
-            
             guard let cartItem = self.authViewModel.userCartItemsArr else {return }
             cell.checkPrdAndCartItem(
                 userID: self.str[0],
@@ -152,10 +164,9 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 clickedPrd:cartItem[indexPath.item],
                 allCartItems: cartItem
             )
-            
-        }
 
-            
+        }
+        
         return cell
     }
     

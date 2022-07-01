@@ -15,7 +15,7 @@ final class HomeViewModel {
     var errClosure: StringClosure?
     var prdClosure: VoidClosure?
     var productArray: [ProductResponse] = []
-    
+    var newReloadClosure: VoidClosure?
     init() {
         webService = WebService()
         appDao =  UserDao()
@@ -40,5 +40,22 @@ final class HomeViewModel {
         }
     }
     
+    
+    func addToCartFromService(currentUserId: String,
+                              userToken: String,
+                              prdQuantity: Int,
+                                 clickingProduct: CartProductResponse)
+    {
+        webService.callingAddToCartTwo(currentUserId: currentUserId,
+                                    userToken: userToken,
+                                    prdQuantity: prdQuantity,
+                                       clickingProduct: clickingProduct) {  [weak self ]item in
+         
+            
+           NotificationCenter.default.post(name: NSNotification.Name("refresh"), object: nil)
+           
+           
+        }
+    }
   
 }

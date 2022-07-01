@@ -331,7 +331,7 @@ final class WebService {
                           userToken: String,
                           prdQuantity: Int,
                           clickingProduct: CartProductResponse ,
-                             completionHandler: @escaping VoidClosure
+                             completionHandler: @escaping StringClosure
     ) {
         
         guard let clickThisPrd = clickingProduct.itemId?.id else { return }
@@ -358,7 +358,7 @@ final class WebService {
 
                 if response.response!.statusCode == 200 {
                    do {
-                      completionHandler()
+                       completionHandler("s")
                        
                     } catch {
                        print(error.localizedDescription)

@@ -11,7 +11,11 @@ class CartCollectionCell: UICollectionViewCell {
     
     static var identifier = "CartCollectionCell"
     var addToCartClosure: VoidClosure?
+    var collectionRealoadClosure: VoidClosure?
     var webService = WebService()
+    var homeViewModel = HomeViewModel()
+    var newReloadClosure: VoidClosure?
+    var intClosure: IntClosure?
     
     private let prdImgView: UIImageView = {
          let iv = UIImageView()
@@ -136,10 +140,10 @@ extension CartCollectionCell {
         
     }
     @objc func clickPlusBtn(){
-        print("clickl")
         if let addCartAction = addToCartClosure {
              addCartAction()
         }
+        
     }
 }
 
@@ -190,7 +194,7 @@ extension CartCollectionCell {
         allCartItems.forEach({
       
             guard let  cartItemId = $0.itemId?.id else { return }
-            print("cartItemId",cartItemId)
+         
             if clickItemId == cartItemId {
                     count += 1
                 toplamMiktar += 1
@@ -199,22 +203,18 @@ extension CartCollectionCell {
         })
        
        if count == 1 {
-           print("cartcellclickedPrd", clickedPrd)
-          
-       webService.callingAddToCartTwo(currentUserId: userID,
-                                   userToken: userTOKEN,
-                                   prdQuantity: toplamMiktar,
-                                      clickingProduct: clickedPrd) {
-           self.webService.reloadAddToCartClosure?()
-       }
+
+           self.homeViewModel.addToCartFromService(currentUserId: userID,
+                                                   userToken: userTOKEN,
+                                                   prdQuantity: toplamMiktar,
+                                                      clickingProduct: clickedPrd)
+           
        } else {
-           print("cartcellclixPrd", clickedPrd)
-       webService.callingAddToCartTwo(currentUserId: userID,
-                                   userToken: userTOKEN,
-                                   prdQuantity: 1,
-                                      clickingProduct: clickedPrd) {
-           self.webService.reloadAddToCartClosure?()
-       }
+           self.homeViewModel.addToCartFromService(currentUserId: userID,
+                                                   userToken: userTOKEN,
+                                                   prdQuantity: 1,
+                                                      clickingProduct: clickedPrd)
+           self.intClosure?(toplamMiktar)
        }
         
     }
