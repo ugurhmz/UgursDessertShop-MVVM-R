@@ -384,5 +384,29 @@ final class WebService {
         }
     }
     
+    
+    // DELETE ITEM IN CART
+    func callingDeleteItemInCart(currentUserId: String,
+                                 userToken: String,
+                                 itemId: String )
+    {
+        let urlString = baseUrl + "/carts/delete-product?itemId=\(itemId)"
+        let parameters = [  "owner": currentUserId ]
+        guard let url = URL(string: urlString) else {return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Bearer \(userToken)", forHTTPHeaderField: "token")
+        
+        request.httpBody  = try? JSONSerialization.data(withJSONObject: parameters,
+                                                   options: [])
+        let session = URLSession.shared.dataTask(with: request) { data, response, error in
+    
+            NotificationCenter.default.post(name: NSNotification.Name("refresh"), object: nil)
+            
+        }.resume()
+        
+    }
+    
 }
 

@@ -11,11 +11,13 @@ class CartCollectionCell: UICollectionViewCell {
     
     static var identifier = "CartCollectionCell"
     var addToCartClosure: VoidClosure?
+    var subtractToCartClosure: VoidClosure?
     var collectionRealoadClosure: VoidClosure?
     var webService = WebService()
     var homeViewModel = HomeViewModel()
     var newReloadClosure: VoidClosure?
     var intClosure: IntClosure?
+    var deleteItemInCartClosure: VoidClosure?
     
     private let prdImgView: UIImageView = {
          let iv = UIImageView()
@@ -137,7 +139,9 @@ class CartCollectionCell: UICollectionViewCell {
 extension CartCollectionCell {
     
     @objc func clickMinusBtn(){
-        
+        if let subtractToCartaction = subtractToCartClosure {
+            subtractToCartaction()
+        }
     }
     @objc func clickPlusBtn(){
         if let addCartAction = addToCartClosure {
@@ -175,6 +179,47 @@ extension CartCollectionCell {
             }
                 
         }
+    }
+    
+    //MARK: - ADD TO CART
+    func checkPrdAndCartItemTwo(
+        userID: String,
+        userTOKEN: String,
+        clickedPrd: CartProductResponse,
+        allCartItems: [CartProductResponse]) {
+        var count = 0
+        var toplamMiktar = 0
+            
+         
+            guard let clickItemId  = clickedPrd.itemId?.id else { return }
+          
+            
+        allCartItems.forEach({
+      
+            guard let  cartItemId = $0.itemId?.id else { return }
+         
+            if clickItemId == cartItemId {
+                    count += 1
+                toplamMiktar -= 1
+                    return
+                 }
+        })
+       
+       if count == 1 {
+
+           self.homeViewModel.addToCartFromService(currentUserId: userID,
+                                                   userToken: userTOKEN,
+                                                   prdQuantity: toplamMiktar,
+                                                      clickingProduct: clickedPrd)
+           
+       } else {
+           self.homeViewModel.addToCartFromService(currentUserId: userID,
+                                                   userToken: userTOKEN,
+                                                   prdQuantity: 1,
+                                                      clickingProduct: clickedPrd)
+           self.intClosure?(toplamMiktar)
+       }
+        
     }
     
     
@@ -241,7 +286,9 @@ extension CartCollectionCell {
     }
     
     @objc func clickDeleteIcon(){
-      
+        if let deleteItemInCartAction = deleteItemInCartClosure {
+            deleteItemInCartAction()
+        }
        
     }
     

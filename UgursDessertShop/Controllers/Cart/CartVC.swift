@@ -65,18 +65,18 @@ class CartVC: UIViewController {
         NotificationCenter.default.addObserver(forName: NSNotification.Name("refresh"), object: nil, queue: nil) { _ in
              print("NotificationCenter")
            
-//            self.str = self.appDao.fetchUser()
-//
-//           self.authViewModel.fetchUsertCartItems(userId: self.str[0], token: self.str[1])
-//
-//          self.authViewModel.dataClosure = { [weak self] in
-//              guard let self = self else { return }
-//
-//              if let  cartItem = self.authViewModel.userCartItemsArr {
-//                  self.cartItemArr = cartItem
-//              }
-//              self.generalCollectionView.reloadData()
-//          }
+            self.str = self.appDao.fetchUser()
+
+           self.authViewModel.fetchUsertCartItems(userId: self.str[0], token: self.str[1])
+
+          self.authViewModel.dataClosure = { [weak self] in
+              guard let self = self else { return }
+
+              if let  cartItem = self.authViewModel.userCartItemsArr {
+                  self.cartItemArr = cartItem
+              }
+              self.generalCollectionView.reloadData()
+          }
        }
     }
     
@@ -166,6 +166,30 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
             )
 
         }
+        
+        cell.subtractToCartClosure = { [weak self]  in
+            guard let self = self else { return }
+            guard let cartItem = self.authViewModel.userCartItemsArr else {return }
+            cell.checkPrdAndCartItemTwo(
+                userID: self.str[0],
+                userTOKEN: self.str[1],
+                clickedPrd:cartItem[indexPath.item],
+                allCartItems: cartItem
+            )
+
+        }
+        
+        cell.deleteItemInCartClosure = { [weak self]  in
+            guard let self = self else { return }
+            guard let cartItem = self.authViewModel.userCartItemsArr else {return }
+            guard let clikPrdItemId = cartItem[indexPath.item].itemId?.id else { return }
+            print("click",clikPrdItemId)
+            self.webService.callingDeleteItemInCart(currentUserId: self.str[0],
+                                               userToken: self.str[1],
+                                               itemId: clikPrdItemId)
+            self.generalCollectionView.reloadData()
+        }
+      
         
         return cell
     }
