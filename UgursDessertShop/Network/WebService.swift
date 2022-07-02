@@ -16,7 +16,7 @@ import Alamofire
 typealias loginHandler = (LoginResponse?, String?) -> Void
 typealias registerHandler = (RegisterResponse? ,String?) -> Void
 typealias productHandler = ([ProductResponse]?, String?) -> Void
-typealias cartProductHandler = ([CartProductResponse]?, String?) -> Void
+typealias cartProductHandler = (CartResponse?, String?) -> Void
 
 typealias oneProductHandler = (ProductResponse?, String?) -> Void
 
@@ -26,8 +26,7 @@ final class WebService {
     let headers: HTTPHeaders = [
         .contentType("application/json")
     ]
-    
-    
+   
     static let shared = WebService()
     
     //MARK: - LOGIN
@@ -208,7 +207,12 @@ final class WebService {
                     if response.response!.statusCode == 200 {
                        do {
                            let res = try JSONDecoder().decode(CartResponse.self, from: data!)
-                           completionHandler(res.items, nil)
+                          // guard let cartId = res.id else {return }
+                           
+                           completionHandler(res, nil)
+                           //completionHandler(res.items, nil)
+                           
+                           
                         } catch {
                             completionHandler(nil, error.localizedDescription)
                         }
@@ -406,6 +410,50 @@ final class WebService {
             
         }.resume()
         
+    }
+    
+    func callingDeleteAllCart(userToken: String,
+                              cartId: String) {
+        
+        let myheaders: HTTPHeaders = [
+            "token": "Bearer \(userToken)",
+            "Accept": "application/json"
+        ]
+
+        let params: [String: Any] = [
+            "cartId": cartId
+        ]
+        
+        AF.request("http://localhost:3000/ugurapi/carts/delete-all/cartId/\(cartId)",
+                   method: .delete,
+                   parameters: params,
+                   encoding: JSONEncoding.default, headers: myheaders).response {
+                   response in
+            
+            switch response.result {
+            case .success(let data):
+
+                if response.response!.statusCode == 200 {
+                    NotificationCenter.default.post(name: NSNotification.Name("refresh"), object: nil)
+
+                } else if response.response!.statusCode == 401 {
+
+                    do {
+                        let res = try JSONDecoder().decode(AuthErr.self, from: data!)
+                        if let msg = res.msg {
+                            print(msg)
+                        }
+                     } catch {
+                         print(error.localizedDescription)
+                     }
+                } else if response.response!.statusCode == 404 {
+                    print("error.localizedDescription")
+                }
+            case .failure(let err):
+                print(err.localizedDescription)
+            }
+
+        }
     }
     
 }

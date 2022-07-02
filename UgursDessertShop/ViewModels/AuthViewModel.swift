@@ -22,6 +22,7 @@ final class AuthViewModel{
     var currentUser: LoginResponse?
     var userInfos: LoginResponse?
     var userCartItemsArr: [CartProductResponse]?
+    var cartIDStr: String?
     
     init() {
         webService = WebService()
@@ -99,7 +100,11 @@ final class AuthViewModel{
                 }
                 return
             }
-            self.userCartItemsArr = result
+            print("CARTID", result?.id)
+            guard let cartID = result?.id else {return}
+            guard let items = result?.items else {return }
+            self.cartIDStr = cartID
+            self.userCartItemsArr = items
             self.dataClosure?()
         }
     }

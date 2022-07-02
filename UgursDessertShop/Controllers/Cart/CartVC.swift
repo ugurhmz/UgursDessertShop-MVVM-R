@@ -16,7 +16,8 @@ class CartVC: UIViewController {
     var cartItemArr:[CartProductResponse] = []
     var collectionCell  = CartCollectionCell()
     var homeViewModel = HomeViewModel()
-    
+    var userCartId = ""
+    let deleteAllBtn = UIButton(type: .system)
     
     // General CollectionView
     private var generalCollectionView: UICollectionView = {
@@ -36,7 +37,6 @@ class CartVC: UIViewController {
         super.viewDidLoad()
         setupViews()
         setConstraints()
-        checkOutView.backgroundColor = #colorLiteral(red: 0.8906015158, green: 0.2020004392, blue: 0.3312987983, alpha: 1)
         generalCollectionView.delegate = self
         generalCollectionView.dataSource = self
         
@@ -52,9 +52,29 @@ class CartVC: UIViewController {
         self.authViewModel.dataClosure = { [weak self] in
             guard let self = self else { return }
             
-            if let  cartItem = self.authViewModel.userCartItemsArr {
-                self.cartItemArr = cartItem
+            
+            
+            guard let  cartItem = self.authViewModel.userCartItemsArr else  {
+                return
             }
+            self.cartItemArr = cartItem
+            
+            if  cartItem.count < 4 {
+                self.checkOutView.isHidden = true
+                
+            }
+            
+            
+          
+            if let cartID = self.authViewModel.cartIDStr {
+                self.userCartId = cartID
+            }
+            
+             if cartItem.count < 1 {
+                 self.deleteAllBtn.isHidden = true
+             } else {
+                 self.deleteAllBtn.isHidden = false
+             }
             self.generalCollectionView.reloadData()
         }
         
@@ -68,7 +88,7 @@ class CartVC: UIViewController {
             self.str = self.appDao.fetchUser()
 
            self.authViewModel.fetchUsertCartItems(userId: self.str[0], token: self.str[1])
-
+            
           self.authViewModel.dataClosure = { [weak self] in
               guard let self = self else { return }
 
@@ -99,12 +119,13 @@ class CartVC: UIViewController {
                  navigationController?.navigationBar.prefersLargeTitles = false
                  }
                
-               let deleteAllBtn = UIButton(type: .system)
-                   deleteAllBtn.setImage(UIImage(systemName: "trash.circle.fill"), for: .normal)
-                   deleteAllBtn.setTitle("Delete All", for: .normal)
-                   deleteAllBtn.tintColor = CartDeleteAllTintColor
-                   deleteAllBtn.titleLabel?.font = UIFont(name: "Charter-Black", size: 18)
-               
+       
+        
+          
+               deleteAllBtn.setImage(UIImage(systemName: "trash.circle.fill"), for: .normal)
+               deleteAllBtn.setTitle("Delete All", for: .normal)
+               deleteAllBtn.tintColor = CartDeleteAllTintColor
+               deleteAllBtn.titleLabel?.font = UIFont(name: "Charter-Black", size: 18)
                navigationItem.rightBarButtonItems = [
                    UIBarButtonItem(customView: deleteAllBtn)
                ]
@@ -115,7 +136,9 @@ class CartVC: UIViewController {
     }
     
     @objc func clickDeleteAllCartItems(){
-        
+        webService.callingDeleteAllCart(userToken: self.str[1],
+                                        cartId: self.userCartId)
+       
     }
     
 }
@@ -204,6 +227,7 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
         if kind == UICollectionView.elementKindSectionFooter {
             let footerCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier:CheckOutReusableView.Identifier , for: indexPath) as! CheckOutReusableView
            
+            footerCell.configure(cartItemCount: self.cartItemArr.count)
       
             return footerCell
         }

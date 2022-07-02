@@ -56,4 +56,14 @@ class CheckOutReusableView: UICollectionReusableView {
 //MARK: -
 extension CheckOutReusableView {
   
+    func configure(cartItemCount: Int) {
+        print("CARTCOUNT", cartItemCount)
+        if cartItemCount < 1 {
+            self.checkOutBtn.isHidden = true
+            self.dontHaveCartItem.isHidden = false
+        } else {
+            self.checkOutBtn.isHidden = false
+            self.dontHaveCartItem.isHidden = true
+        }
+    }
 }

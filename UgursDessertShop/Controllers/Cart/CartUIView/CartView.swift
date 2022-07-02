@@ -11,7 +11,7 @@ class CartView: UIView {
     private var checkOutBtn: UIButton = {
         let buton = UIButton(type: .system)
          buton.setTitle("Check Out", for: .normal)
-         buton.backgroundColor = CheckOutCartOneBG
+        buton.backgroundColor = .red
          buton.setTitleColor(.white, for: .normal)
          buton.layer.cornerRadius = 45
          buton.layer.masksToBounds = true
