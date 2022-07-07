@@ -9,10 +9,7 @@ import UIKit
 
 class ProductsCell: UICollectionViewCell {
       static var identifier  = "ProductsCell"
-      var addToCartClosure: VoidClosure?
-      var webService = WebService()
-
-    
+   
       public var prdimgView: UIImageView = {
            let iv = UIImageView()
            iv.contentMode = .scaleToFill
@@ -56,9 +53,7 @@ class ProductsCell: UICollectionViewCell {
       }()
     
     @objc func clickAddToCartBtn() {
-        if let addCartAction = addToCartClosure {
-             addCartAction()
-        }
+       
     }
        
        private let addToFavouriteBtn: UIButton = {
@@ -114,41 +109,6 @@ extension ProductsCell {
       
     }
     
-    
-    
-    //MARK: - ADD TO CART
-    func checkPrdAndCartItem(
-        userID: String,
-        userTOKEN: String,
-        clickedPrd: ProductResponse,
-        allCartItems: [CartProductResponse]) {
-        var count = 0
-        var toplamMiktar = 0
-        guard let clickItemId  = clickedPrd.id else { return }
-
-        allCartItems.forEach({
-
-            if clickItemId == $0.itemId?.id {
-                    count += 1
-                toplamMiktar += 1
-                    return
-                 }
-        })
-       
-       if count == 1 {
-          
-       webService.callingAddToCart(currentUserId: userID,
-                                   userToken: userTOKEN,
-                                   prdQuantity: toplamMiktar,
-                                   clickingProduct: clickedPrd)
-       } else {
-       webService.callingAddToCart(currentUserId: userID,
-                                   userToken: userTOKEN,
-                                   prdQuantity: 1,
-                                   clickingProduct: clickedPrd)
-       }
-        
-    }
     
 }
 

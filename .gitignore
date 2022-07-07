@@ -58,3 +58,165 @@ Pods/Target Support Files/Alamofire/Alamofire-umbrella.h
 Pods/Target Support Files/Alamofire/Alamofire.debug.xcconfig
 Pods/Target Support Files/Alamofire/Alamofire.modulemap
 Pods/Target Support Files/Alamofire/Alamofire.release.xcconfig
+Pods/KeychainSwift/LICENSE
+Pods/KeychainSwift/README.md
+Pods/KeychainSwift/Sources/KeychainSwift.swift
+Pods/KeychainSwift/Sources/KeychainSwiftAccessOptions.swift
+Pods/KeychainSwift/Sources/TegKeychainConstants.swift
+Pods/Kingfisher/LICENSE
+Pods/Kingfisher/README.md
+Pods/Kingfisher/Sources/Cache/CacheSerializer.swift
+Pods/Kingfisher/Sources/Cache/DiskStorage.swift
+Pods/Kingfisher/Sources/Cache/FormatIndicatedCacheSerializer.swift
+Pods/Kingfisher/Sources/Cache/ImageCache.swift
+Pods/Kingfisher/Sources/Cache/MemoryStorage.swift
+Pods/Kingfisher/Sources/Cache/Storage.swift
+Pods/Kingfisher/Sources/Extensions/CPListItem+Kingfisher.swift
+Pods/Kingfisher/Sources/Extensions/ImageView+Kingfisher.swift
+Pods/Kingfisher/Sources/Extensions/NSButton+Kingfisher.swift
+Pods/Kingfisher/Sources/Extensions/NSTextAttachment+Kingfisher.swift
+Pods/Kingfisher/Sources/Extensions/TVMonogramView+Kingfisher.swift
+Pods/Kingfisher/Sources/Extensions/UIButton+Kingfisher.swift
+Pods/Kingfisher/Sources/Extensions/WKInterfaceImage+Kingfisher.swift
+Pods/Kingfisher/Sources/General/KF.swift
+Pods/Kingfisher/Sources/General/KFOptionsSetter.swift
+Pods/Kingfisher/Sources/General/Kingfisher.swift
+Pods/Kingfisher/Sources/General/KingfisherError.swift
+Pods/Kingfisher/Sources/General/KingfisherManager.swift
+Pods/Kingfisher/Sources/General/KingfisherOptionsInfo.swift
+Pods/Kingfisher/Sources/General/ImageSource/AVAssetImageDataProvider.swift
+Pods/Kingfisher/Sources/General/ImageSource/ImageDataProvider.swift
+Pods/Kingfisher/Sources/General/ImageSource/Resource.swift
+Pods/Kingfisher/Sources/General/ImageSource/Source.swift
+Pods/Kingfisher/Sources/Image/Filter.swift
+Pods/Kingfisher/Sources/Image/GIFAnimatedImage.swift
+Pods/Kingfisher/Sources/Image/GraphicsContext.swift
+Pods/Kingfisher/Sources/Image/Image.swift
+Pods/Kingfisher/Sources/Image/ImageDrawing.swift
+Pods/Kingfisher/Sources/Image/ImageFormat.swift
+Pods/Kingfisher/Sources/Image/ImageProcessor.swift
+Pods/Kingfisher/Sources/Image/ImageProgressive.swift
+Pods/Kingfisher/Sources/Image/ImageTransition.swift
+Pods/Kingfisher/Sources/Image/Placeholder.swift
+Pods/Kingfisher/Sources/Networking/AuthenticationChallengeResponsable.swift
+Pods/Kingfisher/Sources/Networking/ImageDataProcessor.swift
+Pods/Kingfisher/Sources/Networking/ImageDownloader.swift
+Pods/Kingfisher/Sources/Networking/ImageDownloaderDelegate.swift
+Pods/Kingfisher/Sources/Networking/ImageModifier.swift
+Pods/Kingfisher/Sources/Networking/ImagePrefetcher.swift
+Pods/Kingfisher/Sources/Networking/RedirectHandler.swift
+Pods/Kingfisher/Sources/Networking/RequestModifier.swift
+Pods/Kingfisher/Sources/Networking/RetryStrategy.swift
+Pods/Kingfisher/Sources/Networking/SessionDataTask.swift
+Pods/Kingfisher/Sources/Networking/SessionDelegate.swift
+Pods/Kingfisher/Sources/SwiftUI/ImageBinder.swift
+Pods/Kingfisher/Sources/SwiftUI/ImageContext.swift
+Pods/Kingfisher/Sources/SwiftUI/KFAnimatedImage.swift
+Pods/Kingfisher/Sources/SwiftUI/KFImage.swift
+Pods/Kingfisher/Sources/SwiftUI/KFImageOptions.swift
+Pods/Kingfisher/Sources/SwiftUI/KFImageProtocol.swift
+Pods/Kingfisher/Sources/SwiftUI/KFImageRenderer.swift
+Pods/Kingfisher/Sources/Utility/Box.swift
+Pods/Kingfisher/Sources/Utility/CallbackQueue.swift
+Pods/Kingfisher/Sources/Utility/Delegate.swift
+Pods/Kingfisher/Sources/Utility/ExtensionHelpers.swift
+Pods/Kingfisher/Sources/Utility/Result.swift
+Pods/Kingfisher/Sources/Utility/Runtime.swift
+Pods/Kingfisher/Sources/Utility/SizeExtensions.swift
+Pods/Kingfisher/Sources/Utility/String+MD5.swift
+Pods/Kingfisher/Sources/Views/AnimatedImageView.swift
+Pods/Kingfisher/Sources/Views/Indicator.swift
+Pods/Pods.xcodeproj/xcuserdata/ugur-pc.xcuserdatad/xcschemes/KeychainSwift.xcscheme
+Pods/Pods.xcodeproj/xcuserdata/ugur-pc.xcuserdatad/xcschemes/Kingfisher.xcscheme
+Pods/Pods.xcodeproj/xcuserdata/ugur-pc.xcuserdatad/xcschemes/SwiftEntryKit.xcscheme
+Pods/SwiftEntryKit/LICENSE
+Pods/SwiftEntryKit/README.md
+Pods/SwiftEntryKit/Source/SwiftEntryKit.swift
+Pods/SwiftEntryKit/Source/Extensions/UIApplication+EKAppearance.swift
+Pods/SwiftEntryKit/Source/Extensions/UIColor+Utils.swift
+Pods/SwiftEntryKit/Source/Extensions/UIEdgeInsets+Utils.swift
+Pods/SwiftEntryKit/Source/Extensions/UIRectCorner+Short.swift
+Pods/SwiftEntryKit/Source/Extensions/UIView+Shadow.swift
+Pods/SwiftEntryKit/Source/Extensions/UIView+Utils.swift
+Pods/SwiftEntryKit/Source/Extensions/QuickLayout/QLCompatibility.swift
+Pods/SwiftEntryKit/Source/Extensions/QuickLayout/QLUtils.swift
+Pods/SwiftEntryKit/Source/Extensions/QuickLayout/UIView+QLContentWrap.swift
+Pods/SwiftEntryKit/Source/Extensions/QuickLayout/UIView+QuickLayout.swift
+Pods/SwiftEntryKit/Source/Extensions/QuickLayout/UIViewArray+QuickLayout.swift
+Pods/SwiftEntryKit/Source/Infra/EKBackgroundView.swift
+Pods/SwiftEntryKit/Source/Infra/EKContentView.swift
+Pods/SwiftEntryKit/Source/Infra/EKEntryView.swift
+Pods/SwiftEntryKit/Source/Infra/EKRootViewController.swift
+Pods/SwiftEntryKit/Source/Infra/EKStyleView.swift
+Pods/SwiftEntryKit/Source/Infra/EKWindow.swift
+Pods/SwiftEntryKit/Source/Infra/EKWindowProvider.swift
+Pods/SwiftEntryKit/Source/Infra/EKWrapperView.swift
+Pods/SwiftEntryKit/Source/Infra/EntryCachingHeuristic.swift
+Pods/SwiftEntryKit/Source/MessageViews/EKAlertMessageView.swift
+Pods/SwiftEntryKit/Source/MessageViews/EKFormMessageView.swift
+Pods/SwiftEntryKit/Source/MessageViews/EKMessageContentView.swift
+Pods/SwiftEntryKit/Source/MessageViews/EKNotificationMessageView.swift
+Pods/SwiftEntryKit/Source/MessageViews/EKPopUpMessageView.swift
+Pods/SwiftEntryKit/Source/MessageViews/EKRatingMessageView.swift
+Pods/SwiftEntryKit/Source/MessageViews/EKSimpleMessageView.swift
+Pods/SwiftEntryKit/Source/MessageViews/MessagesUtils/EKButtonBarView.swift
+Pods/SwiftEntryKit/Source/MessageViews/MessagesUtils/EKButtonView.swift
+Pods/SwiftEntryKit/Source/MessageViews/MessagesUtils/EKRatingSymbolsContainerView.swift
+Pods/SwiftEntryKit/Source/MessageViews/MessagesUtils/EKRatingSymbolView.swift
+Pods/SwiftEntryKit/Source/MessageViews/MessagesUtils/EKTextField.swift
+Pods/SwiftEntryKit/Source/MessageViews/MessagesUtils/EntryAppearanceDescriptor.swift
+Pods/SwiftEntryKit/Source/MessageViews/Notes/EKAccessoryNoteMessageView.swift
+Pods/SwiftEntryKit/Source/MessageViews/Notes/EKImageNoteMessageView.swift
+Pods/SwiftEntryKit/Source/MessageViews/Notes/EKNoteMessageView.swift
+Pods/SwiftEntryKit/Source/MessageViews/Notes/EKProcessingNoteMessageView.swift
+Pods/SwiftEntryKit/Source/MessageViews/Notes/EKXStatusBarMessageView.swift
+Pods/SwiftEntryKit/Source/Model/EKAlertMessage.swift
+Pods/SwiftEntryKit/Source/Model/EKColor.swift
+Pods/SwiftEntryKit/Source/Model/EKNotificationMessage.swift
+Pods/SwiftEntryKit/Source/Model/EKPopUpMessage.swift
+Pods/SwiftEntryKit/Source/Model/EKProperty.swift
+Pods/SwiftEntryKit/Source/Model/EKRatingMessage.swift
+Pods/SwiftEntryKit/Source/Model/EKSimpleMessage.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+Animation.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+BackgroundStyle.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+DisplayMode.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+Duration.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+FrameStyle.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+HapticFeedback.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+LifecycleActions.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+PopBehavior.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+Position.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+PositionConstraints.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+Precedence.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+Presets.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+Scroll.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+Shadow.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+StatusBar.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+UserInteraction.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+Validations.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes+WindowLevel.swift
+Pods/SwiftEntryKit/Source/Model/EntryAttributes/EKAttributes.swift
+Pods/SwiftEntryKit/Source/Utils/GradientView.swift
+Pods/SwiftEntryKit/Source/Utils/HapticFeedbackGenerator.swift
+Pods/SwiftEntryKit/Source/Utils/UIView+Responder.swift
+Pods/Target Support Files/KeychainSwift/KeychainSwift-dummy.m
+Pods/Target Support Files/KeychainSwift/KeychainSwift-Info.plist
+Pods/Target Support Files/KeychainSwift/KeychainSwift-prefix.pch
+Pods/Target Support Files/KeychainSwift/KeychainSwift-umbrella.h
+Pods/Target Support Files/KeychainSwift/KeychainSwift.debug.xcconfig
+Pods/Target Support Files/KeychainSwift/KeychainSwift.modulemap
+Pods/Target Support Files/KeychainSwift/KeychainSwift.release.xcconfig
+Pods/Target Support Files/Kingfisher/Kingfisher-dummy.m
+Pods/Target Support Files/Kingfisher/Kingfisher-Info.plist
+Pods/Target Support Files/Kingfisher/Kingfisher-prefix.pch
+Pods/Target Support Files/Kingfisher/Kingfisher-umbrella.h
+Pods/Target Support Files/Kingfisher/Kingfisher.debug.xcconfig
+Pods/Target Support Files/Kingfisher/Kingfisher.modulemap
+Pods/Target Support Files/Kingfisher/Kingfisher.release.xcconfig
+Pods/Target Support Files/SwiftEntryKit/SwiftEntryKit-dummy.m
+Pods/Target Support Files/SwiftEntryKit/SwiftEntryKit-Info.plist
+Pods/Target Support Files/SwiftEntryKit/SwiftEntryKit-prefix.pch
+Pods/Target Support Files/SwiftEntryKit/SwiftEntryKit-umbrella.h
+Pods/Target Support Files/SwiftEntryKit/SwiftEntryKit.debug.xcconfig
+Pods/Target Support Files/SwiftEntryKit/SwiftEntryKit.modulemap
+Pods/Target Support Files/SwiftEntryKit/SwiftEntryKit.release.xcconfig

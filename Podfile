@@ -7,4 +7,7 @@ target 'UgursDessertShop' do
 
   # Pods for UgursDessertShop
   pod 'Alamofire'
+  pod 'Kingfisher', '~> 7.0'
+  pod 'SwiftEntryKit', '2.0.0'
+  pod 'KeychainSwift', '~> 20.0'
 end
