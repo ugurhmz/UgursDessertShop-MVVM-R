@@ -25,7 +25,7 @@ public struct ProductResponseModel: Decodable {
 }
 
 // MARK: - Category
-public struct Category: Decodable {
+public struct Category: Codable {
     let id, name, categoryImg, createdAt: String?
     let updatedAt: String?
 

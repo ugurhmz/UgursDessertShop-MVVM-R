@@ -18,8 +18,8 @@ public class APIRequestInterceptor: RequestInterceptor {
                       completion: @escaping (Result<URLRequest, Error>) -> Void) {
         
         var urlRequest = urlRequest
-        //let accessToken = KeychainSwift().get(Keychain.token)
-        let accessToken: String? = "MY_TOKEN"
+        let accessToken = KeychainSwift().get(Keychain.token)
+        //let accessToken: String? = "MY_TOKEN"
         
         if let accessToken = accessToken {
             urlRequest.headers.add(name: "token", value: "Bearer \(accessToken)")

@@ -8,9 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		540805BFDC19DD5943D57E59 /* Pods_UgursDessertShop.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EF46838F215E2B472DD9AD /* Pods_UgursDessertShop.framework */; };
+		630861CF2879F53B00284534 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630861CE2879F53B00284534 /* Keychain.swift */; };
 		631DC01528797DEF00331986 /* CartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC01428797DEF00331986 /* CartViewModel.swift */; };
 		631DC01728797E1600331986 /* CartRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC01628797E1600331986 /* CartRouter.swift */; };
 		631DC01928797E1C00331986 /* CartRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC01828797E1C00331986 /* CartRoute.swift */; };
+		631DC01B28797F2100331986 /* CartRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC01A28797F2100331986 /* CartRequest.swift */; };
+		631DC01D2879815100331986 /* CartResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631DC01C2879815100331986 /* CartResponseModel.swift */; };
 		633667E62878F3ED00D2515D /* ProductRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633667E52878F3ED00D2515D /* ProductRequest.swift */; };
 		6362A84128651E9300B12591 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6362A84028651E9300B12591 /* AppDelegate.swift */; };
 		6362A84528651E9300B12591 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6362A84428651E9300B12591 /* HomeVC.swift */; };
@@ -72,14 +75,16 @@
 		63E044C1286B6E25008D9499 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E044C0286B6E25008D9499 /* CartView.swift */; };
 		63E044C3286B6E50008D9499 /* CheckOutReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E044C2286B6E50008D9499 /* CheckOutReusableView.swift */; };
 		63E044C5286B6EC2008D9499 /* Extension+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E044C4286B6EC2008D9499 /* Extension+UIButton.swift */; };
-		63E044C8286B76B2008D9499 /* CartResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E044C7286B76B2008D9499 /* CartResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		01EF46838F215E2B472DD9AD /* Pods_UgursDessertShop.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UgursDessertShop.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		630861CE2879F53B00284534 /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		631DC01428797DEF00331986 /* CartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewModel.swift; sourceTree = "<group>"; };
 		631DC01628797E1600331986 /* CartRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRouter.swift; sourceTree = "<group>"; };
 		631DC01828797E1C00331986 /* CartRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRoute.swift; sourceTree = "<group>"; };
+		631DC01A28797F2100331986 /* CartRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRequest.swift; sourceTree = "<group>"; };
+		631DC01C2879815100331986 /* CartResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartResponseModel.swift; sourceTree = "<group>"; };
 		633667E52878F3ED00D2515D /* ProductRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRequest.swift; sourceTree = "<group>"; };
 		6362A83D28651E9300B12591 /* UgursDessertShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UgursDessertShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6362A84028651E9300B12591 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -143,7 +148,6 @@
 		63E044C0286B6E25008D9499 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
 		63E044C2286B6E50008D9499 /* CheckOutReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOutReusableView.swift; sourceTree = "<group>"; };
 		63E044C4286B6EC2008D9499 /* Extension+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIButton.swift"; sourceTree = "<group>"; };
-		63E044C7286B76B2008D9499 /* CartResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartResponse.swift; sourceTree = "<group>"; };
 		98FE681527163EAEB6985FE5 /* Pods-UgursDessertShop.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UgursDessertShop.debug.xcconfig"; path = "Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop.debug.xcconfig"; sourceTree = "<group>"; };
 		FB7B0284D650D57AEC3CD51F /* Pods-UgursDessertShop.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UgursDessertShop.release.xcconfig"; path = "Target Support Files/Pods-UgursDessertShop/Pods-UgursDessertShop.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -294,6 +298,7 @@
 				6362A8652865211E00B12591 /* AppColors.swift */,
 				6384371028662BCB0013179C /* SectionEnums.swift */,
 				63A49F3B2869E14900BACF73 /* Closures.swift */,
+				630861CE2879F53B00284534 /* Keychain.swift */,
 			);
 			path = Consts;
 			sourceTree = "<group>";
@@ -364,7 +369,6 @@
 			children = (
 				63A49F382869C60B00BACF73 /* RegisterResponse.swift */,
 				6387780C2868CFAA0041E810 /* LoginResponse.swift */,
-				63E044C7286B76B2008D9499 /* CartResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -398,6 +402,7 @@
 			isa = PBXGroup;
 			children = (
 				633667E52878F3ED00D2515D /* ProductRequest.swift */,
+				631DC01A28797F2100331986 /* CartRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -407,6 +412,7 @@
 			children = (
 				63E044B9286B3547008D9499 /* ProductResponseModel.swift */,
 				638B71392879426B00B577B1 /* BaseResponse.swift */,
+				631DC01C2879815100331986 /* CartResponseModel.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -658,6 +664,7 @@
 				6362A84528651E9300B12591 /* HomeVC.swift in Sources */,
 				631DC01928797E1C00331986 /* CartRoute.swift in Sources */,
 				6362A84128651E9300B12591 /* AppDelegate.swift in Sources */,
+				630861CF2879F53B00284534 /* Keychain.swift in Sources */,
 				639120D8286F6A0D008F8162 /* Extension+Number.swift in Sources */,
 				63AF01BE2877454E007724D0 /* RequestMethod.swift in Sources */,
 				63AF01CF2877475C007724D0 /* BaseViewModel.swift in Sources */,
@@ -699,8 +706,8 @@
 				6384370D2865F8C30013179C /* ProductsCell.swift in Sources */,
 				63AF01AF287744FC007724D0 /* AppRouter.swift in Sources */,
 				63AF01D8287748A8007724D0 /* HomeRouter.swift in Sources */,
-				63E044C8286B76B2008D9499 /* CartResponse.swift in Sources */,
 				63AF01C32877454E007724D0 /* DataProviderProtocol.swift in Sources */,
+				631DC01D2879815100331986 /* CartResponseModel.swift in Sources */,
 				6384371128662BCB0013179C /* SectionEnums.swift in Sources */,
 				6384370F2865F8D00013179C /* CategoryCell.swift in Sources */,
 				63AF01C72877458B007724D0 /* AppRouterContainer.swift in Sources */,
@@ -713,6 +720,7 @@
 				63AF01BF2877454E007724D0 /* APIDecodableResponseRequest.swift in Sources */,
 				63AF01D6287748A1007724D0 /* HomeViewModel.swift in Sources */,
 				63E044C3286B6E50008D9499 /* CheckOutReusableView.swift in Sources */,
+				631DC01B28797F2100331986 /* CartRequest.swift in Sources */,
 				63AF01BD2877454E007724D0 /* DecodableResponseRequest.swift in Sources */,
 				63E044BE286B6DDC008D9499 /* CartCollectionCell.swift in Sources */,
 				63AF01DA287748AF007724D0 /* HomeRoute.swift in Sources */,
