@@ -116,6 +116,7 @@ class HomeVC: BaseViewController<HomeViewModel> {
         setConstraints()
         generalCollectionView.allowsMultipleSelection = false
         searchBarConfigure()
+        viewModel.fetchAllProducts(categoryQuery: "")
     }
     
     
@@ -139,6 +140,11 @@ class HomeVC: BaseViewController<HomeViewModel> {
         generalCollectionView.dataSource = self
         generalCollectionView.delegate = self
         generalCollectionView.collectionViewLayout = HomeVC.createCompositionalLayout()
+        
+        self.viewModel.reloadData = { [weak self] in
+            guard let self = self else { return }
+            self.generalCollectionView.reloadData()
+        }
     }
     
     private func  searchBarConfigure() {
@@ -191,7 +197,10 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         case Sections.CategoriesSection.rawValue:
             return myArr.count
         case Sections.ProductsSection.rawValue:
-            return 7
+            guard let prdArr = viewModel.productArray else {
+                return 0
+            }
+            return prdArr.count
         default:
             return 5
         }
@@ -216,6 +225,9 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         case Sections.ProductsSection.rawValue:
             let productsCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: ProductsCell.identifier, for: indexPath) as! ProductsCell
             productsCell.backgroundColor = .white
+            if let  prdModel = viewModel.productArray?[indexPath.item] {
+                productsCell.configure(productModel: prdModel)
+            }
             
             
             return productsCell

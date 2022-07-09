@@ -2,7 +2,7 @@
 //  TabBarVC.swift
 //  UgursDessertShop
 //
-//  Created by ugur-pc on 24.06.2022.
+//  Created by ugur-pc on 7.07.2022.
 //
 
 import UIKit
@@ -13,11 +13,11 @@ class MainTabBarVC: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let homeViewController = createHomeViewController()
-      //  let favoritesViewController = createFavoritesViewController()
+        let cartViewController = createCartViewController()
         
         viewControllers = [
             homeViewController,
-            //favoritesViewController
+            cartViewController
         ]
     }
     
@@ -31,15 +31,16 @@ class MainTabBarVC: UITabBarController {
         return navController
     }
     
-//    private func createFavoritesViewController() -> UINavigationController {
-//        let favoritesRouter = FavoritesRouter()
-//        let favoritesViewModel = FavoritesViewModel(router: favoritesRouter)
-//        let favoritesViewController = FavoritesViewController(viewModel: favoritesViewModel)
-//        let navController = MainNavigationController(rootViewController: favoritesViewController)
-//        navController.tabBarItem.image = .icHeart
-//        favoritesRouter.viewController = favoritesViewController
-//        return navController
-//    }
+    private func createCartViewController() -> UINavigationController {
+        let cartRouter = CartRouter()
+        let cartViewModel = CartViewModel(router: cartRouter)
+        let cartViewController = CartVC(viewModel: cartViewModel)
+        let navController = MainNavigationController(rootViewController: cartViewController)
+        navController.tabBarItem.image = UIImage(systemName: "cart")
+        cartRouter.viewController = cartViewController
+        return navController
+    }
+    
     
 
 }

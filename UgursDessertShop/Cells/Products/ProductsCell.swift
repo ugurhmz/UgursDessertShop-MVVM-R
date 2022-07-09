@@ -98,15 +98,15 @@ class ProductsCell: UICollectionViewCell {
        }
 }
 extension ProductsCell {
-    func configure(productModel: ProductResponse) {
-        self.prdNameLbl.text = productModel.title
-        if let price = productModel.price {
+    func configure(productModel: ProductsCellModel) {
+        self.prdNameLbl.text = productModel.prdNameLbl
+        if let price =  productModel.prdPriceLbl{
             self.prdPriceLbl.text = "$ \(price) / gr"
         }
-        if let img = productModel.prdImg {
+        
+        if let img = productModel.prdImgView {
             self.prdimgView.image = UIImage(named: "\(img)")
         }
-      
     }
     
     

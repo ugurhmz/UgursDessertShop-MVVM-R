@@ -23,7 +23,7 @@ public extension APIDecodableResponseRequest {
 //MARK: - url
 public extension APIDecodableResponseRequest {
     var url: String {
-        return "http://localhost:3500/ugurapi/user" + path
+        return "http://localhost:3000/ugurapi" + path
     }
 }
 

@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct ProductResponse: Codable {
+
+public struct ProductResponseModel: Decodable {
     let id, title, description, prdImg: String?
     let categories: [Category]?
     let size: String?
@@ -24,7 +25,7 @@ struct ProductResponse: Codable {
 }
 
 // MARK: - Category
-struct Category: Codable {
+public struct Category: Decodable {
     let id, name, categoryImg, createdAt: String?
     let updatedAt: String?
 

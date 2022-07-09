@@ -1,22 +1,22 @@
 //
-//  HomeRoute.swift
+//  CartRoute.swift
 //  UgursDessertShop
 //
-//  Created by ugur-pc on 7.07.2022.
+//  Created by ugur-pc on 9.07.2022.
 //
 
-import UIKit
+import Foundation
 
-protocol HomeRoute {
-    func placeOnWindowHome()
+protocol CartRoute {
+    func placeOnCart()
 }
 
-extension HomeRoute where Self: RouterProtocol {
+extension CartRoute where Self: RouterProtocol {
     
-    func placeOnWindowHome() {
-        let router = HomeRouter()
-        let viewModel = HomeViewModel(router: router)
-        let viewController = HomeVC(viewModel: viewModel)
+    func placeOnCart() {
+        let router = CartRouter()
+        let viewModel = CartViewModel(router: router)
+        let viewController = CartVC(viewModel: viewModel)
         let navigationController = MainNavigationController(rootViewController: viewController)
         
         let transition = PlaceOnWindowTransition()

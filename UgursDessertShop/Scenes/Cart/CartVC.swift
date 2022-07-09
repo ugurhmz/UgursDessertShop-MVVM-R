@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CartVC: UIViewController {
+class CartVC: BaseViewController<CartViewModel> {
     private let checkOutView = CartView()
     let deleteAllBtn = UIButton(type: .system)
     
