@@ -25,7 +25,7 @@ class RegisterVC: UIViewController {
                navigationItem.compactAppearance?.buttonAppearance = buttonAppearance
                
                button.image = UIImage(systemName: "chevron.left")
-               button.action = #selector(backToHomePageBtn)
+              
                navBar.layer.zPosition = 1
                
                navigationItem.leftBarButtonItem = button
@@ -34,11 +34,7 @@ class RegisterVC: UIViewController {
        }()
     
     
-    @objc func backToHomePageBtn() {
-        let view = LoginVC()
-        let nav = UINavigationController(rootViewController: view)
-        self.view.window?.rootViewController = nav
-    }
+  
     private let myview: UIView = {
         let view = UIView()
         view.backgroundColor = .white

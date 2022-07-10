@@ -9,12 +9,13 @@ import Foundation
 import UIKit
 
 final class AppRouter: Router, AppRouter.Routes {
-    typealias Routes = MainTabBarRoute
+    typealias Routes = MainTabBarRoute & LoginRoute
     
     static let shared = AppRouter()
     
     func startApp() {
-        placeOnWindowMainTabBar()
+       // placeOnWindowMainTabBar()
+        placeOnLogin()
     }
     
     private func topViewController() -> UIViewController? {

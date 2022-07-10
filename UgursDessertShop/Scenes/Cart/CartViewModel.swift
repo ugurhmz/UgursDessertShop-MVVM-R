@@ -13,7 +13,7 @@ final class CartViewModel: BaseViewModel<CartRouter> {
     private let keychain = KeychainSwift()
     
     init(router: CartRouter) {
-          super.init(router: router)
+        super.init(router: router)
     }
     
     
