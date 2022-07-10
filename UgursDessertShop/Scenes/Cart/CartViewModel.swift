@@ -32,9 +32,12 @@ extension CartViewModel {
             case .success(let response):
                 if let _ = response?.id {
                     if let responseItems = response?.items {
+                      
                         self.currentUserCartItems = responseItems
                         self.reloadDataClosure?()
                     }
+                    
+                    print("response", response?.items)
                 }
                 
             case .failure(let error):

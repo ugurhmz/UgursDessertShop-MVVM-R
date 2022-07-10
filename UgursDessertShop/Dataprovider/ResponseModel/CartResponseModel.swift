@@ -26,12 +26,12 @@ public struct CartResponseModel: Codable {
 
 // MARK: - Item
 public struct Item: Codable {
-    var itemID: ItemID?
+    var productId: ItemID?
     var quantity: Int?
     var id: String?
 
     enum CodingKeys: String, CodingKey {
-        case itemID = "itemId"
+        case productId = "itemId"
         case quantity
         case id = "_id"
     }

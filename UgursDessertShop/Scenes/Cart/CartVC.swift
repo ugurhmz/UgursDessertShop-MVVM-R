@@ -33,6 +33,11 @@ class CartVC: BaseViewController<CartViewModel> {
         setConstraints()
         generalCollectionView.delegate = self
         generalCollectionView.dataSource = self
+       
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if let userid = self.keychain.get("userid") {
             viewModel.fetchUserCart(userId: userid)
             
@@ -42,7 +47,6 @@ class CartVC: BaseViewController<CartViewModel> {
                 self.generalCollectionView.reloadData()
             }
         }
-        
     }
     
     

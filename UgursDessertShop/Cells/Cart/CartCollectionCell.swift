@@ -142,24 +142,26 @@ extension CartCollectionCell {
 extension CartCollectionCell {
     
     func fillData(cartItemModel: Item){
-        self.prdTitleLbl.text = cartItemModel.itemID?.title
+        print("cartmodel", cartItemModel)
+        
+        self.prdTitleLbl.text = cartItemModel.productId?.title
         guard let quantity = cartItemModel.quantity  else  { return }
         if String(quantity).count > 4 {
             self.stepperCountLbl.font = .systemFont(ofSize: 15)
         }
         self.stepperCountLbl.text = "\(quantity)"
-        if let prdImg = cartItemModel.itemID?.prdImg {
+        if let prdImg = cartItemModel.productId?.prdImg {
             self.prdImgView.image = UIImage(named: "\(prdImg)")
         }
-        
 
-        if let  prdPrice = cartItemModel.itemID?.price {
+
+        if let  prdPrice = cartItemModel.productId?.price {
             let totalPrice = Double(quantity) * prdPrice
             self.prdPriceLbl.text = "$ \(numberFormat(totalPrice))"
         }
-        
 
-        if let  prdDescription = cartItemModel.itemID?.itemDescription {
+
+        if let  prdDescription = cartItemModel.productId?.itemDescription {
             self.prdDescriptionLbl.text = prdDescription
         }
       
