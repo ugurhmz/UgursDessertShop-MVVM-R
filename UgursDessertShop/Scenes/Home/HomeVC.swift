@@ -117,6 +117,7 @@ class HomeVC: BaseViewController<HomeViewModel> {
         generalCollectionView.allowsMultipleSelection = false
         searchBarConfigure()
         viewModel.fetchAllProducts(categoryQuery: "")
+        //userProfileIconSettings("ugur")
     }
     
     
@@ -173,7 +174,7 @@ class HomeVC: BaseViewController<HomeViewModel> {
             navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
 
             navigationController?.navigationBar.prefersLargeTitles = true
-           
+          
             }
     }
 }

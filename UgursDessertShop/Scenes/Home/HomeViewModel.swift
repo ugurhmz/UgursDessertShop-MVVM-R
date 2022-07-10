@@ -39,13 +39,12 @@ extension HomeViewModel {
                                              prdImgView: $0.prdImg)
                   }) else { return}
                 
-                print("movieArr", movieArr)
                 self.productArray = movieArr
                 self.reloadData?()
                 
            case .failure(let error):
-              // SnackHelper.showSnack(message:error.localizedDescription)
-                print("ERR",error.localizedDescription)
+              SnackHelper.showSnack(message:error.localizedDescription)
+                
           }
         }
     }

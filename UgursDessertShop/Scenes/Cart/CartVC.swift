@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import KeychainSwift
 
 class CartVC: BaseViewController<CartViewModel> {
+    private let keychain = KeychainSwift()
     private let checkOutView = CartView()
     let deleteAllBtn = UIButton(type: .system)
     
@@ -31,12 +33,15 @@ class CartVC: BaseViewController<CartViewModel> {
         setConstraints()
         generalCollectionView.delegate = self
         generalCollectionView.dataSource = self
-        
-      
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        if let userid = self.keychain.get("userid") {
+            viewModel.fetchUserCart(userId: userid)
+            
+            viewModel.reloadDataClosure = { [weak self] in
+                guard let self = self else { return}
+                print("currentUserCartItems", self.viewModel.currentUserCartItems)
+                self.generalCollectionView.reloadData()
+            }
+        }
         
     }
     
@@ -100,14 +105,21 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return 4
+        guard let items = self.viewModel.currentUserCartItems else {
+            return 0
+        }
+        
+        return items.count
     }
    
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: CartCollectionCell.identifier, for: indexPath) as! CartCollectionCell
-        
+        if let items = self.viewModel.currentUserCartItems  {
+            cell.fillData(cartItemModel: items[indexPath.item])
+        }
+       
         return cell
     }
     

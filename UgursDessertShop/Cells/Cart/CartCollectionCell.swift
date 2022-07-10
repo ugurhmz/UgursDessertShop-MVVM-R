@@ -140,34 +140,30 @@ extension CartCollectionCell {
 }
 
 extension CartCollectionCell {
-//    func fillData(cartItemModel: CartProductResponse) {
-//        
-//        guard let quantity = cartItemModel.quantity  else  { return }
-//        
-//        if String(quantity).count > 4 {
-//            self.stepperCountLbl.font = .systemFont(ofSize: 15)
-//        }
-//        self.stepperCountLbl.text = "\(quantity)"
-//        
-//        
-//        if let cartProduct = cartItemModel.itemId {
-//            self.prdTitleLbl.text = cartProduct.title
-//           
-//            if let  prdPrice = cartProduct.price {
-//                let totalPrice = Double(quantity) * prdPrice
-//                self.prdPriceLbl.text = "$ \(numberFormat(totalPrice))"
-//            }
-//            
-//            if let  prdDescription = cartProduct.prdDescription {
-//                self.prdDescriptionLbl.text = prdDescription
-//            }
-//            
-//            if let prdImg = cartProduct.prdImg {
-//                self.prdImgView.image = UIImage(named: "\(prdImg)")
-//            }
-//                
-//        }
-//    }
+    
+    func fillData(cartItemModel: Item){
+        self.prdTitleLbl.text = cartItemModel.itemID?.title
+        guard let quantity = cartItemModel.quantity  else  { return }
+        if String(quantity).count > 4 {
+            self.stepperCountLbl.font = .systemFont(ofSize: 15)
+        }
+        self.stepperCountLbl.text = "\(quantity)"
+        if let prdImg = cartItemModel.itemID?.prdImg {
+            self.prdImgView.image = UIImage(named: "\(prdImg)")
+        }
+        
+
+        if let  prdPrice = cartItemModel.itemID?.price {
+            let totalPrice = Double(quantity) * prdPrice
+            self.prdPriceLbl.text = "$ \(numberFormat(totalPrice))"
+        }
+        
+
+        if let  prdDescription = cartItemModel.itemID?.itemDescription {
+            self.prdDescriptionLbl.text = prdDescription
+        }
+      
+    }
     
     
     

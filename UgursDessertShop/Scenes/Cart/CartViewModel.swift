@@ -11,6 +11,8 @@ import KeychainSwift
 
 final class CartViewModel: BaseViewModel<CartRouter> {
     private let keychain = KeychainSwift()
+    var currentUserCartItems: [Item]?
+    var reloadDataClosure: VoidClosure?
     
     init(router: CartRouter) {
         super.init(router: router)
@@ -21,20 +23,23 @@ final class CartViewModel: BaseViewModel<CartRouter> {
 
 extension CartViewModel {
     
-    func fetchUserCart(email: String, userId: String){
-        guard keychain.get(Keychain.token) != nil else {
-            let request = CartRequest(email: email, userId: userId)
-            dataProvider.request(for: request) { [weak self] (result) in
-                guard let self = self else { return }
-                
-                switch result {
-                case .success(let response):
-                    print(response)
-                case .failure(let error):
-                    print(error.localizedDescription)
+    func fetchUserCart(userId: String){
+        let request = CartRequest(userId: userId)
+        dataProvider.request(for: request) { [weak self] (result) in
+            guard let self = self else { return }
+
+            switch result {
+            case .success(let response):
+                if let _ = response?.id {
+                    if let responseItems = response?.items {
+                        self.currentUserCartItems = responseItems
+                        self.reloadDataClosure?()
+                    }
                 }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-            return 
         }
         
     }

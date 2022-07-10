@@ -58,6 +58,9 @@ extension LoginViewModel {
                 
                 if let loginToken = response?.accessToken {
                         self.keychain.set(loginToken, forKey: Keychain.token)
+                    if let userid = response?.id {
+                        self.keychain.set(userid, forKey: "userid")
+                    }
                         self.currentUser = response
                         self.reloadDataClosure?()
                         self.pushHome()

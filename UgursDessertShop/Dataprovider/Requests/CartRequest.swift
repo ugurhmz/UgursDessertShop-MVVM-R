@@ -13,8 +13,7 @@ public struct CartRequest: APIDecodableResponseRequest {
     public var path: String = "/carts/user-id/{userId}"
     public var parameters: RequestParameters = [:]
     
-    public init(email: String, userId: String) {
-        parameters["email"] = email
+    public init(userId: String) {
         path = "/carts/user-id/\(userId)"
         
     }
