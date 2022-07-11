@@ -33,7 +33,7 @@ class CartVC: BaseViewController<CartViewModel> {
         setConstraints()
         generalCollectionView.delegate = self
         generalCollectionView.dataSource = self
-       
+      
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -43,7 +43,7 @@ class CartVC: BaseViewController<CartViewModel> {
             
             viewModel.reloadDataClosure = { [weak self] in
                 guard let self = self else { return}
-                print("currentUserCartItems", self.viewModel.currentUserCartItems)
+                print("reload")
                 self.generalCollectionView.reloadData()
             }
         }
@@ -68,10 +68,7 @@ class CartVC: BaseViewController<CartViewModel> {
                  navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
                  navigationController?.navigationBar.prefersLargeTitles = false
                  }
-               
-       
-        
-          
+ 
                deleteAllBtn.setImage(UIImage(systemName: "trash.circle.fill"), for: .normal)
                deleteAllBtn.setTitle("Delete All", for: .normal)
                deleteAllBtn.tintColor = CartDeleteAllTintColor
@@ -120,9 +117,34 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: CartCollectionCell.identifier, for: indexPath) as! CartCollectionCell
-        if let items = self.viewModel.currentUserCartItems  {
-            cell.fillData(cartItemModel: items[indexPath.item])
+        
+        let cellViewModel = viewModel.cellItemAt(indexPath: indexPath)
+        cell.setData(viewModel: cellViewModel)
+      
+        
+        cell.addToCartClosure =  { [weak self] in
+            guard let self = self else { return }
+        
         }
+        
+        
+//        let cell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: CartCollectionCell.identifier, for: indexPath) as! CartCollectionCell
+//
+//        if let items = self.viewModel.currentUserCartItems  {
+//            cell.fillData(cartItemModel: items[indexPath.item])
+//
+//            cell.addToCartClosure = { [weak self] in
+//                guard let self = self else {return }
+//                if let userId = self.keychain.get("userid") {
+//                if let prdId = items[indexPath.item].productId?.id {
+//                    self.viewModel.addToCartItem(userId: userId, itemId:prdId , quantity: 1)
+//                    }
+//                }
+//                self.generalCollectionView.reloadData()
+//            }
+//
+//        }
+        
        
         return cell
     }
@@ -150,7 +172,8 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-      
+        
+        
     }
 }
 

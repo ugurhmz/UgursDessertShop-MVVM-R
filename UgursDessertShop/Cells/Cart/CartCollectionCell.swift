@@ -10,6 +10,7 @@ import UIKit
 class CartCollectionCell: UICollectionViewCell {
     
     static var identifier = "CartCollectionCell"
+    var addToCartClosure: VoidClosure?
     
     private let prdImgView: UIImageView = {
          let iv = UIImageView()
@@ -107,6 +108,8 @@ class CartCollectionCell: UICollectionViewCell {
         return stackView
     }()
 
+    weak var viewModel: CartCellProtocol?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -134,40 +137,34 @@ extension CartCollectionCell {
         
     }
     @objc func clickPlusBtn(){
-        
-        
+        if let addCartAction = addToCartClosure {
+               addCartAction()
+       }
     }
 }
 
 extension CartCollectionCell {
     
-    func fillData(cartItemModel: Item){
-        print("cartmodel", cartItemModel)
+    public func setData(viewModel: CartCellProtocol) {
+        self.viewModel = viewModel
+        self.prdTitleLbl.text = viewModel.prdTitle
+        self.prdDescriptionLbl.text = viewModel.prdDescription
+        guard let quantity = viewModel.stepperCount  else  { return }
         
-        self.prdTitleLbl.text = cartItemModel.productId?.title
-        guard let quantity = cartItemModel.quantity  else  { return }
+        if let prdPrice = viewModel.prdPrice {
+            let totalPrice = Double(quantity) * prdPrice
+            self.prdPriceLbl.text = "$ \(numberFormat(totalPrice))"
+        }
+        
         if String(quantity).count > 4 {
             self.stepperCountLbl.font = .systemFont(ofSize: 15)
         }
         self.stepperCountLbl.text = "\(quantity)"
-        if let prdImg = cartItemModel.productId?.prdImg {
+        
+        if let prdImg = viewModel.prdImgUrl {
             self.prdImgView.image = UIImage(named: "\(prdImg)")
         }
-
-
-        if let  prdPrice = cartItemModel.productId?.price {
-            let totalPrice = Double(quantity) * prdPrice
-            self.prdPriceLbl.text = "$ \(numberFormat(totalPrice))"
-        }
-
-
-        if let  prdDescription = cartItemModel.productId?.itemDescription {
-            self.prdDescriptionLbl.text = prdDescription
-        }
-      
     }
-    
-    
     
 }
 
