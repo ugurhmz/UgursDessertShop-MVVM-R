@@ -20,7 +20,7 @@ class CheckOutReusableView: UICollectionReusableView {
          return buton
      }()
     
-    private let dontHaveCartItem: UILabel = {
+    var dontHaveCartItem: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 30, weight: .bold)
         label.text = "You do not have any products in your cart"

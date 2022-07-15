@@ -12,6 +12,7 @@ class CartVC: BaseViewController<CartViewModel> {
     private let keychain = KeychainSwift()
     private let checkOutView = CartView()
     let deleteAllBtn = UIButton(type: .system)
+    var userCartItemCount: Int?
     
     // General CollectionView
     private var generalCollectionView: UICollectionView = {
@@ -44,6 +45,16 @@ class CartVC: BaseViewController<CartViewModel> {
           
           self.viewModel.reloadMyData = { [weak self] in
               guard let self = self else { return}
+              print("reload")
+              guard let userCartItemscount = self.viewModel.currentUserCartItems?.count else {
+                  return
+                  
+              }
+              self.userCartItemCount = userCartItemscount
+              if   self.userCartItemCount ?? 0 < 4 {
+                   self.checkOutView.isHidden = true
+              }
+              
               self.generalCollectionView.reloadData()
           }
     }
@@ -139,6 +150,20 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
 
         if kind == UICollectionView.elementKindSectionFooter {
             let footerCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier:CheckOutReusableView.Identifier , for: indexPath) as! CheckOutReusableView
+            
+           
+            
+            if self.userCartItemCount == 0 {
+                footerCell.dontHaveCartItem.isHidden = false
+                footerCell.checkOutBtn.isHidden = true
+            } else if self.userCartItemCount ?? 0 > 0 && self.userCartItemCount ?? 0  < 4 {
+                footerCell.checkOutBtn.isHidden = false
+                footerCell.dontHaveCartItem.isHidden = true
+            }
+            
+            
+            
+            
             return footerCell
         }
         return UICollectionReusableView()

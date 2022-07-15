@@ -50,6 +50,15 @@ extension CartViewModel {
 
             switch result {
             case .success(let response):
+                print("response", response?.id)
+                
+                if response?.id == nil {
+                    self.currentUserCartItems = []
+                    self.reloadMyData?()
+                    return
+                }
+                
+                
                 
                 if let usertCartId = response?.id {
                     if let responseItems = response?.items {
@@ -68,6 +77,8 @@ extension CartViewModel {
                         self.reloadMyData?()
                     }
                 }
+                
+               
             case .failure(let error):
                 print(error.localizedDescription)
             }
