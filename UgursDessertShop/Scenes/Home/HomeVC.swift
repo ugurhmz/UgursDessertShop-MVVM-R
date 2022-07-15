@@ -6,12 +6,16 @@
 //
 
 import UIKit
+import KeychainSwift
 
 class HomeVC: BaseViewController<HomeViewModel> {
     var lastIndexActive:IndexPath = [1 ,0]
+    private let keychain = KeychainSwift()
     var selectedIndex = Int ()
     var myArr  = ["a","b","c","a","b","c","a"]
+   
     
+    var userID: String?
     private let searchController = UISearchController(searchResultsController: nil)
     
     private let generalCollectionView: UICollectionView = {
@@ -117,6 +121,10 @@ class HomeVC: BaseViewController<HomeViewModel> {
         generalCollectionView.allowsMultipleSelection = false
         searchBarConfigure()
         viewModel.fetchAllProducts(categoryQuery: "")
+       
+        
+        guard let userId =  self.keychain.get("userid") else {return }
+        userID = userId
         //userProfileIconSettings("ugur")
     }
     
@@ -228,6 +236,19 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
             productsCell.backgroundColor = .white
             if let  prdModel = viewModel.productArray?[indexPath.item] {
                 productsCell.configure(productModel: prdModel)
+            }
+         
+            
+            
+            productsCell.addCartClosure = { [weak self] in
+                guard let self = self else { return}
+                if let  prdModelId = self.viewModel.productArray?[indexPath.item].prdId {
+        
+                    self.viewModel.addToCartItem(userId: self.userID ?? "",
+                                                     itemId: prdModelId,
+                                                     quantity: 1)
+                }
+
             }
             
             

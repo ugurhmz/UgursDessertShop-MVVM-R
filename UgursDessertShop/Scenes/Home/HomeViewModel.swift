@@ -34,7 +34,8 @@ extension HomeViewModel {
             case .success(let response):
               
                 guard let movieArr = response?.map({
-                    return ProductsCellModel(prdNameLbl: $0.title,
+                    return ProductsCellModel(prdId: $0.id,
+                                             prdNameLbl: $0.title,
                                              prdPriceLbl: $0.price,
                                              prdImgView: $0.prdImg)
                   }) else { return}
@@ -46,6 +47,22 @@ extension HomeViewModel {
               SnackHelper.showSnack(message:error.localizedDescription)
                 
           }
+        }
+    }
+    
+    //MARK: - ADD TO CART ITEM
+    func addToCartItem(userId: String, itemId: String, quantity: Int){
+        let request = AddToCartRequest(userId: userId, itemId: itemId, quantity: quantity)
+        dataProvider.request(for: request) { [weak self] (result) in
+            guard let _ = self else { return }
+
+            switch result {
+            case .success(let response):
+                print(response!)
+
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
     }
 }

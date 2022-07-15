@@ -34,15 +34,18 @@ class CartVC: BaseViewController<CartViewModel> {
         generalCollectionView.delegate = self
         generalCollectionView.dataSource = self
       
-        if let userid = self.keychain.get("userid") {
-            viewModel.fetchUserCart(userId: userid)
-        }
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        self.viewModel.reloadMyData = { [weak self] in
-            guard let self = self else { return}
-            self.generalCollectionView.reloadData()
-        }
-        
+          if let userid = self.keychain.get("userid") {
+              viewModel.fetchUserCart(userId: userid)
+          }
+          
+          self.viewModel.reloadMyData = { [weak self] in
+              guard let self = self else { return}
+              self.generalCollectionView.reloadData()
+          }
     }
     
     
