@@ -37,3 +37,14 @@ class CustomTextField : UITextField {
     }
     
 }
+
+extension UITextField{
+
+    func setLeftImage(imageName:String) {
+
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        imageView.image = UIImage(systemName:  imageName)
+        self.rightView = imageView;
+        self.leftViewMode = .always
+    }
+}

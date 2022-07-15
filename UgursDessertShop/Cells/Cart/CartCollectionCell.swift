@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CartCollectionCell: UICollectionViewCell {
+class CartCollectionCell: UICollectionViewCell{
     
     static var identifier = "CartCollectionCell"
     var addToCartClosure: VoidClosure?
@@ -86,7 +86,7 @@ class CartCollectionCell: UICollectionViewCell {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.distribution = .fillEqually
+        //stackView.distribution = .fillEqually
         return stackView
     }()
     
@@ -105,8 +105,11 @@ class CartCollectionCell: UICollectionViewCell {
         
         pickerView.delegate = self
         pickerView.dataSource = self
-        
         prdtextField.inputView = pickerView
+        prdstackView.setCustomSpacing(27, after: stepperCountLbl)
+        prdtextField.leftViewMode = .always
+        prdtextField.leftView = UIImageView(image: UIImage(systemName: "chevron.down.circle")?.withRenderingMode(.alwaysOriginal))
+        prdtextField.widthAnchor.constraint(equalToConstant: 28).isActive = true
     }
     
     private func setStyle(){
@@ -121,7 +124,9 @@ class CartCollectionCell: UICollectionViewCell {
 }
 
 
+
 extension CartCollectionCell: UIPickerViewDelegate, UIPickerViewDataSource {
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -138,9 +143,9 @@ extension CartCollectionCell: UIPickerViewDelegate, UIPickerViewDataSource {
         stepperCountLbl.text =  "\(pickerNumbers[row])"
         strClosure?("\(pickerNumbers[row])")
         let quantity = pickerNumbers[row]
-        print("selfprice",self.prdPrice )
+       
         if let price = self.prdPrice {
-            self.prdPriceLbl.text = "$ \(price * Double(quantity) )"
+            self.prdPriceLbl.text = "$ \(numberFormat(price * Double(quantity)))"
         }
         prdtextField.resignFirstResponder()
     }
@@ -158,7 +163,7 @@ extension CartCollectionCell {
         guard let price = viewModel.prdPrice else { return }
        
         self.prdPrice = price
-        self.prdPriceLbl.text = "$ \(price * Double(quantity) )"
+        self.prdPriceLbl.text = "$ \(numberFormat(price * Double(quantity)))"
         
         if String(quantity).count > 4 {
             self.stepperCountLbl.font = .systemFont(ofSize: 15)
@@ -182,14 +187,16 @@ extension CartCollectionCell {
         addSubview(topstackView)
         addSubview(prdPriceLbl)
        
-        [ stepperCountLbl, prdtextField ].forEach{ prdstackView.addArrangedSubview($0)}
+       
+        [ stepperCountLbl, prdtextField].forEach{ prdstackView.addArrangedSubview($0)}
         [prdTitleLbl, prdDescriptionLbl].forEach{ topstackView.addArrangedSubview($0)}
         
         
         let deleteIconTap = UITapGestureRecognizer(target: self, action: #selector(clickDeleteIcon))
         deleteIcon.isUserInteractionEnabled = true
         deleteIcon.addGestureRecognizer(deleteIconTap)
-     
+  
+       
     }
     
     @objc func clickDeleteIcon(){
@@ -231,5 +238,9 @@ extension CartCollectionCell {
                           bottom: bottomAnchor,
                           trailing: trailingAnchor,
                           padding: .init(top: 2, left: 5, bottom: 5, right: 1))
+        
+        
+ 
     }
 }
+

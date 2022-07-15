@@ -22,8 +22,8 @@ class CartVC: BaseViewController<CartViewModel> {
           cv.backgroundColor = .white
           cv.register(CartCollectionCell.self,
                           forCellWithReuseIdentifier: CartCollectionCell.identifier)
-//          cv.register(CheckOutReusableView.self,
-//                      forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CheckOutReusableView.Identifier)
+          cv.register(CheckOutReusableView.self,
+                      forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CheckOutReusableView.Identifier)
           return cv
       }()
 
@@ -38,16 +38,12 @@ class CartVC: BaseViewController<CartViewModel> {
             viewModel.fetchUserCart(userId: userid)
         }
         
- 
         self.viewModel.reloadMyData = { [weak self] in
             guard let self = self else { return}
-
             self.generalCollectionView.reloadData()
         }
         
     }
-    
-    
     
     
     private func setupViews(){
@@ -136,17 +132,14 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return 30
     }
     
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//
-//        if kind == UICollectionView.elementKindSectionFooter {
-//            let footerCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier:CheckOutReusableView.Identifier , for: indexPath) as! CheckOutReusableView
-//
-//
-//
-//            return footerCell
-//        }
-//        return UICollectionReusableView()
-//    }
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+
+        if kind == UICollectionView.elementKindSectionFooter {
+            let footerCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier:CheckOutReusableView.Identifier , for: indexPath) as! CheckOutReusableView
+            return footerCell
+        }
+        return UICollectionReusableView()
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return  CGSize(width: generalCollectionView.frame.width,
