@@ -13,6 +13,8 @@ final class CartViewModel: BaseViewModel<CartRouter> {
     private let keychain = KeychainSwift()
     var currentUserCartItems: [Item]?
     var reloadDataClosure: VoidClosure?
+    var reloadMyData: VoidClosure?
+    var userCartId: String?
     
     init(router: CartRouter) {
         super.init(router: router)
@@ -25,6 +27,20 @@ final class CartViewModel: BaseViewModel<CartRouter> {
     
 }
 
+//MARK: -
+extension CartViewModel {
+    func plusButtonTapped(at: IndexPath, userId: String, quanti: Int ) {
+        guard let clickItemId = self.cellItems[at.item].prdId else {return }
+        guard let itemQuantity = self.cellItems[at.item].stepperCount else { return}
+        self.addToCartItem(userId: userId, itemId: clickItemId, quantity: quanti)
+ 
+    }
+}
+
+
+
+
+//MARK: -
 extension CartViewModel {
     
     func fetchUserCart(userId: String){
@@ -35,10 +51,11 @@ extension CartViewModel {
             switch result {
             case .success(let response):
                 
-                if let _ = response?.id {
+                if let usertCartId = response?.id {
                     if let responseItems = response?.items {
                        let cellItems =  responseItems.map({
-                           CartCellModel(prdImgUrl: $0.productId?.prdImg ?? "-",
+                           CartCellModel( prdId: $0.productId?.id ?? "00",
+                                        prdImgUrl: $0.productId?.prdImg ?? "-",
                                          prdPrice: $0.productId?.price ?? 0.0,
                                          prdTitle: $0.productId?.title ?? "-",
                                          prdDescription: $0.productId?.itemDescription ?? "-",
@@ -46,8 +63,9 @@ extension CartViewModel {
                        })
                        
                         self.currentUserCartItems = responseItems
+                        self.userCartId =  usertCartId
                         self.cellItems = cellItems
-                        self.reloadDataClosure?()
+                        self.reloadMyData?()
                     }
                 }
             case .failure(let error):
@@ -57,19 +75,20 @@ extension CartViewModel {
     }
     
     
-//    //MARK: - ADD TO CART ITEM
-//    func addToCartItem(userId: String, itemId: String, quantity: Int){
-//        let request = AddToCartRequest(userId: userId, itemId: itemId, quantity: quantity)
-//        dataProvider.request(for: request) { [weak self] (result) in
-//            guard let self = self else { return }
-//
-//            switch result {
-//            case .success(let response):
-//                print(response)
-//
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
+    //MARK: - ADD TO CART ITEM
+    func addToCartItem(userId: String, itemId: String, quantity: Int){
+        let request = AddToCartRequest(userId: userId, itemId: itemId, quantity: quantity)
+        dataProvider.request(for: request) { [weak self] (result) in
+            guard let _ = self else { return }
+
+            switch result {
+            case .success(let response):
+                print(response!)
+
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
+

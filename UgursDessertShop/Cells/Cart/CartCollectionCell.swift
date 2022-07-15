@@ -11,6 +11,11 @@ class CartCollectionCell: UICollectionViewCell {
     
     static var identifier = "CartCollectionCell"
     var addToCartClosure: VoidClosure?
+    var strClosure: StringClosure?
+    var prdPrice: Double?
+    
+    var pickerNumbers = [1,2,3,4,5,6,7,8,9,10]
+    var pickerView = UIPickerView()
     
     private let prdImgView: UIImageView = {
          let iv = UIImageView()
@@ -53,29 +58,6 @@ class CartCollectionCell: UICollectionViewCell {
         return label
     }()
 
-    private let plusBtn: UIButton = {
-         let buton = UIButton()
-         buton.setTitle("+", for: .normal)
-         buton.backgroundColor = #colorLiteral(red: 0.8086332071, green: 0.3559194398, blue: 0.1270762815, alpha: 1)
-         buton.setTitleColor(.white, for: .normal)
-         buton.layer.cornerRadius = 18
-         buton.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
-         
-         buton.addTarget(self, action: #selector(clickPlusBtn), for: .touchUpInside)
-         return buton
-     }()
-
-    private var minusBtn: UIButton = {
-        let buton = UIButton(type: .system)
-         buton.setTitle("-", for: .normal)
-         buton.backgroundColor = #colorLiteral(red: 0.8086332071, green: 0.3559194398, blue: 0.1270762815, alpha: 1)
-         buton.setTitleColor(.white, for: .normal)
-         buton.layer.cornerRadius = 18
-         buton.titleLabel?.font = .systemFont(ofSize: 15, weight: .bold)
-         buton.addTarget(self, action: #selector(clickMinusBtn), for: .touchUpInside)
-         return buton
-     }()
-    
     private let stepperCountLbl: UILabel = {
           let label = UILabel()
           label.font = .systemFont(ofSize: 18, weight: .bold)
@@ -107,6 +89,11 @@ class CartCollectionCell: UICollectionViewCell {
         stackView.distribution = .fillEqually
         return stackView
     }()
+    
+    private var prdtextField: UITextField = {
+        let field = UITextField()
+        return field
+    }()
 
     weak var viewModel: CartCellProtocol?
     
@@ -115,14 +102,17 @@ class CartCollectionCell: UICollectionViewCell {
         setupViews()
         setConstraints()
         setStyle()
+        
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        
+        prdtextField.inputView = pickerView
     }
     
     private func setStyle(){
-        self.plusBtn.backgroundColor = #colorLiteral(red: 0.2499767244, green: 0.009076544084, blue: 0.8062750697, alpha: 1)
-        self.minusBtn.backgroundColor = #colorLiteral(red: 0.2499767244, green: 0.009076544084, blue: 0.8062750697, alpha: 1)
         bringSubviewToFront(prdstackView)
         bringSubviewToFront(deleteIcon)
-        
+      
     }
     
     required init?(coder: NSCoder) {
@@ -130,17 +120,31 @@ class CartCollectionCell: UICollectionViewCell {
     }
 }
 
-//MARK: - @objc funcs
-extension CartCollectionCell {
+
+extension CartCollectionCell: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
     
-    @objc func clickMinusBtn(){
-        
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return pickerNumbers.count
     }
-    @objc func clickPlusBtn(){
-        if let addCartAction = addToCartClosure {
-               addCartAction()
-       }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return "\(pickerNumbers[row])"
     }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        stepperCountLbl.text =  "\(pickerNumbers[row])"
+        strClosure?("\(pickerNumbers[row])")
+        let quantity = pickerNumbers[row]
+        print("selfprice",self.prdPrice )
+        if let price = self.prdPrice {
+            self.prdPriceLbl.text = "$ \(price * Double(quantity) )"
+        }
+        prdtextField.resignFirstResponder()
+    }
+    
 }
 
 extension CartCollectionCell {
@@ -150,11 +154,11 @@ extension CartCollectionCell {
         self.prdTitleLbl.text = viewModel.prdTitle
         self.prdDescriptionLbl.text = viewModel.prdDescription
         guard let quantity = viewModel.stepperCount  else  { return }
-        
-        if let prdPrice = viewModel.prdPrice {
-            let totalPrice = Double(quantity) * prdPrice
-            self.prdPriceLbl.text = "$ \(numberFormat(totalPrice))"
-        }
+
+        guard let price = viewModel.prdPrice else { return }
+       
+        self.prdPrice = price
+        self.prdPriceLbl.text = "$ \(price * Double(quantity) )"
         
         if String(quantity).count > 4 {
             self.stepperCountLbl.font = .systemFont(ofSize: 15)
@@ -178,7 +182,7 @@ extension CartCollectionCell {
         addSubview(topstackView)
         addSubview(prdPriceLbl)
        
-        [minusBtn, stepperCountLbl, plusBtn].forEach{ prdstackView.addArrangedSubview($0)}
+        [ stepperCountLbl, prdtextField ].forEach{ prdstackView.addArrangedSubview($0)}
         [prdTitleLbl, prdDescriptionLbl].forEach{ topstackView.addArrangedSubview($0)}
         
         

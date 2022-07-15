@@ -8,6 +8,7 @@
 import Foundation
 
 public protocol CartCellDataSource: AnyObject {
+    var prdId: String? { get }
      var prdImgUrl: String? { get }
      var prdPrice: Double? { get }
      var prdTitle: String? { get }
@@ -22,6 +23,7 @@ public protocol CartCellEventSource: AnyObject {
 public protocol CartCellProtocol: CartCellDataSource, CartCellEventSource {}
 
 public final class CartCellModel: CartCellProtocol {
+    public var prdId: String?
     public var prdImgUrl: String?
     public var prdPrice: Double?
     public var prdTitle: String?
@@ -29,12 +31,14 @@ public final class CartCellModel: CartCellProtocol {
     public var stepperCount: Int?
     public var plusButtonTapped: VoidClosure?
     
-    public init(prdImgUrl: String,
+    public init( prdId: String,
+                prdImgUrl: String,
                 prdPrice: Double,
                 prdTitle: String,
                 prdDescription: String,
                 stepperCount: Int)
     {
+        self.prdId = prdId
         self.prdImgUrl = prdImgUrl
         self.prdPrice = prdPrice
         self.prdTitle = prdTitle

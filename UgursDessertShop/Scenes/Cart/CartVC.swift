@@ -22,8 +22,8 @@ class CartVC: BaseViewController<CartViewModel> {
           cv.backgroundColor = .white
           cv.register(CartCollectionCell.self,
                           forCellWithReuseIdentifier: CartCollectionCell.identifier)
-          cv.register(CheckOutReusableView.self,
-                      forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CheckOutReusableView.Identifier)
+//          cv.register(CheckOutReusableView.self,
+//                      forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CheckOutReusableView.Identifier)
           return cv
       }()
 
@@ -34,20 +34,20 @@ class CartVC: BaseViewController<CartViewModel> {
         generalCollectionView.delegate = self
         generalCollectionView.dataSource = self
       
-        
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         if let userid = self.keychain.get("userid") {
             viewModel.fetchUserCart(userId: userid)
-            
-            viewModel.reloadDataClosure = { [weak self] in
-                guard let self = self else { return}
-                print("reload")
-                self.generalCollectionView.reloadData()
-            }
         }
+        
+ 
+        self.viewModel.reloadMyData = { [weak self] in
+            guard let self = self else { return}
+
+            self.generalCollectionView.reloadData()
+        }
+        
     }
+    
+    
     
     
     private func setupViews(){
@@ -110,6 +110,7 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return 0
         }
         
+        
         return items.count
     }
    
@@ -120,32 +121,13 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         let cellViewModel = viewModel.cellItemAt(indexPath: indexPath)
         cell.setData(viewModel: cellViewModel)
-      
-        
-        cell.addToCartClosure =  { [weak self] in
+        guard let userId = self.keychain.get("userid") else { return UICollectionViewCell()}
+        cell.setData(viewModel: cellViewModel)
+        cell.strClosure = { [weak self] quanti in
             guard let self = self else { return }
-        
+            self.viewModel.plusButtonTapped(at: indexPath, userId: userId, quanti: Int(quanti) ?? 0)
+            
         }
-        
-        
-//        let cell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: CartCollectionCell.identifier, for: indexPath) as! CartCollectionCell
-//
-//        if let items = self.viewModel.currentUserCartItems  {
-//            cell.fillData(cartItemModel: items[indexPath.item])
-//
-//            cell.addToCartClosure = { [weak self] in
-//                guard let self = self else {return }
-//                if let userId = self.keychain.get("userid") {
-//                if let prdId = items[indexPath.item].productId?.id {
-//                    self.viewModel.addToCartItem(userId: userId, itemId:prdId , quantity: 1)
-//                    }
-//                }
-//                self.generalCollectionView.reloadData()
-//            }
-//
-//        }
-        
-       
         return cell
     }
     
@@ -154,17 +136,17 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return 30
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        if kind == UICollectionView.elementKindSectionFooter {
-            let footerCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier:CheckOutReusableView.Identifier , for: indexPath) as! CheckOutReusableView
-           
-           
-      
-            return footerCell
-        }
-        return UICollectionReusableView()
-    }
+//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//
+//        if kind == UICollectionView.elementKindSectionFooter {
+//            let footerCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier:CheckOutReusableView.Identifier , for: indexPath) as! CheckOutReusableView
+//
+//
+//
+//            return footerCell
+//        }
+//        return UICollectionReusableView()
+//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return  CGSize(width: generalCollectionView.frame.width,
