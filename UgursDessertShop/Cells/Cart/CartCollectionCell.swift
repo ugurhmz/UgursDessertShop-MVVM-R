@@ -4,7 +4,7 @@
 //
 //  Created by ugur-pc on 28.06.2022.
 //
-
+//
 import UIKit
 
 class CartCollectionCell: UICollectionViewCell{
@@ -13,18 +13,19 @@ class CartCollectionCell: UICollectionViewCell{
     var addToCartClosure: VoidClosure?
     var strClosure: StringClosure?
     var prdPrice: Double?
+    var deleteProductInCartClosure: VoidClosure?
     
     var pickerNumbers = [1,2,3,4,5,6,7,8,9,10]
     var pickerView = UIPickerView()
     
     private let prdImgView: UIImageView = {
-         let iv = UIImageView()
-         iv.image = UIImage(named: "v3")
-         iv.contentMode = .scaleToFill
-         iv.clipsToBounds = true
-         iv.layer.cornerRadius = 15
+        let iv = UIImageView()
+        iv.image = UIImage(named: "v3")
+        iv.contentMode = .scaleToFill
+        iv.clipsToBounds = true
+        iv.layer.cornerRadius = 15
         iv.backgroundColor =  ProductBgColor
-         return iv
+        return iv
     }()
     
     private let prdPriceLbl: UILabel = {
@@ -36,7 +37,7 @@ class CartCollectionCell: UICollectionViewCell{
         label.numberOfLines = 0
         return label
     }()
-
+    
     private let prdTitleLbl: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .bold)
@@ -44,10 +45,10 @@ class CartCollectionCell: UICollectionViewCell{
         label.textColor = #colorLiteral(red: 0.1709887727, green: 0.1870856636, blue: 0.2076978542, alpha: 1)
         label.textAlignment = .left
         label.numberOfLines = 2
-
+        
         return label
     }()
-
+    
     private let prdDescriptionLbl: UILabel = {
         let label = UILabel()
         label.text = "lorem ipsum dolar sit lorem ipsum dolar sitlorem ipsum dolar sitlorem ipsum dolar sitlorem ipsum dolar sit"
@@ -57,23 +58,24 @@ class CartCollectionCell: UICollectionViewCell{
         label.numberOfLines = 3
         return label
     }()
-
+    
     private let stepperCountLbl: UILabel = {
-          let label = UILabel()
-          label.font = .systemFont(ofSize: 18, weight: .bold)
-          label.text = "1"
-          label.textColor = .black
-          label.textAlignment = .center
-
-          return label
-   }()
-    private let deleteIcon: UIImageView = {
-           let iv = UIImageView()
-        iv.image = UIImage(systemName: "trash")
-           iv.tintColor = .red
-           return iv
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.text = "1"
+        label.textColor = .black
+        label.textAlignment = .center
+        
+        return label
     }()
-
+    
+    private let deleteIcon: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(systemName: "trash")
+        iv.tintColor = .red
+        return iv
+    }()
+    
     private var  topstackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -94,7 +96,7 @@ class CartCollectionCell: UICollectionViewCell{
         let field = UITextField()
         return field
     }()
-
+    
     weak var viewModel: CartCellProtocol?
     
     override init(frame: CGRect) {
@@ -110,12 +112,23 @@ class CartCollectionCell: UICollectionViewCell{
         prdtextField.leftViewMode = .always
         prdtextField.leftView = UIImageView(image: UIImage(systemName: "chevron.down.circle")?.withRenderingMode(.alwaysOriginal))
         prdtextField.widthAnchor.constraint(equalToConstant: 28).isActive = true
+        
+        let imgSelectTap = UITapGestureRecognizer(target: self, action: #selector(deleteProductInCartBtn))
+        imgSelectTap.numberOfTapsRequired = 1 // Kullanıcının el hareketinin tespit edilmesi için gereken dokunma sayısı. (Varsayılan değeri 1'dir.)
+        deleteIcon.isUserInteractionEnabled = true
+        deleteIcon.addGestureRecognizer(imgSelectTap)
+        
     }
     
+    
+    @objc func deleteProductInCartBtn(){
+        NotificationCenter.default.post(name: NSNotification.Name("refresh"), object: nil)
+        self.deleteProductInCartClosure?()
+    }
     private func setStyle(){
         bringSubviewToFront(prdstackView)
         bringSubviewToFront(deleteIcon)
-      
+        
     }
     
     required init?(coder: NSCoder) {
@@ -143,7 +156,7 @@ extension CartCollectionCell: UIPickerViewDelegate, UIPickerViewDataSource {
         stepperCountLbl.text =  "\(pickerNumbers[row])"
         strClosure?("\(pickerNumbers[row])")
         let quantity = pickerNumbers[row]
-       
+        
         if let price = self.prdPrice {
             self.prdPriceLbl.text = "$ \(numberFormat(price * Double(quantity)))"
         }
@@ -159,9 +172,9 @@ extension CartCollectionCell {
         self.prdTitleLbl.text = viewModel.prdTitle
         self.prdDescriptionLbl.text = viewModel.prdDescription
         guard let quantity = viewModel.stepperCount  else  { return }
-
+        
         guard let price = viewModel.prdPrice else { return }
-       
+        
         self.prdPrice = price
         self.prdPriceLbl.text = "$ \(numberFormat(price * Double(quantity)))"
         
@@ -186,23 +199,13 @@ extension CartCollectionCell {
         addSubview(prdstackView)
         addSubview(topstackView)
         addSubview(prdPriceLbl)
-       
-       
+        
+        
         [ stepperCountLbl, prdtextField].forEach{ prdstackView.addArrangedSubview($0)}
         [prdTitleLbl, prdDescriptionLbl].forEach{ topstackView.addArrangedSubview($0)}
-        
-        
-        let deleteIconTap = UITapGestureRecognizer(target: self, action: #selector(clickDeleteIcon))
-        deleteIcon.isUserInteractionEnabled = true
-        deleteIcon.addGestureRecognizer(deleteIconTap)
-  
-       
+      
     }
     
-    @objc func clickDeleteIcon(){
-       
-       
-    }
     
     private func setConstraints(){
         prdImgView.anchor(top: contentView.topAnchor,
@@ -228,19 +231,19 @@ extension CartCollectionCell {
         
         prdstackView.anchor(top: topstackView.bottomAnchor,
                             leading: prdImgView.trailingAnchor,
-                           bottom: bottomAnchor,
-                           trailing: nil,
-                           padding: .init(top: 2, left: 8, bottom: 2, right: 5),
-                           size: .init(width: 140, height: 0))
+                            bottom: bottomAnchor,
+                            trailing: nil,
+                            padding: .init(top: 2, left: 8, bottom: 2, right: 5),
+                            size: .init(width: 140, height: 0))
         
         prdPriceLbl.anchor(top: topstackView.bottomAnchor,
-                          leading: prdstackView.trailingAnchor,
-                          bottom: bottomAnchor,
-                          trailing: trailingAnchor,
-                          padding: .init(top: 2, left: 5, bottom: 5, right: 1))
+                           leading: prdstackView.trailingAnchor,
+                           bottom: bottomAnchor,
+                           trailing: trailingAnchor,
+                           padding: .init(top: 2, left: 5, bottom: 5, right: 1))
         
         
- 
+        
     }
 }
 

@@ -34,6 +34,15 @@ class CartVC: BaseViewController<CartViewModel> {
         setConstraints()
         generalCollectionView.delegate = self
         generalCollectionView.dataSource = self
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("refresh"), object: nil, queue: nil) { [weak self] _ in
+            guard let self = self else { return}
+            print("notificenter")
+            if let userid = self.keychain.get("userid") {
+                self.viewModel.fetchUserCart(userId: userid)
+            }
+      }
+ 
       
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -57,6 +66,8 @@ class CartVC: BaseViewController<CartViewModel> {
               
               self.generalCollectionView.reloadData()
           }
+        
+      
     }
     
     
@@ -138,6 +149,12 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
             self.viewModel.plusButtonTapped(at: indexPath, userId: userId, quanti: Int(quanti) ?? 0)
             
         }
+        
+        cell.deleteProductInCartClosure = { [weak self]  in
+            guard let self = self else { return }
+            self.viewModel.deleteCartItem(userId: userId, itemId: self.viewModel.cellItems[indexPath.item].prdId ?? "")
+        }
+        
         return cell
     }
     
@@ -158,6 +175,8 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 footerCell.checkOutBtn.isHidden = true
             } else if self.userCartItemCount ?? 0 > 0 && self.userCartItemCount ?? 0  < 4 {
                 footerCell.checkOutBtn.isHidden = false
+                footerCell.dontHaveCartItem.isHidden = true
+            } else if self.userCartItemCount ?? 0  > 4 {
                 footerCell.dontHaveCartItem.isHidden = true
             }
             

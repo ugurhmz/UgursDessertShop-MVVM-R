@@ -15,6 +15,7 @@ final class CartViewModel: BaseViewModel<CartRouter> {
     var reloadDataClosure: VoidClosure?
     var reloadMyData: VoidClosure?
     var userCartId: String?
+    var fetchAgainClosure: VoidClosure?
     
     init(router: CartRouter) {
         super.init(router: router)
@@ -95,6 +96,24 @@ extension CartViewModel {
             switch result {
             case .success(let response):
                 print(response!)
+
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    
+    // DELETE ONE PRODUCT IN CART
+    func deleteCartItem(userId: String, itemId: String) {
+        let request = OneProductDeleteInCart(userId: userId, itemId: itemId)
+        dataProvider.request(for: request) { [weak self] (result) in
+            guard let self = self else { return }
+
+            switch result {
+            case .success(let response):
+                print(response!)
+             
 
             case .failure(let error):
                 print(error.localizedDescription)
