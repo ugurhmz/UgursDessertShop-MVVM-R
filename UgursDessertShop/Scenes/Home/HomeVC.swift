@@ -120,12 +120,23 @@ class HomeVC: BaseViewController<HomeViewModel> {
         setConstraints()
         generalCollectionView.allowsMultipleSelection = false
         searchBarConfigure()
+        
         viewModel.fetchAllProducts(categoryQuery: "")
         viewModel.fetchAllCategory()
         
         guard let userId =  self.keychain.get("userid") else {return }
         userID = userId
-        //userProfileIconSettings("ugur")
+        viewModel.fetchCurrentUserDetail(userId: userId)
+        
+    
+        self.viewModel.userDetailClosure = { [weak self] in
+            guard let self = self else { return}
+            
+            self.userProfileIconSettings(self.viewModel.userDetail?.userImg ?? "")
+            self.navigationItem.title = "Hi, \(self.viewModel.userDetail?.username ?? "-")"
+        }
+        
+       
     }
     
     
