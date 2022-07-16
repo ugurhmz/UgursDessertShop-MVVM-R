@@ -34,41 +34,50 @@ class CartVC: BaseViewController<CartViewModel> {
         setConstraints()
         generalCollectionView.delegate = self
         generalCollectionView.dataSource = self
-        
+      
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+          if let userid = self.keychain.get("userid") {
+              viewModel.fetchUserCart(userId: userid)
+          }
+
+          self.viewModel.reloadMyData = { [weak self] in
+              guard let self = self else { return}
+              print("reload")
+              guard let userCartItemscount = self.viewModel.currentUserCartItems?.count else {
+                  return
+
+              }
+              self.userCartItemCount = userCartItemscount
+              if   self.userCartItemCount ?? 0 < 4 {
+                   self.checkOutView.isHidden = true
+              }
+
+              if self.userCartItemCount == 0 {
+                  self.deleteAllBtn.isHidden = true
+              } else {
+                  self.deleteAllBtn.isHidden = false
+              }
+
+              self.generalCollectionView.reloadData()
+          }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(forName: NSNotification.Name("refresh"), object: nil, queue: nil) { [weak self] _ in
             guard let self = self else { return}
             print("notificenter")
             if let userid = self.keychain.get("userid") {
                 self.viewModel.fetchUserCart(userId: userid)
             }
+            self.generalCollectionView.reloadData()
       }
- 
-      
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-          if let userid = self.keychain.get("userid") {
-              viewModel.fetchUserCart(userId: userid)
-          }
-          
-          self.viewModel.reloadMyData = { [weak self] in
-              guard let self = self else { return}
-              print("reload")
-              guard let userCartItemscount = self.viewModel.currentUserCartItems?.count else {
-                  return
-                  
-              }
-              self.userCartItemCount = userCartItemscount
-              if   self.userCartItemCount ?? 0 < 4 {
-                   self.checkOutView.isHidden = true
-              }
-              
-              self.generalCollectionView.reloadData()
-          }
-        
-      
-    }
+    
+
     
     
     private func setupViews(){

@@ -242,8 +242,6 @@ extension CartCollectionCell {
                            trailing: trailingAnchor,
                            padding: .init(top: 2, left: 5, bottom: 5, right: 1))
         
-        
-        
     }
 }
 

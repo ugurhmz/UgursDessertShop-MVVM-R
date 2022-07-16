@@ -14,9 +14,11 @@ class MainTabBarVC: UITabBarController {
         super.viewDidLoad()
         let homeViewController = createHomeViewController()
         let cartViewController = createCartViewController()
+        let favouriteViewController = createFavouriteViewController()
         
         viewControllers = [
             homeViewController,
+            favouriteViewController,
             cartViewController
         ]
     }
@@ -42,5 +44,15 @@ class MainTabBarVC: UITabBarController {
     }
     
     
+    
+    private func createFavouriteViewController() -> UINavigationController {
+        let favRouter = FavouriteRouter()
+        let favViewModel = FavouriteViewModel(router: favRouter)
+        let favViewController = FavouritesVC(viewModel: favViewModel)
+        let navController = MainNavigationController(rootViewController: favViewController)
+        navController.tabBarItem.image = UIImage(systemName: "heart")
+        favRouter.viewController = favViewController
+        return navController
+    }
     
 }
