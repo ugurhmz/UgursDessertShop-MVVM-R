@@ -16,6 +16,7 @@ final class HomeViewModel: BaseViewModel<HomeRouter>, HomeViewProtocol {
     
     var reloadData: VoidClosure?
     var productArray: [ProductsCellModel]?
+    var categoryArray: [CategoryResponseModel]?
     
     init(router: HomeRouter) {
           super.init(router: router)
@@ -60,6 +61,25 @@ extension HomeViewModel {
             case .success(let response):
                 print(response!)
 
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    
+    
+    //MARK: -  CATEGORY GET ALL
+    func fetchAllCategory(){
+        let request = CategoryRequest()
+        dataProvider.request(for: request) { [weak self] (result) in
+            guard let self = self else { return }
+
+            switch result {
+            case .success(let response):
+                guard let categoryArr = response else {return }
+                self.categoryArray = categoryArr
+               
             case .failure(let error):
                 print(error.localizedDescription)
             }

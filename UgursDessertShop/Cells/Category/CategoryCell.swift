@@ -88,4 +88,8 @@ extension CategoryCell {
            
         }
     }
+    
+    func fillData(data: CategoryResponseModel) {
+        self.categoryNameLbl.text = data.name
+    }
 }

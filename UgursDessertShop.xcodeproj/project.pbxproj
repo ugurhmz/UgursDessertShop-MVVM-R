@@ -81,6 +81,8 @@
 		63B970942882C9AF00DA6269 /* FavouriteRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B970932882C9AF00DA6269 /* FavouriteRoute.swift */; };
 		63B970962882CA1C00DA6269 /* FavouriteRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B970952882CA1C00DA6269 /* FavouriteRouter.swift */; };
 		63B970982882CA5F00DA6269 /* FavouriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B970972882CA5F00DA6269 /* FavouriteViewModel.swift */; };
+		63B9709A2882D1D800DA6269 /* CategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B970992882D1D800DA6269 /* CategoryRequest.swift */; };
+		63B9709C2882D20D00DA6269 /* CategoryResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B9709B2882D20D00DA6269 /* CategoryResponseModel.swift */; };
 		63E044BA286B3547008D9499 /* ProductResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E044B9286B3547008D9499 /* ProductResponseModel.swift */; };
 		63E044BE286B6DDC008D9499 /* CartCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E044BD286B6DDC008D9499 /* CartCollectionCell.swift */; };
 		63E044C1286B6E25008D9499 /* CartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E044C0286B6E25008D9499 /* CartView.swift */; };
@@ -165,6 +167,8 @@
 		63B970932882C9AF00DA6269 /* FavouriteRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteRoute.swift; sourceTree = "<group>"; };
 		63B970952882CA1C00DA6269 /* FavouriteRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteRouter.swift; sourceTree = "<group>"; };
 		63B970972882CA5F00DA6269 /* FavouriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewModel.swift; sourceTree = "<group>"; };
+		63B970992882D1D800DA6269 /* CategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRequest.swift; sourceTree = "<group>"; };
+		63B9709B2882D20D00DA6269 /* CategoryResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryResponseModel.swift; sourceTree = "<group>"; };
 		63E044B9286B3547008D9499 /* ProductResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductResponseModel.swift; sourceTree = "<group>"; };
 		63E044BD286B6DDC008D9499 /* CartCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartCollectionCell.swift; sourceTree = "<group>"; };
 		63E044C0286B6E25008D9499 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
@@ -426,6 +430,7 @@
 				63156FFE287AD99C00936AF6 /* LoginRequest.swift */,
 				63157013287B17B300936AF6 /* AddToCartRequest.swift */,
 				637AFCC52881B36000262F0C /* OneProductDeleteInCart.swift */,
+				63B970992882D1D800DA6269 /* CategoryRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -437,6 +442,7 @@
 				638B71392879426B00B577B1 /* BaseResponse.swift */,
 				631DC01C2879815100331986 /* CartResponseModel.swift */,
 				63157000287ADA7A00936AF6 /* LoginResponseModel.swift */,
+				63B9709B2882D20D00DA6269 /* CategoryResponseModel.swift */,
 			);
 			path = ResponseModel;
 			sourceTree = "<group>";
@@ -697,6 +703,7 @@
 				63AF01E328774A09007724D0 /* LoadingProtocol.swift in Sources */,
 				6362A84528651E9300B12591 /* HomeVC.swift in Sources */,
 				631DC01928797E1C00331986 /* CartRoute.swift in Sources */,
+				63B9709A2882D1D800DA6269 /* CategoryRequest.swift in Sources */,
 				6362A84128651E9300B12591 /* AppDelegate.swift in Sources */,
 				630861CF2879F53B00284534 /* Keychain.swift in Sources */,
 				639120D8286F6A0D008F8162 /* Extension+Number.swift in Sources */,
@@ -750,6 +757,7 @@
 				6384370F2865F8D00013179C /* CategoryCell.swift in Sources */,
 				637AFCC62881B36000262F0C /* OneProductDeleteInCart.swift in Sources */,
 				63AF01C72877458B007724D0 /* AppRouterContainer.swift in Sources */,
+				63B9709C2882D20D00DA6269 /* CategoryResponseModel.swift in Sources */,
 				63AF01A6287744AA007724D0 /* DataProvider.swift in Sources */,
 				63AF01E228774A09007724D0 /* BlockingActivityIndicator.swift in Sources */,
 				63157001287ADA7A00936AF6 /* LoginResponseModel.swift in Sources */,

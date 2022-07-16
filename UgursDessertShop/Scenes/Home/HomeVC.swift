@@ -121,7 +121,7 @@ class HomeVC: BaseViewController<HomeViewModel> {
         generalCollectionView.allowsMultipleSelection = false
         searchBarConfigure()
         viewModel.fetchAllProducts(categoryQuery: "")
-       
+        viewModel.fetchAllCategory()
         
         guard let userId =  self.keychain.get("userid") else {return }
         userID = userId
@@ -204,7 +204,10 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         case Sections.SearchSection.rawValue:
             return 1
         case Sections.CategoriesSection.rawValue:
-            return myArr.count
+            guard let categoryCount = viewModel.categoryArray?.count else {
+                return 0
+            }
+            return categoryCount
         case Sections.ProductsSection.rawValue:
             guard let prdArr = viewModel.productArray else {
                 return 0
@@ -226,7 +229,9 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
             
             let categoryCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.identifier, for: indexPath) as! CategoryCell
             
+            guard let categoryDatas = viewModel.categoryArray else { return UICollectionViewCell() }
             
+            categoryCell.fillData(data: categoryDatas[indexPath.row])
             
             // select category
             if selectedIndex == indexPath.row {
