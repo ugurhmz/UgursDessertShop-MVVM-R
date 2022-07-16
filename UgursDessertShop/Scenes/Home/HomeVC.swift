@@ -217,12 +217,18 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
+            
         case  Sections.SearchSection.rawValue:
             let searchCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: NavBarCollectionCell.identifier, for: indexPath) as! NavBarCollectionCell
             return searchCell
+            
         case Sections.CategoriesSection.rawValue:
+            
             let categoryCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.identifier, for: indexPath) as! CategoryCell
             
+            
+            
+            // select category
             if selectedIndex == indexPath.row {
                 categoryCell.configure(select: true)
             }
