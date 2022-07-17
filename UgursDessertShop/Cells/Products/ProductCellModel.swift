@@ -26,3 +26,10 @@ final class ProductsCellModel {
         self.prdImgView = prdImgView
     }
 }
+
+//MARK: -
+extension ProductsCellModel: Equatable {
+    static func == (lhs: ProductsCellModel, rhs: ProductsCellModel) -> Bool {
+        return (lhs.prdId == rhs.prdId)
+    }
+}

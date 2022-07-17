@@ -19,6 +19,8 @@ final class HomeViewModel: BaseViewModel<HomeRouter>, HomeViewProtocol {
     var categoryArray: [CategoryResponseModel]?
     var userDetail: UserDetailResponseModel?
     var userDetailClosure: VoidClosure?
+    var userFavItems: [ProductsCellModel] = []
+    var favDataClosure: VoidClosure?
     
     init(router: HomeRouter) {
           super.init(router: router)
@@ -36,14 +38,14 @@ extension HomeViewModel {
             switch result {
             case .success(let response):
               
-                guard let movieArr = response?.map({
+                guard let productArr = response?.map({
                     return ProductsCellModel(prdId: $0.id,
                                              prdNameLbl: $0.title,
                                              prdPriceLbl: $0.price,
                                              prdImgView: $0.prdImg)
                   }) else { return}
                 
-                self.productArray = movieArr
+                self.productArray = productArr
                 self.reloadData?()
                 
            case .failure(let error):
@@ -124,5 +126,42 @@ extension HomeViewModel {
             }
         }
         
+    }
+    
+    //MARK: -  USER  FAV ITEMS
+    func fetchUserFavItems(userId: String){
+        let request = FavouriteRequest(userId: userId)
+        dataProvider.request(for: request) { [weak self] (result) in
+            guard let self = self else { return }
+
+                switch result {
+                case .success(let response):
+                    
+                    if response?.id == nil {
+                        self.userFavItems = []
+                        self.favDataClosure?()
+                        return
+                    }
+                    
+                    if let userFavId = response?.id {
+                        
+                        if let responseItems = response?.items {
+                            let cellFavItems = responseItems.map({
+                                return ProductsCellModel(prdId: $0.productId?.id,
+                                                         prdNameLbl: $0.productId?.title,
+                                                         prdPriceLbl: $0.productId?.price,
+                                                         prdImgView: $0.productId?.prdImg)
+                            })
+                            
+                            
+                            self.userFavItems = cellFavItems
+                            self.favDataClosure?()
+                           
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+            }
+        }
     }
 }

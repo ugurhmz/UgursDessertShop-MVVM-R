@@ -11,6 +11,7 @@ class ProductsCell: UICollectionViewCell {
     static var identifier  = "ProductsCell"
     var addCartClosure: VoidClosure?
     var addToFavClosure: VoidClosure?
+   
     
     public var prdimgView: UIImageView = {
         let iv = UIImageView()
@@ -58,7 +59,7 @@ class ProductsCell: UICollectionViewCell {
         self.addCartClosure?()
     }
     
-    private let addToFavouriteBtn: UIButton = {
+    var addToFavouriteBtn: UIButton = {
         let btn = UIButton(type: .system)
         btn.setBackgroundImage(UIImage(systemName: "heart"), for: .normal)
         btn.tintColor = AddToCartBtnBg
@@ -104,7 +105,9 @@ class ProductsCell: UICollectionViewCell {
     }
 }
 extension ProductsCell {
-    func configure(productModel: ProductsCellModel) {
+    func configure(productModel: ProductsCellModel, favItems: [ProductsCellModel]) {
+        
+        
         self.prdNameLbl.text = productModel.prdNameLbl
         if let price =  productModel.prdPriceLbl{
             self.prdPriceLbl.text = "$ \(price) / gr"
@@ -113,6 +116,18 @@ extension ProductsCell {
         if let img = productModel.prdImgView {
             self.prdimgView.image = UIImage(named: "\(img)")
         }
+        
+        
+        if favItems.count == 0 {
+            print(favItems.count)
+            addToFavouriteBtn.setBackgroundImage(UIImage(systemName: "heart"), for: .normal)
+        }
+        if  favItems.contains(productModel) {
+            addToFavouriteBtn.setBackgroundImage(UIImage(systemName: "heart.fill"), for: .normal)
+        } else {
+            addToFavouriteBtn.setBackgroundImage(UIImage(systemName: "heart"), for: .normal)
+        }
+        
     }
     
     

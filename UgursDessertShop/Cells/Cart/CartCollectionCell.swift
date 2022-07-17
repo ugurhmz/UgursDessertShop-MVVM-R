@@ -15,6 +15,8 @@ class CartCollectionCell: UICollectionViewCell{
     var prdPrice: Double?
     var deleteProductInCartClosure: VoidClosure?
     
+
+    
     var pickerNumbers = [1,2,3,4,5,6,7,8,9,10]
     var pickerView = UIPickerView()
     
@@ -186,6 +188,7 @@ extension CartCollectionCell {
         if let prdImg = viewModel.prdImgUrl {
             self.prdImgView.image = UIImage(named: "\(prdImg)")
         }
+        
     }
     
 }

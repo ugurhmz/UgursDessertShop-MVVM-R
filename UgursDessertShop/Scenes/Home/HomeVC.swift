@@ -12,7 +12,7 @@ class HomeVC: BaseViewController<HomeViewModel> {
     var lastIndexActive:IndexPath = [1 ,0]
     private let keychain = KeychainSwift()
     var selectedIndex = Int ()
-   
+   var favData: [FavouriteCellProtocol] = []
     
     var userID: String?
     private let searchController = UISearchController(searchResultsController: nil)
@@ -135,9 +135,21 @@ class HomeVC: BaseViewController<HomeViewModel> {
             self.navigationItem.title = "Hi, \(self.viewModel.userDetail?.username ?? "-")"
         }
         
+        
        
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard let userId =  self.keychain.get("userid") else {return }
+        
+        self.viewModel.fetchUserFavItems(userId: userId)
+        self.viewModel.favDataClosure = { [weak self] in
+            guard let self = self else { return}
+            self.generalCollectionView.reloadData()
+        }
+        
+       
+    }
     
     private func userProfileIconSettings(_ img: String) {
         let img = UIImage(named: "\(img)")
@@ -256,10 +268,12 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         case Sections.ProductsSection.rawValue:
             let productsCell = generalCollectionView.dequeueReusableCell(withReuseIdentifier: ProductsCell.identifier, for: indexPath) as! ProductsCell
             productsCell.backgroundColor = .white
+            
+            
             if let  prdModel = viewModel.productArray?[indexPath.item] {
-                productsCell.configure(productModel: prdModel)
+                productsCell.configure(productModel: prdModel, favItems: self.viewModel.userFavItems)
             }
-         
+            
             
             
             productsCell.addCartClosure = { [weak self] in
@@ -274,11 +288,13 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
             
             productsCell.addToFavClosure = { [weak self] in
                 guard let self = self else { return}
+             
                 if let  prdModelId = self.viewModel.productArray?[indexPath.item].prdId {
         
                     self.viewModel.addToFavItem(userId: self.userID ?? "",
                                                      itemId: prdModelId)
                 }
+                self.generalCollectionView.reloadData()
             }
             
             
