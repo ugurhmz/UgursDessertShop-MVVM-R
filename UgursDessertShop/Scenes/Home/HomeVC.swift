@@ -243,10 +243,11 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
             guard let categoryDatas = viewModel.categoryArray else { return UICollectionViewCell() }
             
             categoryCell.fillData(data: categoryDatas[indexPath.row])
-            
+        
             // select category
             if selectedIndex == indexPath.row {
                 categoryCell.configure(select: true)
+                print(categoryDatas[selectedIndex])
             }
             else {
                 categoryCell.configure(select: false)

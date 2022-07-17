@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import KeychainSwift
 
 class FavouritesVC: BaseViewController<FavouriteViewModel>{
-    
+    private let keychain = KeychainSwift()
     private let tableView: UITableView = {
             let tableView = UITableView()
            tableView.register(FavouriteCell.self,
@@ -20,7 +21,21 @@ class FavouritesVC: BaseViewController<FavouriteViewModel>{
         super.viewDidLoad()
         setupViews()
         setConstraints()
+       
         
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let userid = self.keychain.get("userid") {
+            viewModel.fetchUserFavItems(userId: userid)
+         }
+        
+        self.viewModel.reloadDataClosure = { [weak self] in
+            guard let self = self else { return}
+            print("data", self.viewModel.userFavItems.count)
+            self.tableView.reloadData()
+        }
+       
     }
     
     private func setupViews(){
@@ -43,7 +58,7 @@ extension FavouritesVC {
 extension FavouritesVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return self.viewModel.userFavItems.count
     }
     
     
@@ -51,6 +66,8 @@ extension FavouritesVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavouriteCell.identifier,
                                                  for: indexPath) as! FavouriteCell
+        
+        cell.fillData(data: self.viewModel.userFavItems[indexPath.row])
         cell.backgroundColor = .white
         
         return cell

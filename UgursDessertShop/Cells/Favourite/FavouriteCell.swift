@@ -80,9 +80,28 @@ class FavouriteCell: UITableViewCell {
         
     }
     
-   
     
 }
+
+extension FavouriteCell {
+    func fillData(data: FavouriteCellProtocol) {
+        if let prdPrice = data.prdPrice {
+            self.prdPriceLbl.text = "$ \(prdPrice)"
+        }
+        if let prdTitle = data.prdTitle {
+            self.prdTitleLbl.text = prdTitle
+        }
+        
+        if let prdDesc = data.prdDescription {
+            self.prdDescriptionLbl.text = prdDesc
+        }
+        
+        if let prdImgURLString = data.prdImgUrl {
+            self.prdImgView.image = UIImage(named: prdImgURLString)
+        }
+    }
+}
+
 extension FavouriteCell {
     private func setConstraints(){
         prdImgView.anchor(top: topAnchor,

@@ -7,7 +7,7 @@
 import Foundation
 
 // MARK: - FavouriteResponseModel
-struct FavouriteResponseModel: Codable {
+public struct FavouriteResponseModel: Codable {
     var id: String?
     var owner: Owner?
     var items: [Item]?
