@@ -12,7 +12,6 @@ class HomeVC: BaseViewController<HomeViewModel> {
     var lastIndexActive:IndexPath = [1 ,0]
     private let keychain = KeychainSwift()
     var selectedIndex = Int ()
-    var myArr  = ["a","b","c","a","b","c","a"]
    
     
     var userID: String?
@@ -271,7 +270,15 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
                                                      itemId: prdModelId,
                                                      quantity: 1)
                 }
-
+            }
+            
+            productsCell.addToFavClosure = { [weak self] in
+                guard let self = self else { return}
+                if let  prdModelId = self.viewModel.productArray?[indexPath.item].prdId {
+        
+                    self.viewModel.addToFavItem(userId: self.userID ?? "",
+                                                     itemId: prdModelId)
+                }
             }
             
             

@@ -10,6 +10,7 @@ import UIKit
 class ProductsCell: UICollectionViewCell {
     static var identifier  = "ProductsCell"
     var addCartClosure: VoidClosure?
+    var addToFavClosure: VoidClosure?
     
     public var prdimgView: UIImageView = {
         let iv = UIImageView()
@@ -63,9 +64,13 @@ class ProductsCell: UICollectionViewCell {
         btn.tintColor = AddToCartBtnBg
         btn.backgroundColor = .clear
         btn.layer.cornerRadius = 8
-        //btn.addTarget(self, action: #selector(clickFavouriteBtn), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(clickFavouriteBtn), for: .touchUpInside)
         return btn
     }()
+    
+    @objc func clickFavouriteBtn(){
+        self.addToFavClosure?()
+    }
     
     private lazy var prdstackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [prdPriceLbl, prdNameLbl])

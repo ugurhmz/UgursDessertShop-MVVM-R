@@ -47,6 +47,7 @@
 		638B713A2879426B00B577B1 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638B71392879426B00B577B1 /* BaseResponse.swift */; };
 		638DBDAD28842B21009C0A16 /* FavouriteRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638DBDAC28842B21009C0A16 /* FavouriteRequest.swift */; };
 		638DBDAF28842D93009C0A16 /* FavouriteCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638DBDAE28842D93009C0A16 /* FavouriteCellModel.swift */; };
+		638DBDB12884326E009C0A16 /* AddToFavRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638DBDB02884326E009C0A16 /* AddToFavRequest.swift */; };
 		639120D8286F6A0D008F8162 /* Extension+Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639120D7286F6A0D008F8162 /* Extension+Number.swift */; };
 		63A49F3C2869E14900BACF73 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A49F3B2869E14900BACF73 /* Closures.swift */; };
 		63AF01A2287744AA007724D0 /* APIRequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF019D287744AA007724D0 /* APIRequestAdapter.swift */; };
@@ -137,6 +138,7 @@
 		638B71392879426B00B577B1 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		638DBDAC28842B21009C0A16 /* FavouriteRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteRequest.swift; sourceTree = "<group>"; };
 		638DBDAE28842D93009C0A16 /* FavouriteCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteCellModel.swift; sourceTree = "<group>"; };
+		638DBDB02884326E009C0A16 /* AddToFavRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToFavRequest.swift; sourceTree = "<group>"; };
 		639120D7286F6A0D008F8162 /* Extension+Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Number.swift"; sourceTree = "<group>"; };
 		63A49F3B2869E14900BACF73 /* Closures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Closures.swift; sourceTree = "<group>"; };
 		63AF019D287744AA007724D0 /* APIRequestAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestAdapter.swift; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 				63B970992882D1D800DA6269 /* CategoryRequest.swift */,
 				63B9709F2882F29000DA6269 /* UserDetailRequest.swift */,
 				638DBDAC28842B21009C0A16 /* FavouriteRequest.swift */,
+				638DBDB02884326E009C0A16 /* AddToFavRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -732,6 +735,7 @@
 				63AF01E128774A09007724D0 /* ActivityIndicatorProtocol.swift in Sources */,
 				631DC01728797E1600331986 /* CartRouter.swift in Sources */,
 				6362A8692865238100B12591 /* Extension+UIView.swift in Sources */,
+				638DBDB12884326E009C0A16 /* AddToFavRequest.swift in Sources */,
 				63AF01A2287744AA007724D0 /* APIRequestAdapter.swift in Sources */,
 				63AF01B528774504007724D0 /* PushTransition.swift in Sources */,
 				638778072868B6920041E810 /* Extension+CustomTextField.swift in Sources */,

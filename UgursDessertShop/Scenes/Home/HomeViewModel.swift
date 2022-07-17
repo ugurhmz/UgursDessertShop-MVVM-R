@@ -104,4 +104,25 @@ extension HomeViewModel {
             }
         }
     }
+    
+    
+    
+    //MARK: - ADD TO FAV ITEM
+    func addToFavItem(userId: String,
+                      itemId: String)
+    {
+        let request = AddToFavRequest(userId: userId, itemId: itemId)
+        dataProvider.request(for: request) { [weak self] (result) in
+            guard let _ = self else { return }
+
+            switch result {
+            case .success(let response):
+                print("prdEklendi",response!)
+
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
 }
