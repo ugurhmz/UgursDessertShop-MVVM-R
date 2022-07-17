@@ -9,7 +9,8 @@ import Foundation
 
 final class FavouriteViewModel: BaseViewModel<FavouriteRouter> {
     var reloadDataClosure: VoidClosure?
-    var userFavItems: [FavouriteCellProtocol] = []
+    var userFavItems: [FavouriteCellProtocol] = [] 
+    var deleteClosure: VoidClosure?
     
     init(router: FavouriteRouter){
         super.init(router: router)
@@ -18,6 +19,8 @@ final class FavouriteViewModel: BaseViewModel<FavouriteRouter> {
 }
 
 extension FavouriteViewModel {
+    
+    //MARK: -  USER  FAV ITEMS
     func fetchUserFavItems(userId: String){
         let request = FavouriteRequest(userId: userId)
         dataProvider.request(for: request) { [weak self] (result) in
@@ -39,6 +42,7 @@ extension FavouriteViewModel {
                             
                             self.userFavItems = cellFavItems
                             self.reloadDataClosure?()
+                           
                         }
                     }
                 case .failure(let error):
@@ -46,4 +50,26 @@ extension FavouriteViewModel {
             }
         }
     }
+    
+    
+    //MARK: - DELETE ONE ITEM IN FAVS
+    func deleteFavItem(userId: String, itemId: String) {
+           let request = OneProductDeleteInFavsRequest(userId: userId, itemId: itemId)
+    
+           dataProvider.request(for: request) { [weak self] (result) in
+               guard let _ = self else { return }
+               DispatchQueue.main.async {
+                   NotificationCenter.default.post(name: NSNotification.Name("refresh"), object: nil)
+               }
+               switch result {
+                 
+               case .success( _):
+                  
+                   print("abc")
+
+               case .failure(let error):
+                   print(error.localizedDescription)
+               }
+           }
+       }
 }

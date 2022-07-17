@@ -10,6 +10,7 @@ import UIKit
 class FavouriteCell: UITableViewCell {
     
     static var identifier = "FavouriteCell"
+    var deleteProductInFavoriteClosure: VoidClosure?
     
     private let prdImgView: UIImageView = {
         let iv = UIImageView()
@@ -50,6 +51,13 @@ class FavouriteCell: UITableViewCell {
         return label
     }()
     
+    private let deleteIcon: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(systemName: "trash")
+        iv.tintColor = .red
+        return iv
+    }()
+    
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -64,9 +72,11 @@ class FavouriteCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         setConstraints()
+        bringSubviewToFront(stackView)
+        bringSubviewToFront(deleteIcon)
     }
     
-   
+    
     
     required init?(coder: NSCoder) {
         fatalError("not imps")
@@ -75,9 +85,18 @@ class FavouriteCell: UITableViewCell {
     private func setupViews(){
         addSubview(prdImgView)
         addSubview(stackView)
+        addSubview(deleteIcon)
         
         [prdTitleLbl, prdDescriptionLbl, prdPriceLbl].forEach{ stackView.addArrangedSubview($0)}
+        let imgSelectTap = UITapGestureRecognizer(target: self, action: #selector(deleteProductInCartBtn))
+        imgSelectTap.numberOfTapsRequired = 1 // Kullanıcının el hareketinin tespit edilmesi için gereken dokunma sayısı. (Varsayılan değeri 1'dir.)
+        deleteIcon.isUserInteractionEnabled = true
+        deleteIcon.addGestureRecognizer(imgSelectTap)
         
+    }
+    
+    @objc func deleteProductInCartBtn(){
+        self.deleteProductInFavoriteClosure?()
     }
     
     
@@ -109,6 +128,12 @@ extension FavouriteCell {
                           bottom:bottomAnchor,
                           trailing: nil,
                           size: .init(width: 200, height: 0))
+        deleteIcon.anchor(top: contentView.topAnchor,
+                          leading: nil,
+                          bottom: nil,
+                          trailing: contentView.trailingAnchor,
+                          padding: .init(top: 8, left: 4, bottom: 10, right: 15),
+                          size: .init(width:25, height: 25))
         
         stackView.anchor(top: contentView.topAnchor,
                          leading: prdImgView.trailingAnchor,
@@ -116,6 +141,8 @@ extension FavouriteCell {
                          trailing: contentView.trailingAnchor,
                          padding: .init(top: 0, left: 10, bottom: 0, right: 5)
         )
+        
+        
         
         
     }

@@ -15,6 +15,8 @@ public protocol ActivityIndicatorProtocol {
 public extension ActivityIndicatorProtocol where Self: UIViewController {
     func showActivityIndicator() {
         let indicator = ActivityIndicatorView(frame: .infinite)
+        indicator.color = .red
+        
         indicator.startAnimating()
         view.addSubview(indicator)
         indicator.centerInSuperview()
