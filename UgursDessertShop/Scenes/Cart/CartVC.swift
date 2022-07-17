@@ -10,7 +10,7 @@ import KeychainSwift
 
 class CartVC: BaseViewController<CartViewModel> {
     private let keychain = KeychainSwift()
-    private let checkOutView = CartView()
+    private let checkOutRedButtonView = CartView()
     let deleteAllBtn = UIButton(type: .system)
     var userCartItemCount: Int?
     
@@ -34,25 +34,38 @@ class CartVC: BaseViewController<CartViewModel> {
         setConstraints()
         generalCollectionView.delegate = self
         generalCollectionView.dataSource = self
+     
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name("refresh"), object: nil, queue: nil) { [weak self] _ in
+                  guard let self = self else { return}
+                    if let userid = self.keychain.get("userid") {
+                        self.viewModel.fetchUserCart(userId: userid)
+                       
+                    }
+                  self.generalCollectionView.reloadData()
+         }
       
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        self.checkOutRedButtonView.isHidden = true
+    
+        self.showActivityIndicator()
           if let userid = self.keychain.get("userid") {
               viewModel.fetchUserCart(userId: userid)
+              
           }
 
           self.viewModel.reloadMyData = { [weak self] in
               guard let self = self else { return}
-              print("reload")
+              
+              
               guard let userCartItemscount = self.viewModel.currentUserCartItems?.count else {
                   return
-
               }
               self.userCartItemCount = userCartItemscount
               if   self.userCartItemCount ?? 0 < 4 {
-                   self.checkOutView.isHidden = true
+                   self.checkOutRedButtonView.isHidden = true
               }
 
               if self.userCartItemCount == 0 {
@@ -62,28 +75,19 @@ class CartVC: BaseViewController<CartViewModel> {
               }
 
               self.generalCollectionView.reloadData()
+              
           }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+               self.hideActivityIndicator()
+        }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(forName: NSNotification.Name("refresh"), object: nil, queue: nil) { [weak self] _ in
-            guard let self = self else { return}
-            print("notificenter")
-            if let userid = self.keychain.get("userid") {
-                self.viewModel.fetchUserCart(userId: userid)
-            }
-            self.generalCollectionView.reloadData()
-      }
-    }
-    
-
     
     
     private func setupViews(){
         view.addSubview(generalCollectionView)
-        view.addSubview(checkOutView)
-        checkOutView.layer.cornerRadius = 40
+        view.addSubview(checkOutRedButtonView)
+        checkOutRedButtonView.layer.cornerRadius = 40
         settingsNavigateBar()
     }
     
@@ -120,13 +124,13 @@ class CartVC: BaseViewController<CartViewModel> {
 extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
        
-        self.checkOutView.isHidden = false
+        self.checkOutRedButtonView.isHidden = false
         let height = scrollView.frame.size.height
         let contentYoffset = scrollView.contentOffset.y
         let distanceFromBottom = scrollView.contentSize.height - contentYoffset
         
         if distanceFromBottom < height {
-            self.checkOutView.isHidden = true
+            self.checkOutRedButtonView.isHidden = true
         }
     }
     
@@ -176,21 +180,17 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
 
         if kind == UICollectionView.elementKindSectionFooter {
             let footerCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier:CheckOutReusableView.Identifier , for: indexPath) as! CheckOutReusableView
-            
-           
-            
-            if self.userCartItemCount == 0 {
-                footerCell.dontHaveCartItem.isHidden = false
-                footerCell.checkOutBtn.isHidden = true
-            } else if self.userCartItemCount ?? 0 > 0 && self.userCartItemCount ?? 0  < 4 {
-                footerCell.checkOutBtn.isHidden = false
-                footerCell.dontHaveCartItem.isHidden = true
-            } else if self.userCartItemCount ?? 0  > 4 {
-                footerCell.dontHaveCartItem.isHidden = true
-            }
-            
-            
-            
+       
+                if self.userCartItemCount == 0 {
+                    footerCell.dontHaveCartItem.isHidden = false
+                    footerCell.checkOutBtn.isHidden = true
+                } else if self.userCartItemCount ?? 0 > 0 && self.userCartItemCount ?? 0  <= 4 {
+                    footerCell.checkOutBtn.isHidden = false
+                    footerCell.dontHaveCartItem.isHidden = true
+                } else if self.userCartItemCount ?? 0  > 4 {
+                    footerCell.dontHaveCartItem.isHidden = true
+                }
+          
             
             return footerCell
         }
@@ -229,7 +229,7 @@ extension CartVC {
     private func setConstraints(){
      
         generalCollectionView.fillSuperview()
-        checkOutView.anchor(top: nil,
+        checkOutRedButtonView.anchor(top: nil,
                             leading: view.leadingAnchor,
                             bottom: view.safeAreaLayoutGuide.bottomAnchor,
                             trailing: view.trailingAnchor,

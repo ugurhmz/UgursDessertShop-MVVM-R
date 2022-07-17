@@ -42,7 +42,7 @@ class CheckOutReusableView: UICollectionReusableView {
                       padding: .init(top: 10, left: 20, bottom: 10, right: 20))
         self.dontHaveCartItem.fillSuperview()
         self.dontHaveCartItem.isHidden = true
-      
+        self.checkOutBtn.isHidden = true
         
         self.checkOutBtn.applyGradient(colors: [UIColor.red.cgColor, UIColor.blue.cgColor, UIColor.systemGreen.cgColor])
         

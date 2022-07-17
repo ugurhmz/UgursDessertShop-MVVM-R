@@ -51,7 +51,6 @@ extension CartViewModel {
 
             switch result {
             case .success(let response):
-                print("response", response?.id)
                 
                 if response?.id == nil {
                     self.currentUserCartItems = []
@@ -109,7 +108,10 @@ extension CartViewModel {
         let request = OneProductDeleteInCart(userId: userId, itemId: itemId)
         dataProvider.request(for: request) { [weak self] (result) in
             guard let self = self else { return }
-
+            DispatchQueue.main.async {
+               NotificationCenter.default.post(name: NSNotification.Name("refresh"), object: nil)
+                
+            }
             switch result {
             case .success(let response):
                 print(response!)
