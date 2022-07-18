@@ -50,12 +50,16 @@
 		638DBDB3288434CE009C0A16 /* OneProductDeleteInFavsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638DBDB2288434CE009C0A16 /* OneProductDeleteInFavsRequest.swift */; };
 		6390CA37288574F600A087ED /* LogoutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA34288574F600A087ED /* LogoutRequest.swift */; };
 		6390CA38288574F600A087ED /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA35288574F600A087ED /* RegisterRequest.swift */; };
-		6390CA39288574F600A087ED /* ResetPasswordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA36288574F600A087ED /* ResetPasswordRequest.swift */; };
 		6390CA3B2885750700A087ED /* SuccessResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA3A2885750700A087ED /* SuccessResponse.swift */; };
 		6390CA402885756700A087ED /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA3C2885756700A087ED /* RegisterViewModel.swift */; };
 		6390CA412885756700A087ED /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA3D2885756700A087ED /* RegisterVC.swift */; };
 		6390CA422885756700A087ED /* RegisterRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA3E2885756700A087ED /* RegisterRoute.swift */; };
 		6390CA432885756700A087ED /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA3F2885756700A087ED /* RegisterRouter.swift */; };
+		6390CA492885920800A087ED /* ForgotPasswordRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA452885920800A087ED /* ForgotPasswordRoute.swift */; };
+		6390CA4A2885920800A087ED /* ForgotPasswordRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA462885920800A087ED /* ForgotPasswordRouter.swift */; };
+		6390CA4B2885920800A087ED /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA472885920800A087ED /* ForgotPasswordViewModel.swift */; };
+		6390CA4C2885920800A087ED /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA482885920800A087ED /* ForgotPasswordVC.swift */; };
+		6390CA4E2885921B00A087ED /* ResetPasswordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA4D2885921B00A087ED /* ResetPasswordRequest.swift */; };
 		639120D8286F6A0D008F8162 /* Extension+Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639120D7286F6A0D008F8162 /* Extension+Number.swift */; };
 		63A49F3C2869E14900BACF73 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A49F3B2869E14900BACF73 /* Closures.swift */; };
 		63AF01A2287744AA007724D0 /* APIRequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF019D287744AA007724D0 /* APIRequestAdapter.swift */; };
@@ -149,12 +153,16 @@
 		638DBDB2288434CE009C0A16 /* OneProductDeleteInFavsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneProductDeleteInFavsRequest.swift; sourceTree = "<group>"; };
 		6390CA34288574F600A087ED /* LogoutRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutRequest.swift; sourceTree = "<group>"; };
 		6390CA35288574F600A087ED /* RegisterRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
-		6390CA36288574F600A087ED /* ResetPasswordRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordRequest.swift; sourceTree = "<group>"; };
 		6390CA3A2885750700A087ED /* SuccessResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessResponse.swift; sourceTree = "<group>"; };
 		6390CA3C2885756700A087ED /* RegisterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		6390CA3D2885756700A087ED /* RegisterVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		6390CA3E2885756700A087ED /* RegisterRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterRoute.swift; sourceTree = "<group>"; };
 		6390CA3F2885756700A087ED /* RegisterRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
+		6390CA452885920800A087ED /* ForgotPasswordRoute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordRoute.swift; sourceTree = "<group>"; };
+		6390CA462885920800A087ED /* ForgotPasswordRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordRouter.swift; sourceTree = "<group>"; };
+		6390CA472885920800A087ED /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
+		6390CA482885920800A087ED /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
+		6390CA4D2885921B00A087ED /* ResetPasswordRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResetPasswordRequest.swift; path = "../../../../AuthApp-MVVM/AuthApp-MVVM/DataProvider/Requests/ResetPasswordRequest.swift"; sourceTree = "<group>"; };
 		639120D7286F6A0D008F8162 /* Extension+Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Number.swift"; sourceTree = "<group>"; };
 		63A49F3B2869E14900BACF73 /* Closures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Closures.swift; sourceTree = "<group>"; };
 		63AF019D287744AA007724D0 /* APIRequestAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestAdapter.swift; sourceTree = "<group>"; };
@@ -271,6 +279,7 @@
 		6362A85428651EDB00B12591 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				6390CA44288591F800A087ED /* ForgotPassword */,
 				63AF01D2287747DF007724D0 /* Main */,
 				63AF01CB2877474A007724D0 /* Base */,
 				638778102868E9C30041E810 /* Register */,
@@ -428,6 +437,17 @@
 			path = Register;
 			sourceTree = "<group>";
 		};
+		6390CA44288591F800A087ED /* ForgotPassword */ = {
+			isa = PBXGroup;
+			children = (
+				6390CA452885920800A087ED /* ForgotPasswordRoute.swift */,
+				6390CA462885920800A087ED /* ForgotPasswordRouter.swift */,
+				6390CA482885920800A087ED /* ForgotPasswordVC.swift */,
+				6390CA472885920800A087ED /* ForgotPasswordViewModel.swift */,
+			);
+			path = ForgotPassword;
+			sourceTree = "<group>";
+		};
 		63AF019628774419007724D0 /* Dataprovider */ = {
 			isa = PBXGroup;
 			children = (
@@ -456,9 +476,9 @@
 		63AF019828774422007724D0 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				6390CA4D2885921B00A087ED /* ResetPasswordRequest.swift */,
 				6390CA34288574F600A087ED /* LogoutRequest.swift */,
 				6390CA35288574F600A087ED /* RegisterRequest.swift */,
-				6390CA36288574F600A087ED /* ResetPasswordRequest.swift */,
 				633667E52878F3ED00D2515D /* ProductRequest.swift */,
 				631DC01A28797F2100331986 /* CartRequest.swift */,
 				63156FFE287AD99C00936AF6 /* LoginRequest.swift */,
@@ -759,7 +779,6 @@
 				63AF01A4287744AA007724D0 /* APILogger.swift in Sources */,
 				63AF01B428774504007724D0 /* Transition.swift in Sources */,
 				63AF01E128774A09007724D0 /* ActivityIndicatorProtocol.swift in Sources */,
-				6390CA39288574F600A087ED /* ResetPasswordRequest.swift in Sources */,
 				631DC01728797E1600331986 /* CartRouter.swift in Sources */,
 				6362A8692865238100B12591 /* Extension+UIView.swift in Sources */,
 				638DBDB12884326E009C0A16 /* AddToFavRequest.swift in Sources */,
@@ -767,6 +786,7 @@
 				63AF01B528774504007724D0 /* PushTransition.swift in Sources */,
 				638778072868B6920041E810 /* Extension+CustomTextField.swift in Sources */,
 				6390CA412885756700A087ED /* RegisterVC.swift in Sources */,
+				6390CA4A2885920800A087ED /* ForgotPasswordRouter.swift in Sources */,
 				638778142868EAB40041E810 /* Extension+UIAlert.swift in Sources */,
 				63157014287B17B300936AF6 /* AddToCartRequest.swift in Sources */,
 				6362A8622865201C00B12591 /* FavouritesVC.swift in Sources */,
@@ -811,6 +831,7 @@
 				63B9709C2882D20D00DA6269 /* CategoryResponseModel.swift in Sources */,
 				63AF01A6287744AA007724D0 /* DataProvider.swift in Sources */,
 				63AF01E228774A09007724D0 /* BlockingActivityIndicator.swift in Sources */,
+				6390CA4B2885920800A087ED /* ForgotPasswordViewModel.swift in Sources */,
 				63157001287ADA7A00936AF6 /* LoginResponseModel.swift in Sources */,
 				6315700D287ADB7E00936AF6 /* LoginRoute.swift in Sources */,
 				63157009287ADB7E00936AF6 /* LoginViewModel.swift in Sources */,
@@ -823,11 +844,14 @@
 				63E044C3286B6E50008D9499 /* CheckOutReusableView.swift in Sources */,
 				631DC01B28797F2100331986 /* CartRequest.swift in Sources */,
 				6390CA38288574F600A087ED /* RegisterRequest.swift in Sources */,
+				6390CA492885920800A087ED /* ForgotPasswordRoute.swift in Sources */,
 				63B970962882CA1C00DA6269 /* FavouriteRouter.swift in Sources */,
 				63B970A02882F29000DA6269 /* UserDetailRequest.swift in Sources */,
 				63AF01BD2877454E007724D0 /* DecodableResponseRequest.swift in Sources */,
+				6390CA4C2885920800A087ED /* ForgotPasswordVC.swift in Sources */,
 				63157012287ADC1600936AF6 /* SnackHelper.swift in Sources */,
 				6390CA422885756700A087ED /* RegisterRoute.swift in Sources */,
+				6390CA4E2885921B00A087ED /* ResetPasswordRequest.swift in Sources */,
 				63B970A22882F2A700DA6269 /* UserDetailResponse.swift in Sources */,
 				63E044BE286B6DDC008D9499 /* CartCollectionCell.swift in Sources */,
 				63AF01DA287748AF007724D0 /* HomeRoute.swift in Sources */,

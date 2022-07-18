@@ -24,9 +24,9 @@ final class LoginViewModel: BaseViewModel<LoginRouter> {
         router.pushRegister()
     }
     
-    //    func pushForgotPassword(){
-    //        router.pushPasswordResetVC()
-    //    }
+    func pushForgotPassword(){
+        router.pushPasswordResetVC()
+    }
     
 }
 
