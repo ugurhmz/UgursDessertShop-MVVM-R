@@ -9,11 +9,10 @@ import UIKit
 import KeychainSwift
 
 class HomeVC: BaseViewController<HomeViewModel> {
-    var lastIndexActive:IndexPath = [1 ,0]
     private let keychain = KeychainSwift()
+    var favData: [FavouriteCellProtocol] = []
+    var filterClosure: StringClosure?
     var selectedIndex = Int ()
-   var favData: [FavouriteCellProtocol] = []
-    
     var userID: String?
     private let searchController = UISearchController(searchResultsController: nil)
     
@@ -136,6 +135,10 @@ class HomeVC: BaseViewController<HomeViewModel> {
         }
         
         
+        self.filterClosure = { [weak self] categoryName in
+            guard let self = self else {return }
+            self.viewModel.fetchAllProducts(categoryQuery: categoryName)
+        }
        
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -254,15 +257,15 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
             guard let categoryDatas = viewModel.categoryArray else { return UICollectionViewCell() }
             
             categoryCell.fillData(data: categoryDatas[indexPath.row])
-        
             // select category
-            if selectedIndex == indexPath.row {
-                categoryCell.configure(select: true)
-                print(categoryDatas[selectedIndex])
-            }
-            else {
-                categoryCell.configure(select: false)
-            }
+           if selectedIndex == indexPath.row {
+               categoryCell.configure(select: true)
+               print(categoryDatas[selectedIndex])
+           }
+           else {
+               categoryCell.configure(select: false)
+           }
+            
             
             return categoryCell
         case Sections.ProductsSection.rawValue:
@@ -328,7 +331,16 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             selectedIndex = indexPath.row
-            self.generalCollectionView.reloadData()
+            if selectedIndex == 0 {
+                viewModel.fetchAllProducts(categoryQuery: "")
+                return
+            }
+            guard let categoryDatas = viewModel.categoryArray else { return  }
+            
+            if let categoryName = categoryDatas[selectedIndex].name {
+                self.filterClosure?(categoryName)
+            }
+           
         }
     }
 }

@@ -32,13 +32,10 @@ final class CartViewModel: BaseViewModel<CartRouter> {
 extension CartViewModel {
     func plusButtonTapped(at: IndexPath, userId: String, quanti: Int ) {
         guard let clickItemId = self.cellItems[at.item].prdId else {return }
-        guard let itemQuantity = self.cellItems[at.item].stepperCount else { return}
         self.addToCartItem(userId: userId, itemId: clickItemId, quantity: quanti)
- 
+        
     }
 }
-
-
 
 
 //MARK: -
@@ -48,7 +45,7 @@ extension CartViewModel {
         let request = CartRequest(userId: userId)
         dataProvider.request(for: request) { [weak self] (result) in
             guard let self = self else { return }
-
+            
             switch result {
             case .success(let response):
                 
@@ -58,19 +55,17 @@ extension CartViewModel {
                     return
                 }
                 
-                
-                
                 if let usertCartId = response?.id {
                     if let responseItems = response?.items {
-                       let cellItems =  responseItems.map({
-                           CartCellModel( prdId: $0.productId?.id ?? "00",
-                                        prdImgUrl: $0.productId?.prdImg ?? "-",
-                                         prdPrice: $0.productId?.price ?? 0.0,
-                                         prdTitle: $0.productId?.title ?? "-",
-                                         prdDescription: $0.productId?.itemDescription ?? "-",
-                                         stepperCount: $0.quantity ?? 0)
-                       })
-                       
+                        let cellItems =  responseItems.map({
+                            CartCellModel( prdId: $0.productId?.id ?? "00",
+                                           prdImgUrl: $0.productId?.prdImg ?? "-",
+                                           prdPrice: $0.productId?.price ?? 0.0,
+                                           prdTitle: $0.productId?.title ?? "-",
+                                           prdDescription: $0.productId?.itemDescription ?? "-",
+                                           stepperCount: $0.quantity ?? 0)
+                        })
+                        
                         self.currentUserCartItems = responseItems
                         self.userCartId =  usertCartId
                         self.cellItems = cellItems
@@ -78,45 +73,43 @@ extension CartViewModel {
                     }
                 }
                 
-               
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
     }
-    
     
     //MARK: - ADD TO CART ITEM
     func addToCartItem(userId: String, itemId: String, quantity: Int){
         let request = AddToCartRequest(userId: userId, itemId: itemId, quantity: quantity)
         dataProvider.request(for: request) { [weak self] (result) in
             guard let _ = self else { return }
-
+            
             switch result {
             case .success(let response):
                 print(response!)
-
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
     }
     
-    
     // DELETE ONE PRODUCT IN CART
     func deleteCartItem(userId: String, itemId: String) {
         let request = OneProductDeleteInCart(userId: userId, itemId: itemId)
         dataProvider.request(for: request) { [weak self] (result) in
-            guard let self = self else { return }
+            guard let _ = self else { return }
             DispatchQueue.main.async {
-               NotificationCenter.default.post(name: NSNotification.Name("refresh"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name("refresh"), object: nil)
                 
             }
             switch result {
             case .success(let response):
                 print(response!)
-             
-
+                
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }

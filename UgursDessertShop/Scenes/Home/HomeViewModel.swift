@@ -37,7 +37,6 @@ extension HomeViewModel {
             guard let self = self else { return }
             switch result {
             case .success(let response):
-              
                 guard let productArr = response?.map({
                     return ProductsCellModel(prdId: $0.id,
                                              prdNameLbl: $0.title,
@@ -49,7 +48,8 @@ extension HomeViewModel {
                 self.reloadData?()
                 
            case .failure(let error):
-              SnackHelper.showSnack(message:error.localizedDescription)
+                
+              SnackHelper.showSnack(message:"There are no products in the category!")
                 
           }
         }
@@ -82,7 +82,16 @@ extension HomeViewModel {
             switch result {
             case .success(let response):
                 guard let categoryArr = response else {return }
+               
+                var firstObj =  CategoryResponseModel(id: "-",
+                                                    name: "All",
+                                                    categoryImg: "",
+                                                    createdAt: "",
+                                                    updatedAt: "")
+                
                 self.categoryArray = categoryArr
+                self.categoryArray?.insert(firstObj, at: 0)
+               
                
             case .failure(let error):
                 print(error.localizedDescription)

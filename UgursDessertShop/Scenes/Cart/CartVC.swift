@@ -16,70 +16,70 @@ class CartVC: BaseViewController<CartViewModel> {
     
     // General CollectionView
     private var generalCollectionView: UICollectionView = {
-          let layout = UICollectionViewFlowLayout()
-          layout.scrollDirection = .vertical
-          let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-          cv.showsHorizontalScrollIndicator = false
-          cv.backgroundColor = .white
-          cv.register(CartCollectionCell.self,
-                          forCellWithReuseIdentifier: CartCollectionCell.identifier)
-          cv.register(CheckOutReusableView.self,
-                      forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CheckOutReusableView.Identifier)
-          return cv
-      }()
-
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.showsHorizontalScrollIndicator = false
+        cv.backgroundColor = .white
+        cv.register(CartCollectionCell.self,
+                    forCellWithReuseIdentifier: CartCollectionCell.identifier)
+        cv.register(CheckOutReusableView.self,
+                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CheckOutReusableView.Identifier)
+        return cv
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         setConstraints()
         generalCollectionView.delegate = self
         generalCollectionView.dataSource = self
-     
+        
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name("refresh"), object: nil, queue: nil) { [weak self] _ in
-                  guard let self = self else { return}
-                    if let userid = self.keychain.get("userid") {
-                        self.viewModel.fetchUserCart(userId: userid)
-                       
-                    }
-                  self.generalCollectionView.reloadData()
-         }
-      
+            guard let self = self else { return}
+            if let userid = self.keychain.get("userid") {
+                self.viewModel.fetchUserCart(userId: userid)
+                
+            }
+            self.generalCollectionView.reloadData()
+        }
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.checkOutRedButtonView.isHidden = true
-    
+        
         self.showActivityIndicator()
-          if let userid = self.keychain.get("userid") {
-              viewModel.fetchUserCart(userId: userid)
-              
-          }
-
-          self.viewModel.reloadMyData = { [weak self] in
-              guard let self = self else { return}
-              
-              
-              guard let userCartItemscount = self.viewModel.currentUserCartItems?.count else {
-                  return
-              }
-              self.userCartItemCount = userCartItemscount
-              if   self.userCartItemCount ?? 0 < 4 {
-                   self.checkOutRedButtonView.isHidden = true
-              }
-
-              if self.userCartItemCount == 0 {
-                  self.deleteAllBtn.isHidden = true
-              } else {
-                  self.deleteAllBtn.isHidden = false
-              }
-
-              self.generalCollectionView.reloadData()
-              
-          }
+        if let userid = self.keychain.get("userid") {
+            viewModel.fetchUserCart(userId: userid)
+            
+        }
+        
+        self.viewModel.reloadMyData = { [weak self] in
+            guard let self = self else { return}
+            
+            
+            guard let userCartItemscount = self.viewModel.currentUserCartItems?.count else {
+                return
+            }
+            self.userCartItemCount = userCartItemscount
+            if   self.userCartItemCount ?? 0 < 4 {
+                self.checkOutRedButtonView.isHidden = true
+            }
+            
+            if self.userCartItemCount == 0 {
+                self.deleteAllBtn.isHidden = true
+            } else {
+                self.deleteAllBtn.isHidden = false
+            }
+            
+            self.generalCollectionView.reloadData()
+            
+        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-               self.hideActivityIndicator()
+            self.hideActivityIndicator()
         }
     }
     
@@ -92,38 +92,38 @@ class CartVC: BaseViewController<CartViewModel> {
     }
     
     private func settingsNavigateBar(){
-               if #available(iOS 13.0, *) {
-                 let navBarAppearance = UINavigationBarAppearance()
-                  navBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,NSAttributedString.Key.font: UIFont(name: "Charter-Black", size: 26)!]
-                
-                   navigationController?.navigationBar.barStyle = .black
-                 navigationController?.navigationBar.standardAppearance = navBarAppearance
-                 navigationController?.navigationBar.compactAppearance = navBarAppearance
-                 navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-                 navigationController?.navigationBar.prefersLargeTitles = false
-                 }
- 
-               deleteAllBtn.setImage(UIImage(systemName: "trash.circle.fill"), for: .normal)
-               deleteAllBtn.setTitle("Delete All", for: .normal)
-               deleteAllBtn.tintColor = CartDeleteAllTintColor
-               deleteAllBtn.titleLabel?.font = UIFont(name: "Charter-Black", size: 18)
-               navigationItem.rightBarButtonItems = [
-                   UIBarButtonItem(customView: deleteAllBtn)
-               ]
-               navigationController?.navigationBar.tintColor = .label
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,NSAttributedString.Key.font: UIFont(name: "Charter-Black", size: 26)!]
+            
+            navigationController?.navigationBar.barStyle = .black
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.compactAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+            navigationController?.navigationBar.prefersLargeTitles = false
+        }
+        
+        deleteAllBtn.setImage(UIImage(systemName: "trash.circle.fill"), for: .normal)
+        deleteAllBtn.setTitle("Delete All", for: .normal)
+        deleteAllBtn.tintColor = CartDeleteAllTintColor
+        deleteAllBtn.titleLabel?.font = UIFont(name: "Charter-Black", size: 18)
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(customView: deleteAllBtn)
+        ]
+        navigationController?.navigationBar.tintColor = .label
         
         deleteAllBtn.addTarget(self, action: #selector(clickDeleteAllCartItems), for: .touchUpInside)
-           
+        
     }
     
     @objc func clickDeleteAllCartItems(){
-       
+        
     }
     
 }
 extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-       
+        
         self.checkOutRedButtonView.isHidden = false
         let height = scrollView.frame.size.height
         let contentYoffset = scrollView.contentOffset.y
@@ -144,10 +144,9 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return 0
         }
         
-        
         return items.count
     }
-   
+    
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -173,25 +172,23 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-            return 30
+        return 30
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-
+        
         if kind == UICollectionView.elementKindSectionFooter {
             let footerCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier:CheckOutReusableView.Identifier , for: indexPath) as! CheckOutReusableView
-       
-                if self.userCartItemCount == 0 {
-                    footerCell.dontHaveCartItem.isHidden = false
-                    footerCell.checkOutBtn.isHidden = true
-                } else if self.userCartItemCount ?? 0 > 0 && self.userCartItemCount ?? 0  <= 4 {
-                    footerCell.checkOutBtn.isHidden = false
-                    footerCell.dontHaveCartItem.isHidden = true
-                } else if self.userCartItemCount ?? 0  > 4 {
-                    footerCell.dontHaveCartItem.isHidden = true
-                }
-          
             
+            if self.userCartItemCount == 0 {
+                footerCell.dontHaveCartItem.isHidden = false
+                footerCell.checkOutBtn.isHidden = true
+            } else if self.userCartItemCount ?? 0 > 0 && self.userCartItemCount ?? 0  <= 4 {
+                footerCell.checkOutBtn.isHidden = false
+                footerCell.dontHaveCartItem.isHidden = true
+            } else if self.userCartItemCount ?? 0  > 4 {
+                footerCell.dontHaveCartItem.isHidden = true
+            }
             return footerCell
         }
         return UICollectionReusableView()
@@ -213,7 +210,7 @@ extension CartVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-    
+        
         return CGSize(width: generalCollectionView.frame.width - 35,height: 170)
     }
     
@@ -227,14 +224,14 @@ extension CartVC: UICollectionViewDelegateFlowLayout {
 //MARK: -
 extension CartVC {
     private func setConstraints(){
-     
+        
         generalCollectionView.fillSuperview()
         checkOutRedButtonView.anchor(top: nil,
-                            leading: view.leadingAnchor,
-                            bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                            trailing: view.trailingAnchor,
-                            padding: .init(top: 0, left: 20, bottom: 0, right: 20),
-                            size: .init(width: 0, height: 80)
+                                     leading: view.leadingAnchor,
+                                     bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                                     trailing: view.trailingAnchor,
+                                     padding: .init(top: 0, left: 20, bottom: 0, right: 20),
+                                     size: .init(width: 0, height: 80)
         )
     }
 }
