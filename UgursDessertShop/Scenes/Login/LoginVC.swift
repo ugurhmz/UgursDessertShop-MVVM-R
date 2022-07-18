@@ -91,15 +91,9 @@ class LoginVC: BaseViewController<LoginViewModel> {
         btn.layer.borderWidth = 0.4
        btn.layer.borderColor = UIColor(red: 16/255, green: 129/255, blue: 49/255, alpha: 1).cgColor
        btn.titleLabel?.font = UIFont.systemFont(ofSize: 28, weight: .medium)
-       //btn.addTarget(self, action: #selector(goRegisterVC), for: .touchUpInside)
+       btn.addTarget(self, action: #selector(goRegisterVC), for: .touchUpInside)
        return btn
     }()
-    
-//    // Go RegisterVC
-//    @objc func goRegisterVC(){
-//        viewModel.showRegisterOnWindow()
-//    }
-
 
     override func viewDidLoad() {
        super.viewDidLoad()
@@ -141,7 +135,14 @@ class LoginVC: BaseViewController<LoginViewModel> {
 
 //MARK: - @OBJC Func
 extension LoginVC {
-//    // click forgot pw
+    
+    // Go RegisterVC
+    @objc func goRegisterVC(){
+        viewModel.showRegisterOnWindow()
+    }
+
+    
+    // click forgot pw
 //     @objc func clickForgotPw(_ sender: Any){
 //         viewModel.pushForgotPassword()
 //     }

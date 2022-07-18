@@ -20,9 +20,9 @@ final class LoginViewModel: BaseViewModel<LoginRouter> {
 //        router.placeOnWindowHome()
 //    }
 //    
-//    func showRegisterOnWindow() {
-//        router.pushRegister()
-//    }
+    func showRegisterOnWindow() {
+        router.pushRegister()
+    }
 //
 //    func pushForgotPassword(){
 //        router.pushPasswordResetVC()

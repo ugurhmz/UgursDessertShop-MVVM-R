@@ -14,8 +14,8 @@ final class AppRouter: Router, AppRouter.Routes {
     static let shared = AppRouter()
     
     func startApp() {
-        placeOnWindowMainTabBar()
-        //placeOnLogin()
+        //placeOnWindowMainTabBar()
+        placeOnLogin()
     }
     
     private func topViewController() -> UIViewController? {

@@ -1,59 +1,38 @@
 //
 //  RegisterVC.swift
-//  UgursDessertShop
+//  AuthApp-MVVM
 //
-//  Created by ugur-pc on 26.06.2022.
+//  Created by ugur-pc on 5.07.2022.
 //
 
 import UIKit
 
-class RegisterVC: UIViewController {
+class RegisterVC: BaseViewController<RegisterViewModel>{
     
-    private let navigationBar : UINavigationBar = {
-               let navBar = UINavigationBar()
-               let navigationItem =  UINavigationItem()
-               let button = UIBarButtonItem()
-               let standardAppearance = UINavigationBarAppearance()
-               standardAppearance.configureWithTransparentBackground()
-               navigationItem.standardAppearance = standardAppearance
-               navigationItem.scrollEdgeAppearance = standardAppearance
-               navigationItem.compactAppearance = standardAppearance
-               let buttonAppearance = UIBarButtonItemAppearance()
-               buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.black,.font : UIFont.systemFont(ofSize:25, weight: .medium)]
-               button.tintColor = .systemBlue
-               navigationItem.standardAppearance?.buttonAppearance = buttonAppearance
-               navigationItem.compactAppearance?.buttonAppearance = buttonAppearance
-               
-               button.image = UIImage(systemName: "chevron.left")
-              
-               navBar.layer.zPosition = 1
-               
-               navigationItem.leftBarButtonItem = button
-               navBar.setItems([navigationItem], animated: false)
-               return navBar
-       }()
-    
-    
-  
-    private let myview: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
+    private let shapeTopImgView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named:"registershape4")
+        iv.tintColor = .white
+        iv.layer.zPosition = -1
+        iv.alpha = 0.5
+        return iv
     }()
     
-    private let personImgView: UIImageView = {
+    private let shapeBottomImgView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(systemName: "person.crop.circle.badge.plus")
+        iv.image = UIImage(named:"registershapetop")
         iv.tintColor = .white
+        iv.layer.zPosition = -1
+        iv.alpha = 0.5
         return iv
     }()
     
     private let registerTxtLabel: UILabel = {
         let label = UILabel()
-        label.font =  UIFont(name: "Zapfino", size: 45)
+        label.font =  .systemFont(ofSize: 55, weight: .bold)
         label.text = "Register"
-        label.textColor = .black
-        label.textAlignment = .center
+        label.textAlignment = .left
+        label.textColor = #colorLiteral(red: 0.7163005471, green: 0.6066218019, blue: 0.9284923673, alpha: 1)
         return label
     }()
     
@@ -61,16 +40,25 @@ class RegisterVC: UIViewController {
         let txt = CustomTextField(padding: 24, height: 55)
         txt.backgroundColor = .white
         txt.placeholder = "Username"
-        txt.layer.borderWidth = 1
+        txt.layer.borderWidth = 0.4
         return txt
     }()
+    
+    private let txtfullName: CustomTextField = {
+        let txt = CustomTextField(padding: 24, height: 55)
+        txt.backgroundColor = .white
+        txt.placeholder = "Full Name"
+        txt.layer.borderWidth = 0.4
+        return txt
+    }()
+    
     
     private let txtEmail: CustomTextField = {
         let txt = CustomTextField(padding: 24, height: 55)
         txt.backgroundColor = .white
         txt.keyboardType = .emailAddress
         txt.placeholder = "Email address"
-        txt.layer.borderWidth = 1
+        txt.layer.borderWidth = 0.5
         return txt
     }()
     
@@ -79,7 +67,7 @@ class RegisterVC: UIViewController {
         txt.backgroundColor = .white
         txt.isSecureTextEntry = true
         txt.placeholder = "Password"
-        txt.layer.borderWidth = 1
+        txt.layer.borderWidth =  0.4
         txt.addTarget(self, action: #selector(pwTextDidChange(_:)), for: .editingChanged)
         return txt
     }()
@@ -90,7 +78,7 @@ class RegisterVC: UIViewController {
         txt.backgroundColor = .white
         txt.isSecureTextEntry = true
         txt.placeholder = "Re password"
-        txt.layer.borderWidth = 1
+        txt.layer.borderWidth = 0.4
         txt.addTarget(self, action: #selector(pwTextDidChange(_:)), for: .editingChanged)
         return txt
     }()
@@ -127,9 +115,9 @@ class RegisterVC: UIViewController {
         btn.setTitle("Register", for: .normal)
         btn.setTitleColor(.white, for: .normal)
         btn.layer.cornerRadius = 15
-        btn.backgroundColor = UIColor(red: 16/255, green: 129/255, blue: 49/255, alpha: 1)
-        btn.layer.borderWidth = 1
-        btn.layer.borderColor = UIColor(red: 16/255, green: 129/255, blue: 49/255, alpha: 1).cgColor
+        btn.backgroundColor = #colorLiteral(red: 0.1703644097, green: 0.5562083125, blue: 0.2419883311, alpha: 0.7098768627).withAlphaComponent(0.6)
+        btn.layer.borderWidth = 0.4
+       btn.layer.borderColor = #colorLiteral(red: 0.2862745098, green: 0.6274509804, blue: 0.6392156863, alpha: 0.9085264901).cgColor
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .medium)
         btn.addTarget(self, action: #selector(clickRegisterBtn), for: .touchUpInside)
         return btn
@@ -149,10 +137,39 @@ class RegisterVC: UIViewController {
         return iv
     }()
     
-  
+       @objc func clickRegisterBtn(){
+           guard let email = txtEmail.text, !email.isEmpty,
+                 let username = txtUsername.text, !username.isEmpty,
+                 let password = txtPassword.text, !password.isEmpty,
+                 let rePass = txtRePassword.text, !rePass.isEmpty,
+                    let fullName = txtfullName.text, !fullName.isEmpty
+                    
+           else {
+
+                     self.createAlert(title: "",
+                                      msg: "Fields can't be empty!",
+                                      prefStyle: .alert,
+                                      bgColor: .white,
+                                      textColor: .black,
+                                      fontSize: 25)
+                     return
+                 }
+
+           guard let rePassword = txtRePassword.text, rePassword == password else {
+               self.createAlert(title: "Error",
+                                msg: "Passwords do not match !",
+                                prefStyle: .alert,
+                                bgColor: .white,
+                                textColor: .black,
+                                fontSize: 25)
+               return
+           }
+           
+           viewModel.sendRegisterRequest(username: username, email: email, password: rePassword, name: fullName)
+       }
     
     private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [registerTxtLabel,txtUsername,txtEmail, txtPassword,txtRePassword, registerBtn ])
+        let stackView = UIStackView(arrangedSubviews: [registerTxtLabel,txtUsername,txtEmail,txtfullName, txtPassword,txtRePassword, registerBtn ])
         stackView.axis = .vertical
         stackView.spacing = 16
         return stackView
@@ -160,110 +177,67 @@ class RegisterVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 16/255, green: 129/255, blue: 49/255, alpha: 1)
         setupViews()
         setConstraints()
     }
     
-    @objc func clickRegisterBtn(){
-        guard let email = txtEmail.text, !email.isEmpty,
-               let username = txtUsername.text, !username.isEmpty,
-               let password = txtPassword.text, !password.isEmpty,
-               let rePass = txtRePassword.text, !rePass.isEmpty
-
-         else {
-
-                   self.createAlert(title: "",
-                                    msg: "Fields can't be empty!",
-                                    prefStyle: .alert,
-                                    bgColor: .white,
-                                    textColor: .black,
-                                    fontSize: 25)
-                   return
-               }
-
-         guard let rePassword = txtRePassword.text, rePassword == password else {
-             self.createAlert(title: "Error",
-                              msg: "Passwords do not match !",
-                              prefStyle: .alert,
-                              bgColor: .white,
-                              textColor: .black,
-                              fontSize: 25)
-             return
-         }
-           
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
     }
 }
 
 //MARK: -
 extension RegisterVC {
     private func setupViews(){
-        view.addSubview(myview)
         view.addSubview(stackView)
-        view.addSubview(personImgView)
+        view.addSubview(shapeBottomImgView)
         view.addSubview(checkPaswoordFieldImg)
         view.addSubview(checkRePasswordImg)
-        view.addSubview(navigationBar)
-        setupShadows()
+        view.addSubview(shapeTopImgView)
+      
         checkPaswoordFieldImg.isHidden = true
         checkRePasswordImg.isHidden = true
-       
+        
+        view.backgroundColor = .white
+        registerTxtLabel.underline()
+        setupShadows()
+        
+        stackView.setCustomSpacing(42, after: registerTxtLabel)
     }
     
     private func setupShadows(){
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2)
-        gradientLayer.colors = [UIColor.green.cgColor,  UIColor.blue.cgColor]
-        view.layer.addSublayer(gradientLayer)
-        view.bringSubviewToFront(myview)
-        view.bringSubviewToFront(personImgView)
+       // view.bringSubviewToFront(shapeImageView)
         view.bringSubviewToFront(stackView)
         view.bringSubviewToFront(checkPaswoordFieldImg)
         view.bringSubviewToFront(checkRePasswordImg)
         
-        myview.layer.cornerRadius = 50
-        myview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        myview.layer.shadowOpacity = 145
-        myview.layer.shadowRadius = 140
-        myview.layer.shadowColor = UIColor.blue.cgColor
         
         
         txtEmail.layer.shadowOpacity = 2
         txtEmail.layer.shadowRadius = 2
-        txtEmail.layer.shadowColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+        txtEmail.layer.shadowColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 0.9193656871).cgColor
 
 
         txtPassword.layer.shadowOpacity = 2
         txtPassword.layer.shadowRadius = 2
-        txtPassword.layer.shadowColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+        txtPassword.layer.shadowColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 0.9193656871).cgColor
         
         txtRePassword.layer.shadowOpacity = 2
         txtRePassword.layer.shadowRadius = 2
-        txtRePassword.layer.shadowColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+        txtRePassword.layer.shadowColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 0.9193656871).cgColor
 
         txtUsername.layer.shadowOpacity = 2
         txtUsername.layer.shadowRadius = 2
-        txtUsername.layer.shadowColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
+        txtUsername.layer.shadowColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 0.9193656871).cgColor
 
         registerBtn.layer.shadowOpacity = 2
         registerBtn.layer.shadowRadius = 2
-        registerBtn.layer.shadowColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1).cgColor
+        registerBtn.layer.shadowColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 0.8711454884).cgColor
     }
     
     
     private func setConstraints(){
-            
-        navigationBar.anchor(top: view.safeAreaLayoutGuide.topAnchor,
-                                      leading: view.leadingAnchor,
-                                      bottom: nil,
-                                      trailing: view.trailingAnchor)
-        
-        myview.anchor(top: view.topAnchor,
-                      leading: view.leadingAnchor,
-                      bottom: view.bottomAnchor,
-                      trailing: view.trailingAnchor,
-                      padding: .init(top: 200, left: 0, bottom: 0, right: 0))
         
         stackView.anchor(top: nil,
                          leading: view.leadingAnchor,
@@ -272,14 +246,20 @@ extension RegisterVC {
                          padding: .init(top: 0, left: 30, bottom: 0, right: 30))
         stackView.centerYInSuperview()
         
-        personImgView.anchor(top: view.topAnchor,
-                              leading: nil,
-                             bottom: myview.topAnchor,
-                              trailing: nil,
-                              padding: .init(top: 40, left: 0, bottom: 30, right: 0),
-                             size: .init(width: 150, height: 100)
+        shapeBottomImgView.anchor(top: nil,
+                             leading: view.leadingAnchor,
+                              bottom: view.bottomAnchor,
+                              trailing: view.trailingAnchor,
+                              padding: .init(top: 0, left: 20, bottom: 35, right: 20)
         )
-        personImgView.centerXInSuperview()
+        
+        shapeTopImgView.anchor(top: view.topAnchor,
+                               leading: nil,
+                                bottom: nil,
+                                trailing: view.trailingAnchor,
+                                padding: .init(top: 45, left: 0, bottom: 0, right: 2),
+                               size: .init(width: 320, height: 260)
+          )
         
         
         checkPaswoordFieldImg.anchor(top: txtPassword.topAnchor,
