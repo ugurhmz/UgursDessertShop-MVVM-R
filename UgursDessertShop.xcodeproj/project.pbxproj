@@ -49,6 +49,10 @@
 		638DBDAF28842D93009C0A16 /* FavouriteCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638DBDAE28842D93009C0A16 /* FavouriteCellModel.swift */; };
 		638DBDB12884326E009C0A16 /* AddToFavRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638DBDB02884326E009C0A16 /* AddToFavRequest.swift */; };
 		638DBDB3288434CE009C0A16 /* OneProductDeleteInFavsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638DBDB2288434CE009C0A16 /* OneProductDeleteInFavsRequest.swift */; };
+		6390CA37288574F600A087ED /* LogoutRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA34288574F600A087ED /* LogoutRequest.swift */; };
+		6390CA38288574F600A087ED /* RegisterRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA35288574F600A087ED /* RegisterRequest.swift */; };
+		6390CA39288574F600A087ED /* ResetPasswordRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA36288574F600A087ED /* ResetPasswordRequest.swift */; };
+		6390CA3B2885750700A087ED /* SuccessResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6390CA3A2885750700A087ED /* SuccessResponse.swift */; };
 		639120D8286F6A0D008F8162 /* Extension+Number.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639120D7286F6A0D008F8162 /* Extension+Number.swift */; };
 		63A49F3C2869E14900BACF73 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A49F3B2869E14900BACF73 /* Closures.swift */; };
 		63AF01A2287744AA007724D0 /* APIRequestAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF019D287744AA007724D0 /* APIRequestAdapter.swift */; };
@@ -141,6 +145,10 @@
 		638DBDAE28842D93009C0A16 /* FavouriteCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteCellModel.swift; sourceTree = "<group>"; };
 		638DBDB02884326E009C0A16 /* AddToFavRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToFavRequest.swift; sourceTree = "<group>"; };
 		638DBDB2288434CE009C0A16 /* OneProductDeleteInFavsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneProductDeleteInFavsRequest.swift; sourceTree = "<group>"; };
+		6390CA34288574F600A087ED /* LogoutRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutRequest.swift; sourceTree = "<group>"; };
+		6390CA35288574F600A087ED /* RegisterRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterRequest.swift; sourceTree = "<group>"; };
+		6390CA36288574F600A087ED /* ResetPasswordRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordRequest.swift; sourceTree = "<group>"; };
+		6390CA3A2885750700A087ED /* SuccessResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessResponse.swift; sourceTree = "<group>"; };
 		639120D7286F6A0D008F8162 /* Extension+Number.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+Number.swift"; sourceTree = "<group>"; };
 		63A49F3B2869E14900BACF73 /* Closures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Closures.swift; sourceTree = "<group>"; };
 		63AF019D287744AA007724D0 /* APIRequestAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestAdapter.swift; sourceTree = "<group>"; };
@@ -439,6 +447,9 @@
 		63AF019828774422007724D0 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				6390CA34288574F600A087ED /* LogoutRequest.swift */,
+				6390CA35288574F600A087ED /* RegisterRequest.swift */,
+				6390CA36288574F600A087ED /* ResetPasswordRequest.swift */,
 				633667E52878F3ED00D2515D /* ProductRequest.swift */,
 				631DC01A28797F2100331986 /* CartRequest.swift */,
 				63156FFE287AD99C00936AF6 /* LoginRequest.swift */,
@@ -456,6 +467,7 @@
 		63AF019928774429007724D0 /* ResponseModel */ = {
 			isa = PBXGroup;
 			children = (
+				6390CA3A2885750700A087ED /* SuccessResponse.swift */,
 				63E044B9286B3547008D9499 /* ProductResponseModel.swift */,
 				638B71392879426B00B577B1 /* BaseResponse.swift */,
 				631DC01C2879815100331986 /* CartResponseModel.swift */,
@@ -729,6 +741,7 @@
 				630861CF2879F53B00284534 /* Keychain.swift in Sources */,
 				639120D8286F6A0D008F8162 /* Extension+Number.swift in Sources */,
 				63AF01BE2877454E007724D0 /* RequestMethod.swift in Sources */,
+				6390CA3B2885750700A087ED /* SuccessResponse.swift in Sources */,
 				6315700B287ADB7E00936AF6 /* LoginRouter.swift in Sources */,
 				63AF01CF2877475C007724D0 /* BaseViewModel.swift in Sources */,
 				63B9709E2882DECB00DA6269 /* FavouriteResponseModel.swift in Sources */,
@@ -736,6 +749,7 @@
 				63AF01A4287744AA007724D0 /* APILogger.swift in Sources */,
 				63AF01B428774504007724D0 /* Transition.swift in Sources */,
 				63AF01E128774A09007724D0 /* ActivityIndicatorProtocol.swift in Sources */,
+				6390CA39288574F600A087ED /* ResetPasswordRequest.swift in Sources */,
 				631DC01728797E1600331986 /* CartRouter.swift in Sources */,
 				6362A8692865238100B12591 /* Extension+UIView.swift in Sources */,
 				638DBDB12884326E009C0A16 /* AddToFavRequest.swift in Sources */,
@@ -747,6 +761,7 @@
 				6362A8622865201C00B12591 /* FavouritesVC.swift in Sources */,
 				638B713828793A3200B577B1 /* ProductCellModel.swift in Sources */,
 				6384371C28664DEF0013179C /* NavBarCollectionCell.swift in Sources */,
+				6390CA37288574F600A087ED /* LogoutRequest.swift in Sources */,
 				638778122868E9CE0041E810 /* RegisterVC.swift in Sources */,
 				6315700C287ADB7E00936AF6 /* LoginModel.swift in Sources */,
 				638DBDAF28842D93009C0A16 /* FavouriteCellModel.swift in Sources */,
@@ -796,6 +811,7 @@
 				63AF01D6287748A1007724D0 /* HomeViewModel.swift in Sources */,
 				63E044C3286B6E50008D9499 /* CheckOutReusableView.swift in Sources */,
 				631DC01B28797F2100331986 /* CartRequest.swift in Sources */,
+				6390CA38288574F600A087ED /* RegisterRequest.swift in Sources */,
 				63B970962882CA1C00DA6269 /* FavouriteRouter.swift in Sources */,
 				63B970A02882F29000DA6269 /* UserDetailRequest.swift in Sources */,
 				63AF01BD2877454E007724D0 /* DecodableResponseRequest.swift in Sources */,
