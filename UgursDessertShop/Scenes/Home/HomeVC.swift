@@ -22,17 +22,17 @@ class HomeVC: BaseViewController<HomeViewModel> {
         cv.backgroundColor = HomeBgColor
         
         //header
-               cv.register(CellHeaderView.self, forSupplementaryViewOfKind: "header",
-                           withReuseIdentifier:   CellHeaderView.identifier)
+        cv.register(CellHeaderView.self, forSupplementaryViewOfKind: "header",
+                    withReuseIdentifier:   CellHeaderView.identifier)
         cv.register(NavBarCollectionCell.self, forCellWithReuseIdentifier: NavBarCollectionCell.identifier)
         cv.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.identifier)
         cv.register(ProductsCell.self, forCellWithReuseIdentifier: ProductsCell.identifier)
         return cv
     }()
-
-   static func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
-       let mylayout = UICollectionViewCompositionalLayout {  (index, environment) -> NSCollectionLayoutSection? in
-           return  HomeVC.createSectionFor(index: index, environment: environment)
+    
+    static func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
+        let mylayout = UICollectionViewCompositionalLayout {  (index, environment) -> NSCollectionLayoutSection? in
+            return  HomeVC.createSectionFor(index: index, environment: environment)
         }
         return mylayout
     }
@@ -53,25 +53,25 @@ class HomeVC: BaseViewController<HomeViewModel> {
     
     static func createNavBarSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem.init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-            
-       
+        
+        
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200)), subitems: [item])
-       let section = NSCollectionLayoutSection(group: group)
-       section.orthogonalScrollingBehavior = .continuous
-      /*  // suplementary
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                heightDimension: .absolute(55))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
-                                                                 elementKind: "header",
-                                                                 alignment: .top)
-        section.boundarySupplementaryItems = [header] */
-       return section
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        /*  // suplementary
+         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+         heightDimension: .absolute(55))
+         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+         elementKind: "header",
+         alignment: .top)
+         section.boundarySupplementaryItems = [header] */
+        return section
     }
     
     static func createCategoriesSection() -> NSCollectionLayoutSection {
         
         let inset: CGFloat = 1
-      
+        
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3),
                                               heightDimension: .fractionalHeight(0.67))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -79,12 +79,12 @@ class HomeVC: BaseViewController<HomeViewModel> {
                                                      leading: 16,
                                                      bottom: inset,
                                                      trailing: 4)
-     
+        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9),
                                                heightDimension: .fractionalHeight(0.10))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,
                                                        subitem:  item, count: 2)
-     
+        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         
@@ -101,17 +101,17 @@ class HomeVC: BaseViewController<HomeViewModel> {
     
     static func createProductsSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5), heightDimension: .absolute(300)))
-       item.contentInsets.bottom = 16
-       item.contentInsets.trailing = 16
-       
-       let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1000)), subitems: [item])
-       
-       let section = NSCollectionLayoutSection(group: group)
-       section.contentInsets = .init(top: 2, leading: 16, bottom: 0, trailing: 0)
-       return section
+        item.contentInsets.bottom = 16
+        item.contentInsets.trailing = 16
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1000)), subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 2, leading: 16, bottom: 0, trailing: 0)
+        return section
     }
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -126,7 +126,7 @@ class HomeVC: BaseViewController<HomeViewModel> {
         userID = userId
         viewModel.fetchCurrentUserDetail(userId: userId)
         
-    
+        
         self.viewModel.userDetailClosure = { [weak self] in
             guard let self = self else { return}
             
@@ -139,19 +139,19 @@ class HomeVC: BaseViewController<HomeViewModel> {
             guard let self = self else { return }
             self.viewModel.fetchAllProducts(categoryQuery: categoryName)
         }
-       
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         guard let userId =  self.keychain.get("userid") else {return }
-        
+      
         self.viewModel.fetchUserFavItems(userId: userId)
         self.viewModel.favDataClosure = { [weak self] in
             guard let self = self else { return}
             self.generalCollectionView.reloadData()
         }
         
-       
+        checkIsUserLogin()
     }
     
     private func userProfileIconSettings(_ img: String) {
@@ -191,28 +191,49 @@ class HomeVC: BaseViewController<HomeViewModel> {
         searchController.searchBar.searchTextField.backgroundColor = .white
         searchController.searchBar.searchTextField.defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         searchController.searchBar.barTintColor = .black
-       
+        
     }
     
     private func customSearchBarStyle(){
         
-         if #available(iOS 13.0, *) {
+        if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
             //navBarAppearance.configureWithOpaqueBackground()
-             navBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,NSAttributedString.Key.font: UIFont(name: "Charter-Black", size: 23)!]
-           
-             navigationController?.navigationBar.barStyle = .black
+            navBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,NSAttributedString.Key.font: UIFont(name: "Charter-Black", size: 23)!]
+            
+            navigationController?.navigationBar.barStyle = .black
             navigationController?.navigationBar.standardAppearance = navBarAppearance
             navigationController?.navigationBar.compactAppearance = navBarAppearance
             navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-
+            
             navigationController?.navigationBar.prefersLargeTitles = true
-          
-            }
+            
+        }
     }
 }
 
 extension HomeVC {
+    
+    private func setupLogoutRightBarButton() {
+        
+        let logOutImage = UIImage(systemName: "person.fill.xmark")?.withRenderingMode(.alwaysOriginal)
+        let logoutBarButton = UIBarButtonItem(image: logOutImage, style: .done, target: self, action: #selector(logoutBarButtonDidTap))
+        navigationItem.leftBarButtonItem = logoutBarButton
+    }
+    
+    private func checkIsUserLogin(){
+        if keychain.get(Keychain.token) != nil {
+            setupLogoutRightBarButton()
+        } else {
+            navigationItem.rightBarButtonItem = .none
+            viewModel.userLogout()
+        }
+    }
+    @objc func logoutBarButtonDidTap() {
+        viewModel.userLogout()
+    }
+    
+    
     private func setConstraints(){
         generalCollectionView.fillSuperview()
     }
@@ -258,13 +279,13 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
             
             categoryCell.fillData(data: categoryDatas[indexPath.row])
             // select category
-           if selectedIndex == indexPath.row {
-               categoryCell.configure(select: true)
-               print(categoryDatas[selectedIndex])
-           }
-           else {
-               categoryCell.configure(select: false)
-           }
+            if selectedIndex == indexPath.row {
+                categoryCell.configure(select: true)
+                print(categoryDatas[selectedIndex])
+            }
+            else {
+                categoryCell.configure(select: false)
+            }
             
             
             return categoryCell
@@ -282,20 +303,20 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
             productsCell.addCartClosure = { [weak self] in
                 guard let self = self else { return}
                 if let  prdModelId = self.viewModel.productArray?[indexPath.item].prdId {
-        
+                    
                     self.viewModel.addToCartItem(userId: self.userID ?? "",
-                                                     itemId: prdModelId,
-                                                     quantity: 1)
+                                                 itemId: prdModelId,
+                                                 quantity: 1)
                 }
             }
             
             productsCell.addToFavClosure = { [weak self] in
                 guard let self = self else { return}
-             
+                
                 if let  prdModelId = self.viewModel.productArray?[indexPath.item].prdId {
-        
+                    
                     self.viewModel.addToFavItem(userId: self.userID ?? "",
-                                                     itemId: prdModelId)
+                                                itemId: prdModelId)
                 }
                 self.generalCollectionView.reloadData()
             }
@@ -303,7 +324,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
             
             return productsCell
         default:
-           return UICollectionViewCell()
+            return UICollectionViewCell()
         }
     }
     
@@ -317,16 +338,16 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         switch indexPath.section {
         case Sections.SearchSection.rawValue:
             view.titleLabel.text = ""
-            case Sections.CategoriesSection.rawValue:
-                view.titleLabel.text = "Categories"
-            case Sections.ProductsSection.rawValue:
-                view.titleLabel.text = ""
-            default:
-                return UICollectionReusableView()
+        case Sections.CategoriesSection.rawValue:
+            view.titleLabel.text = "Categories"
+        case Sections.ProductsSection.rawValue:
+            view.titleLabel.text = ""
+        default:
+            return UICollectionReusableView()
         }
         return view
     }
-  
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 1 {
@@ -340,7 +361,7 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
             if let categoryName = categoryDatas[selectedIndex].name {
                 self.filterClosure?(categoryName)
             }
-           
+            
         }
     }
 }

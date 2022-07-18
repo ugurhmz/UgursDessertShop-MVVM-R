@@ -21,15 +21,36 @@ final class HomeViewModel: BaseViewModel<HomeRouter>, HomeViewProtocol {
     var userDetailClosure: VoidClosure?
     var userFavItems: [ProductsCellModel] = []
     var favDataClosure: VoidClosure?
-    
+    var didSuccesLogout: VoidClosure?
     init(router: HomeRouter) {
           super.init(router: router)
     }
-    
+    func pushLoginScreen(){
+           router.placeOnLogin()
+       }
     
 }
 
 extension HomeViewModel {
+    
+    func userLogout(){
+          showActivityIndicatorView?()
+           let request = LogoutRequest()
+           dataProvider.request(for: request) { [weak self] (result) in
+               guard let self = self else { return }
+               self.showActivityIndicatorView?()
+               switch result {
+               case .success(_ ):
+                   SnackHelper.showSnack(message: "Successfully logout.")
+                   self.didSuccesLogout?()
+                   self.pushLoginScreen()
+               case .failure(let error):
+                   SnackHelper.showSnack(message: error.localizedDescription )
+               }
+           }
+       }
+    
+    
     
     func fetchAllProducts(categoryQuery: String){
         let request = ProductRequest(queryByCategory: categoryQuery)

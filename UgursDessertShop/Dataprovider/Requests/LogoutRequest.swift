@@ -10,7 +10,7 @@ import Foundation
 public struct LogoutRequest: APIDecodableResponseRequest {
     public typealias ResponseType = LoginResponseModel?
     public var method: RequestMethod = .post
-    public var path: String = "/logout"
+    public var path: String = "/user/logout"
     
     public init() {}
 }
