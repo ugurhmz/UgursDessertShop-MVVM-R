@@ -7,17 +7,27 @@
 
 import Foundation
 
-// MARK: - LoginResponseModel
 public struct LoginResponseModel: Codable {
-    var id, username, email: String?
-    var isAdmin: Bool?
-    var userImg, createdAt, updatedAt: String?
-    var accessToken, loginMsg: String?
-    var error, msg: String?
-
+    let id, email, username, name: String?
+    let role: String?
+    let activationToken: String?
+    let isVerified: Bool?
+    let createdAt, updatedAt, loginToken: String?
+    let msg: String?
+    let error: String?
     enum CodingKeys: String, CodingKey {
         case id = "_id"
-        case username, email, isAdmin, userImg, createdAt, updatedAt
-        case accessToken, loginMsg, msg, error
+        case email
+        case username
+        case name
+        case role
+        case activationToken
+        case isVerified
+        case createdAt
+        case updatedAt
+        case loginToken
+        case msg
+        case error
     }
 }
+

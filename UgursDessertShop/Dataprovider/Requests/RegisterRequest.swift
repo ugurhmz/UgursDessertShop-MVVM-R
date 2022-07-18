@@ -9,7 +9,7 @@ public struct RegisterRequest: APIDecodableResponseRequest {
     
     public typealias ResponseType = SuccessResponse
 
-    public var path: String = "/register"
+    public var path: String = "/user/register"
     public var method: RequestMethod = .post
     public var parameters: RequestParameters = [:]
     

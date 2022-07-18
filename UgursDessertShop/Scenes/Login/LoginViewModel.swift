@@ -14,23 +14,19 @@ final class LoginViewModel: BaseViewModel<LoginRouter> {
     let keychain = KeychainSwift()
     var currentUser: LoginResponseModel?
     var reloadDataClosure: VoidClosure?
-  
-//    
-//    func pushHome() {
-//        router.placeOnWindowHome()
-//    }
-//    
+    
+    
+    func pushHome() {
+        router.placeOnWindowMainTabBar()
+    }
+    
     func showRegisterOnWindow() {
         router.pushRegister()
     }
-//
-//    func pushForgotPassword(){
-//        router.pushPasswordResetVC()
-//    }
     
-    func pushHome(){
-        router.placeOnWindowMainTabBar()
-    }
+    //    func pushForgotPassword(){
+    //        router.pushPasswordResetVC()
+    //    }
     
 }
 
@@ -50,25 +46,26 @@ extension LoginViewModel {
                     SnackHelper.showSnack(message: myres )
                     return
                 }
-               
+                
                 if let oter = response?.error {
                     SnackHelper.showSnack(message: oter )
                     return
-               }
-                
-                if let loginToken = response?.accessToken {
-                        self.keychain.set(loginToken, forKey: Keychain.token)
+                }
+                if let loginToken = response?.loginToken {
+                    
                     if let userid = response?.id {
                         self.keychain.set(userid, forKey: "userid")
                     }
-                        self.currentUser = response
-                        self.reloadDataClosure?()
-                        self.pushHome()
-                 }
-               case .failure(let error):
+                    self.keychain.set(loginToken, forKey: Keychain.token)
+                    self.currentUser = response
+                    self.reloadDataClosure?()
+                    self.pushHome()
+                }
+                
+                
+            case .failure(let error):
                 SnackHelper.showSnack(message: error.localizedDescription )
-           }
+            }
         }
     }
 }
-

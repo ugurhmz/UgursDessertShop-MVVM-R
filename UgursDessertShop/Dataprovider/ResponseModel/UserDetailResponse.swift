@@ -14,13 +14,16 @@ import Foundation
 
 // MARK: - UserDetailResponseModel
 public struct UserDetailResponseModel: Codable {
-    var id, username, email, password: String?
+    var id, username, email,password: String?
     var isAdmin: Bool?
     var userImg, createdAt, updatedAt: String?
-
+    var name: String?
+    var isVerified: Bool?
+    
     enum CodingKeys: String, CodingKey {
         case id = "_id"
         case username, email, password, isAdmin, userImg, createdAt, updatedAt
-       
+        case name
+        case isVerified
     }
 }

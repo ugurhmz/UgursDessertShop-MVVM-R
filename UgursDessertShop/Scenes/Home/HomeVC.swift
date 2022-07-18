@@ -131,12 +131,12 @@ class HomeVC: BaseViewController<HomeViewModel> {
             guard let self = self else { return}
             
             self.userProfileIconSettings(self.viewModel.userDetail?.userImg ?? "")
-            self.navigationItem.title = "Hi, \(self.viewModel.userDetail?.username ?? "-")"
+            self.navigationItem.title = "Hi, \(self.viewModel.userDetail?.name ?? "-")"
         }
         
         
         self.filterClosure = { [weak self] categoryName in
-            guard let self = self else {return }
+            guard let self = self else { return }
             self.viewModel.fetchAllProducts(categoryQuery: categoryName)
         }
        
@@ -199,7 +199,7 @@ class HomeVC: BaseViewController<HomeViewModel> {
          if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()
             //navBarAppearance.configureWithOpaqueBackground()
-             navBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,NSAttributedString.Key.font: UIFont(name: "Charter-Black", size: 30)!]
+             navBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,NSAttributedString.Key.font: UIFont(name: "Charter-Black", size: 23)!]
            
              navigationController?.navigationBar.barStyle = .black
             navigationController?.navigationBar.standardAppearance = navBarAppearance
