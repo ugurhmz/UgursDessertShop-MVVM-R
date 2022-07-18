@@ -1,4 +1,4 @@
-# UgursDessertShop-MVVM
+# UgursDessertShop MVVM-R
 ### 1- Home Screen
 <img width="427" alt="Ekran Resmi 2022-07-18 16 28 40" src="https://user-images.githubusercontent.com/13710309/179522014-6cb3efb1-bb02-4b9c-9693-1dd548a08032.png">
 
