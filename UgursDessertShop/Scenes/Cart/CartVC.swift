@@ -68,6 +68,7 @@ class CartVC: BaseViewController<CartViewModel> {
                 self.checkOutRedButtonView.isHidden = true
             }
             
+            self.checkOutRedButtonView.fillData(sumData: self.viewModel.newQuantity)
             if self.userCartItemCount == 0 {
                 self.deleteAllBtn.isHidden = true
             } else {
@@ -165,6 +166,13 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
         cell.deleteProductInCartClosure = { [weak self]  in
             guard let self = self else { return }
             self.viewModel.deleteCartItem(userId: userId, itemId: self.viewModel.cellItems[indexPath.item].prdId ?? "")
+        }
+        
+        cell.myClosure = { [weak self]  in
+            guard let self = self else { return }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                 self.viewModel.fetchUserCart(userId: userId)
+            }
         }
         
         return cell

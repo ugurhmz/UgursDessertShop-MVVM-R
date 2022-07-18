@@ -41,7 +41,15 @@ class CartView: UIView {
 
 }
 extension CartView {
-  
+    func fillData(sumData: Double) {
+        let strCast = "\(numberFormat(sumData))"
+        let addCartStr = "Check Out | "
+        
+        let str = NSMutableAttributedString(string: "\(addCartStr)\(strCast) $ ")
+        str.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 28), range: NSMakeRange(0, addCartStr.count))
+        str.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 22), range: NSMakeRange(addCartStr.count, strCast.count + 3))
+        self.checkOutBtn.setAttributedTitle(str, for: .normal)
+    }
 }
 
 //MARK: -

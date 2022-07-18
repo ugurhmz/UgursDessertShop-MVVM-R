@@ -14,7 +14,7 @@ class CartCollectionCell: UICollectionViewCell{
     var strClosure: StringClosure?
     var prdPrice: Double?
     var deleteProductInCartClosure: VoidClosure?
-    
+    var myClosure: VoidClosure?
 
     
     var pickerNumbers = [1,2,3,4,5,6,7,8,9,10]
@@ -163,6 +163,7 @@ extension CartCollectionCell: UIPickerViewDelegate, UIPickerViewDataSource {
             self.prdPriceLbl.text = "$ \(numberFormat(price * Double(quantity)))"
         }
         prdtextField.resignFirstResponder()
+        self.myClosure?()
     }
     
 }
