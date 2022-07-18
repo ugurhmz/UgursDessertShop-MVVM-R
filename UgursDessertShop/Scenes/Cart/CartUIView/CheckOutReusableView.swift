@@ -55,6 +55,25 @@ class CheckOutReusableView: UICollectionReusableView {
 
 //MARK: -
 extension CheckOutReusableView {
+    
+    
+    func fillData(sumData: Double) {
+        let strCast = "\(numberFormat(sumData))"
+        let addCartStr = "Check Out | "
+        
+        let str = NSMutableAttributedString(string: "\(addCartStr)\(strCast) TL")
+        str.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 28), range: NSMakeRange(0, addCartStr.count))
+        str.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: 22), range: NSMakeRange(addCartStr.count, strCast.count + 3))
+        self.checkOutBtn.setAttributedTitle(str, for: .normal)
+        
+        if sumData == 0.0 {
+            self.checkOutBtn.isHidden = true
+            self.dontHaveCartItem.isHidden = false
+        } else {
+            self.checkOutBtn.isHidden = false
+            self.dontHaveCartItem.isHidden = true
+        }
+    }
   
     func configure(cartItemCount: Int) {
         if cartItemCount < 1 {

@@ -16,6 +16,7 @@ final class CartViewModel: BaseViewModel<CartRouter> {
     var reloadMyData: VoidClosure?
     var userCartId: String?
     var fetchAgainClosure: VoidClosure?
+    var newQuantity = 0.0
     
     init(router: CartRouter) {
         super.init(router: router)
@@ -66,6 +67,10 @@ extension CartViewModel {
                                            stepperCount: $0.quantity ?? 0)
                         })
                         
+                        self.newQuantity = responseItems.reduce(0){
+                            $0 + ($1.productId?.price)! * Double($1.quantity!)
+                        }
+                     
                         self.currentUserCartItems = responseItems
                         self.userCartId =  usertCartId
                         self.cellItems = cellItems

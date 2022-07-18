@@ -180,6 +180,9 @@ extension CartVC: UICollectionViewDelegate, UICollectionViewDataSource {
         if kind == UICollectionView.elementKindSectionFooter {
             let footerCell = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier:CheckOutReusableView.Identifier , for: indexPath) as! CheckOutReusableView
             
+            
+            footerCell.fillData(sumData: self.viewModel.newQuantity)
+           
             if self.userCartItemCount == 0 {
                 footerCell.dontHaveCartItem.isHidden = false
                 footerCell.checkOutBtn.isHidden = true
